@@ -17,8 +17,8 @@ export default function Home(){
             const trendingData = await trending.json()
             const randomIndex = Math.floor(Math.random()*19)
             setLink(trendingData.results[randomIndex].id)
-            document.querySelector(".MainMovie img").src = `https://image.tmdb.org/t/p/original${trendingData.results[randomIndex].poster_path}`
-            document.querySelector(".MainBackdrop img").src = `https://image.tmdb.org/t/p/original${trendingData.results[randomIndex].poster_path}`
+            document.querySelector(".MainMovie img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
+            document.querySelector(".MainBackdrop img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
             const card = []
             for(const i in trendingData.results){
                 card.push({

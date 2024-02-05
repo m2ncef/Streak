@@ -6,7 +6,7 @@ export default () => {
         window.location.href = "#"
         setTimeout(function(){
             document.querySelector(".Loader").style.display = 'none'
-        }, 2000)
+        }, 3000)
     })
     return (
         <div className={`Loader`}>
