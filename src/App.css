@@ -1,38 +1,358 @@
-.App {
-  text-align: center;
+body {
+    background-color: black;
+    color: white;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+::-webkit-scrollbar {
+    opacity: 0;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    z-index: 1;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Header div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1vh;
+    color: white;
+    font-size: small;
 }
-
-.App-link {
-  color: #61dafb;
+.Header div img {
+    width: 5vh;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.MainMovie {
+    position: relative;
+    top: 1vh;
+    text-align: center;
+    margin: 4vh 0vh;
+}
+.MainMovie img {
+    width: 25vh;
+    position: relative;
+    background-color: gray;
+    box-shadow: 0vh 0vh 3vh 4px #151515;
+}
+.MainMovie h3 {
+    position: relative;
+    text-align: center;
+    color: white;
+    text-shadow: 0px 1px 1vh gray;
+}
+.Types {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.Types h1 {
+    background: #252525;
+    border-radius: 1.5vh;
+    padding: 1vh 3vh;
+    font-size: medium;
+}
+.Types a {
+    text-decoration: none;
+    color: gray;
+    font-weight: 400;
+}
+.trendingScroll {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow-x: scroll;
+}
+.movieCard img {
+    border-radius: 1vh;
+    width: 42vw;
+}
+.movieCard {
+    margin: 0vh 1vh;
+}
+.explore {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2vh;
+}
+.explore a {
+    flex: 0 0 50%;
+    box-sizing: border-box;
+    width: -moz-fit-content;
+    text-align: center;
+    margin: 1vh 0vh;
+}
+.loadMore {
+    background: gray;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 1vh;
+    border-radius: 1vh;
+    flex: 1;
+    margin: 1vh;
+}
+.backdrop {
+    top: 0;
+    position: fixed;
+    z-index: -1;
+    opacity: 0.6;
+    mask-image: linear-gradient(180deg, #ffffff 60%, #0000 100%);
+    width: -webkit-fill-available;
+}
+.MovieInfos img {
+    width: 17vh;
+    border-radius: 1vh;
+}
+.MovieInfos {
+    margin: 3vh;
+    gap: 2vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+.genres {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+    justify-content: flex-start;
+}
+.genres span {
+    padding: 1vh 1.4vh;
+    background: #151515;
+    margin-right: 1vh;
+    border-radius: 1.5vh;
+    color: dimgray;
+    font-size: x-small;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.MovieInfos div a {
+    box-shadow: 0vh 0vh 3vw black;
+    padding: 1vh 1.4vh;
+    background: #151515BB;
+    margin-right: 1vh;
+    border-radius: 1vh;
+    color: dimgray;
+    text-decoration: none;
+}
+.MovieBackground {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    filter: blur(20px);
+}
+.NavBar {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 3vh;
+    align-items: center;
+    height: 8vh;
+    margin-bottom: 2vh;
+    position: relative;
+    z-index: 10;
+}
+.Player {
+    position: fixed;
+    display: none;
+    top: 0;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: #151515EE;
+}
+.Loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: #111111FF;
+    z-index: 9999999;
+    text-align: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
+.Loader img {
+    width: 10vh;
+}
+.searchBar {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+}
+.searchBar input {
+    width: 70%;
+    color: white;
+    border: none;
+    padding: 2vh 1vh;
+    border-radius: 0;
+    border-radius: 1vh 0vh 0vh 1vh;
+    background-color: #111;
+}
+.searchBar button {
+    border-radius: 0vh 1vh 1vh 0vh;
+    border: none;
+    background: #111;
+    color: white;
+}
+.searchBar button:is(:hover, :active) {
+    border-radius: 0vh 2vh 2vh 0vh;
+    background: #11111199;
+}
+.previewNavBar {
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 3vh;
+    align-items: center;
+    height: 8vh;
+    margin-bottom: 2vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.recom {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+.recom .movieCard img {
+    width: 15vh;
+    height: 22.5vh;
+    background: gray;
+}
+.buttonDisabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.exploreTypes {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 3vh;
+}
+.exploreTypes a {
+    text-decoration: none;
+    color: gray;
+    background-color: #11111199;
+    padding: 1vh 3vh;
+    border-radius: 1vh;
+    transition: all .3s;
+}
+.exploreTypes a:hover {
+    position:relative;
+    background-color: gray;
+    color: #11111199;
+    box-shadow: 0px 0px 6px white;
+}
+.EPCard {
+    display: flex;
+    line-height: 0px;
+    margin: 1vh;
+    background: #15151566;
+    padding: 1vh 2Vh;
+    border-radius: 1vh;
+    flex-direction: column;
+    gap: 1vh;
+    transition: all .3s;
+}
+.EPCard:hover {
+    background: #252525;
+}
+.EPCard img {
+    width: 20vh;
+    border-radius: .7vh;
+}
+.EPslider {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+#seasonSelector {
+    background: #dfdfdf66;
+    border: none;
+    padding: 1vh;
+    color: black;
+    font-weight: 600;
+    border-radius: .7vh;
+}
+.Cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    margin: 2vh;
+}
+.ListCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1vh;
+    background-color: #151515;
+    border-radius: 2vh;
+}
+.ListCard img {
+    padding: 1vh;
+    width: 10vh;
+    border-radius: 2vh;
+}
+.ListCard p {
+    width: fit-content;
+    background: #ff000033;
+    padding: .7vh 1.5vh;
+    border-radius: .7vh;
+}
+.ListCard h5 {
+    font-weight: 400;
+    color: gray;
+}
+.Cards a {
+    text-decoration: none;
+    color: white;
+}
+.errorPage {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.MainBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.MainBackdrop img {
+    width: 100%;
+    filter: blur(10vh);
+    opacity: 0.3;
+    transform: scale(1.1);
 }
