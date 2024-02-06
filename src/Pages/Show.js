@@ -26,11 +26,7 @@ export default function Movie(){
     useEffect(()=>{
         document.querySelectorAll(".EPCard").forEach(card => card.onclick = function () {
             var epNumber = card.querySelector('p').textContent.replace(/\D/g, '')
-            var BlackVid = `https://blackvid.space/embed?tmdb=${params.id}&season=${season}&episode=${epNumber}`
-            var VidSrc = `https://vidsrc.me/embed/tv?tmdb=${params.id}&season=${season}&episode=${epNumber}`
-            var TVEmbed = `https://tvembed.cc/tv/${params.id}/${season}/${epNumber}`
-            var superEmbed = `https://multiembed.mov/?video_id=${params.id}&tmdb=1&s=${season}&e=${epNumber}`
-            document.querySelector(".Player iframe").src = TVEmbed
+            document.querySelector(".Player iframe").src = `/scrapeShow/${params.id}/${season}/${epNumber}`
         });
     })
     useEffect(()=>{
@@ -153,7 +149,7 @@ export default function Movie(){
                     <div style={{margin:'0vh 5vh', textAlign:'center'}}>
                         <h6>if you're experiencing any issues, change the <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>ECHO</font> server and use  <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>Infinity</font> / <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>Karma</font>.</h6>
                     </div>
-                    <iframe sandbox = "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" title="Player" frameBorder="0" gesture="media" allow="encrypted-media" allowFullScreen referrerpolicy="origin"></iframe>
+                    <iframe title="Player" gesture="media" allow="encrypted-media" allowFullScreen></iframe>
                 </div>
             </div>
             <Footer/>

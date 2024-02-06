@@ -169,6 +169,7 @@ body {
     z-index: 10;
 }
 .Player {
+    z-index: 9999;
     position: fixed;
     display: none;
     top: 0;

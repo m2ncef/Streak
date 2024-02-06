@@ -30,8 +30,8 @@ export default ()=>{
         scrape()
     }, [])
   return(
-    <div style={{display:'flex', flexDirection:'row', alignItems:'center', position:'fixed'}}>
         <ReactPlayer
+                style={{display:'flex', margin:'0 auto'}}
                 url={streamLink}
                 controls={true}
                 width="100%"
@@ -50,6 +50,5 @@ export default ()=>{
                     }
                 }}
             />
-    </div>
   )
 }
