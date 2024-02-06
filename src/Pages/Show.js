@@ -6,11 +6,12 @@ import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
 import { toast } from "react-hot-toast";
 import EpCard from "../Components/EpCard";
+import ShowScraper from "../Components/ShowScraper";
 export default function Movie(){
     const [similar, setSimilar] = useState([])
     const [recom, setRecom] = useState([])
-    const [season, setSeason] = useState(1)
-    const [ep, setEp] = useState(1)
+    const [epCount, setepCount] = useState(1)
+    const [sCount, setsCount] = useState(1)
     const [epCard, setEpCard] = useState([])
     const params = useParams()
     function saveToLibrary(data){
@@ -24,14 +25,14 @@ export default function Movie(){
           })
     }
     useEffect(()=>{
+        document.querySelector(".close").addEventListener('click', function(){
+            document.querySelector(".Player").style.display = "none"
+        })
         document.querySelectorAll(".EPCard").forEach(card => card.onclick = function () {
             var epNumber = card.querySelector('p').textContent.replace(/\D/g, '')
-            document.querySelector(".Player iframe").src = `/scrapeShow/${params.id}/${season}/${epNumber}`
+            setepCount(epNumber)
         });
     })
-    useEffect(()=>{
-        setEp(Number(sessionStorage.getItem("ep")))
-    }, [sessionStorage.getItem("ep")])
     useEffect(()=>{
         async function EPS(){
             const response = await fetch(`https://api.themoviedb.org/3/tv/${params.id}/season/${document.querySelector("#seasonSelector").value.replace(/\D/g, "")}?api_key=84120436235fe71398e95a662f44db8b`)
@@ -46,13 +47,10 @@ export default function Movie(){
             }
         }
         document.querySelector("#seasonSelector").addEventListener('change', function(){
-            setSeason(document.querySelector("#seasonSelector").value.replace(/\D/g, ""))
+            setsCount(document.querySelector("#seasonSelector").value.replace(/\D/g, ""))
             EPS()
         })
         document.querySelector(".Loader").style.display = "flex"
-        document.querySelector(".Player").addEventListener('click', function(){
-            document.querySelector(".Player").style.display = 'none'
-        })
         const fetchData = async () =>{
             const res = await fetch(`https://api.themoviedb.org/3/tv/${params.id}?api_key=84120436235fe71398e95a662f44db8b`)
             const data = await res.json()
@@ -146,10 +144,9 @@ export default function Movie(){
                     </section>
                 </div>
                 <div className="Player">
-                    <div style={{margin:'0vh 5vh', textAlign:'center'}}>
-                        <h6>if you're experiencing any issues, change the <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>ECHO</font> server and use  <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>Infinity</font> / <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>Karma</font>.</h6>
-                    </div>
-                    <iframe title="Player" gesture="media" allow="encrypted-media" allowFullScreen></iframe>
+                    <div className="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    <ShowScraper id={params.id} s={sCount} e={epCount}></ShowScraper>
+                    <div style={{zIndex:'-1', margin:'0vh 5vh', position:'fixed'}}>Fetching Data...</div>
                 </div>
             </div>
             <Footer/>

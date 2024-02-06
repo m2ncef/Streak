@@ -5,6 +5,7 @@ import MovieCard from '../Components/MovieCard'
 import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
 import { toast } from "react-hot-toast";
+import MovieScraper from "../Components/MovieScraper";
 export default function Movie(){
     const [similar, setSimilar] = useState([])
     const [recom, setRecom] = useState([])
@@ -23,10 +24,10 @@ export default function Movie(){
         document.querySelector(".Player").style.display = 'flex'
     }
     useEffect(()=>{
-        document.querySelector(".Loader").style.display = "flex"
-        document.querySelector(".Player").addEventListener('click', function(){
-            document.querySelector(".Player").style.display = 'none'
+        document.querySelector(".close").addEventListener('click', function(){
+            document.querySelector(".Player").style.display = "none"
         })
+        document.querySelector(".Loader").style.display = "flex"
         const fetchData = async () =>{
             const res = await fetch(`https://api.themoviedb.org/3/movie/${params.id}?api_key=84120436235fe71398e95a662f44db8b`)
             const data = await res.json()
@@ -37,7 +38,6 @@ export default function Movie(){
                 document.querySelector(".backdrop").src = `https://image.tmdb.org/t/p/w500${data.backdrop_path}`
             }
             document.querySelector(".MovieInfos img").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
-            document.querySelector(".Player iframe").src = `/scrapeMovie/${data.id}/${data.release_date.substring(0, 4)}/${data.title}`
             document.querySelector(".MovieInfos div h3").innerHTML = data.title
             document.querySelector(".MovieBackground").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
             document.querySelector(".MovieInfos div p").innerHTML = `<i>"${data.tagline}"</i>`
@@ -107,7 +107,9 @@ export default function Movie(){
                     </section>
                 </div>
                 <div className="Player">
-                    <iframe title="Player" gesture="media" allow="encrypted-media" allowFullScreen></iframe>
+                    <div className="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    <MovieScraper id={params.id}></MovieScraper>
+                    <div style={{zIndex:'-1', margin:'0vh 5vh', position:'fixed'}}>Fetching Data...</div>
                 </div>
             </div>
             <Footer/>

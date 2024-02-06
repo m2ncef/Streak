@@ -9,19 +9,19 @@ export default function Home(){
     const [latest, setLatest] = useState([])
     const [trending, setTrending] = useState([])
     const [popular, setPopular] = useState([])
+    const [popularTV, setPopularTV] = useState([])
     useEffect(()=>{
         document.title = 'Streak '
             const fetchData = async () =>{
             const imgPath = 'https://image.tmdb.org/t/p/w500'
-            const trending = await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key=84120436235fe71398e95a662f44db8b')
+            const trending = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=84120436235fe71398e95a662f44db8b')
             const trendingData = await trending.json()
-            const randomIndex = Math.floor(Math.random()*19)
+            const randomIndex = Math.floor(Math.random()*20)
             setLink(trendingData.results[randomIndex].id)
             document.querySelector(".MainMovie img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
             document.querySelector(".MainBackdrop img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
             document.querySelector(".MainMovieInfos h2").innerHTML = trendingData.results[randomIndex].title
             document.querySelector(".MainMovieInfos h4").innerHTML = `${trendingData.results[randomIndex].release_date} • ${trendingData.results[randomIndex].vote_average}/10`
-            console.log(trendingData.results[randomIndex])
             const card = []
             for(const i in trendingData.results){
                 card.push({
@@ -30,7 +30,7 @@ export default function Home(){
                 })
                 setTrending(card)
             }
-            const popularM = await fetch("https://api.themoviedb.org/3/movie/popular?api_key=84120436235fe71398e95a662f44db8b")
+            const popularM = await fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=84120436235fe71398e95a662f44db8b")
             const popularData = await popularM.json()
             const popular = []
             for(const i in popularData.results){
@@ -49,6 +49,16 @@ export default function Home(){
                     id: latestData.results[i].id
                 })
                 setLatest(l)
+            }
+            const popularT = await fetch("https://api.themoviedb.org/3/tv/top_rated?api_key=84120436235fe71398e95a662f44db8b")
+            const popularTData = await popularT.json()
+            const popularTV = []
+            for(const i in popularTData.results){
+                popularTV.push({
+                    img: `${imgPath}${popularTData.results[i].poster_path}`,
+                    id: popularTData.results[i].id
+                })
+                setPopularTV(popularTV)
             }
         }
         fetchData()
@@ -75,7 +85,7 @@ export default function Home(){
                     </div>
                 </Link>
             </div>
-            <div style={{margin:"1vh"}}>
+            <div style={{margin:"1vh", top:'3vh', position:'relative'}}>
                 <h2 style={{marginLeft:'1vh'}}>Trending Movies</h2>
                 <section className="trendingScroll">
                     {trending.map((m)=>{
@@ -91,6 +101,12 @@ export default function Home(){
                 <h2 style={{marginLeft:'1vh'}}>Latest TV Series</h2>
                 <section className="trendingScroll">
                     {latest.map((m)=>{
+                        return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
+                    })}
+                </section>
+                <h2 style={{marginLeft:'1vh'}}>Popular TV Series</h2>
+                <section className="trendingScroll">
+                    {popularTV.map((m)=>{
                         return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
                     })}
                 </section>

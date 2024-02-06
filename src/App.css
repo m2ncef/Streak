@@ -34,7 +34,7 @@ body {
     background-color: black;
     box-shadow: 0vh 0vh 3vh 4px #151515;
     border-radius: 1Vh;
-    mask-image: linear-gradient(180deg, #fff 80%, #0000 95%);
+    mask-image: linear-gradient(180deg, #ffff 75%, #0000 95%);
 }
 .MainMovie h3 {
     position: relative;
@@ -105,9 +105,11 @@ body {
     top: 0;
     position: fixed;
     z-index: -1;
-    opacity: 0.6;
+    opacity: 0.5;
     mask-image: linear-gradient(180deg, #ffffff 60%, #0000 100%);
     width: -webkit-fill-available;
+    filter: blur(2px);
+    transform: scale(1.1);
 }
 .MovieInfos img {
     width: 17vh;
@@ -179,7 +181,7 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    background: #151515EE;
+    background: #050505fa;
 }
 .Loader {
     position: fixed;
@@ -383,4 +385,14 @@ body {
     right: 0;
     color: white;
     margin: 0vh 7vh;
+    bottom: -1vh;
+}
+.close {
+    position: fixed;
+    top: 3vh;
+    right: 3vh;
+    font-size: large;
+    background-color: #ff00042c;
+    border-radius: 5px;
+    padding: 1vh 2vh;
 }

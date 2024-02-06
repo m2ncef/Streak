@@ -1,16 +1,17 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { useParams } from 'react-router-dom';
-export default ()=>{
-    const params = useParams()
-    const [streamLink, setStreamLink] = useState("")
+
+export default (props) => {
+    const [streamLink, setStreamLink] = useState("");
+    const [thumbnail, setThumbnail] = useState("");
     const [captions, setCaptions] = useState([]);
     const API_KEY = '84120436235fe71398e95a662f44db8b';
-    const TV_ID = params.id;
-    const SEASON_NUMBER = params.s;
-    const EPISODE_NUMBER = params.e;
-    useEffect(()=>{
+    const TV_ID = props.id;
+    const SEASON_NUMBER = props.s;
+    const EPISODE_NUMBER = props.e;
+
+    useEffect(() => {
         async function fetchTMDBData(url) {
             try {
                 const response = await fetch(url);
@@ -29,61 +30,67 @@ export default ()=>{
         async function episodeID() {
             const url = `https://api.themoviedb.org/3/tv/${TV_ID}/season/${SEASON_NUMBER}/episode/${EPISODE_NUMBER}?api_key=${API_KEY}`;
             const episodeData = await fetchTMDBData(url);
+            setThumbnail(episodeData.still_path);
             return episodeData.id;
         }
-        fetch(`https://api.themoviedb.org/3/tv/${params.id}?api_key=84120436235fe71398e95a662f44db8b`)
-        .then(r=>r.json())
-        .then(data=>{
-            async function scrape(){
-                const proxyUrl = 'https://proxy.f53.dev/'
-                const providers = makeProviders({
-                fetcher: makeStandardFetcher(fetch),
-                proxiedFetcher: makeSimpleProxyFetcher(proxyUrl, fetch),
-                target: targets.BROWSER,
-                })
-                const media = {
-                    type: 'show',
-                    title: data.name,
-                    releaseYear: data.first_air_date.substr(0, 4),
-                    tmdbId: data.id,
-                    season: {
-                        number: 1,
-                        tmdbId: await seasonID()
-                    },
-                    episode: {
-                        number: 1,
-                        tmdbId: await episodeID()
-                    }
-                }
-                const flixhqStream = await providers.runAll({
-                    media: media,
-                  })
-                setStreamLink(flixhqStream.stream.playlist)
-                setCaptions(flixhqStream.stream.captions);
-            }
-            scrape()
-        })
-    }, [])
-  return(
-        <ReactPlayer
-                style={{display:'flex', margin:'0 auto'}}
-                url={streamLink}
-                controls={true}
-                width="100%"
-                height="100%"
-                config={{
-                    file: {
-                        attributes: {
-                            crossOrigin: 'true',
+        fetch(`https://api.themoviedb.org/3/tv/${props.id}?api_key=84120436235fe71398e95a662f44db8b`)
+            .then(r => r.json())
+            .then(data => {
+                setThumbnail(`https://image.tmdb.org/t/p/w500${data.backdrop_path}`);
+                async function scrape() {
+                    const proxyUrl = 'https://proxy.f53.dev/';
+                    const providers = makeProviders({
+                        fetcher: makeStandardFetcher(fetch),
+                        proxiedFetcher: makeSimpleProxyFetcher(proxyUrl, fetch),
+                        target: targets.BROWSER,
+                    });
+                    const media = {
+                        type: 'show',
+                        title: data.name,
+                        releaseYear: data.first_air_date.substr(0, 4),
+                        tmdbId: data.id,
+                        season: {
+                            number: SEASON_NUMBER,
+                            tmdbId: await seasonID()
                         },
-                        tracks: captions.map(caption => ({
-                            kind: 'subtitles',
-                            src: caption.url,
-                            srcLang: caption.language,
-                            default: true
-                        }))
-                    }
-                }}
-            />
-  )
-}
+                        episode: {
+                            number: EPISODE_NUMBER,
+                            tmdbId: await episodeID()
+                        }
+                    };
+                    const flixhqStream = await providers.runAll({
+                        media: media,
+                    });
+                    setStreamLink(flixhqStream.stream.playlist);
+                    setCaptions(flixhqStream.stream.captions);
+                }
+                scrape();
+            });
+    }, [props.id, props.s, props.e]);
+
+    return (
+        <ReactPlayer
+            style={{ display: 'flex', margin: '0 auto' }}
+            url={streamLink}
+            controls={true}
+            height={'30%'}
+            width={'90%'}
+            config={{
+                file: {
+                    attributes: {
+                        poster: thumbnail,
+                        autoplay: 'false',
+                        crossOrigin: 'true',
+                        preload: 'none'
+                    },
+                    tracks: captions.map(caption => ({
+                        kind: 'subtitles',
+                        src: caption.url,
+                        srcLang: caption.language,
+                        default: true
+                    }))
+                }
+            }}
+        />
+    );
+};
