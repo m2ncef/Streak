@@ -29,16 +29,24 @@ body {
     margin: 4vh 0vh;
 }
 .MainMovie img {
-    width: 25vh;
+    width: 35vh;
     position: relative;
-    background-color: gray;
+    background-color: black;
     box-shadow: 0vh 0vh 3vh 4px #151515;
+    border-radius: 1Vh;
+    mask-image: linear-gradient(180deg, #fff 80%, #0000 95%);
 }
 .MainMovie h3 {
     position: relative;
     text-align: center;
     color: white;
     text-shadow: 0px 1px 1vh gray;
+}
+.MainMovie a {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 .Types {
     display: flex;
@@ -352,7 +360,26 @@ body {
 }
 .MainBackdrop img {
     width: 100%;
-    filter: blur(10vh);
-    opacity: 0.3;
-    transform: scale(1.1);
+    filter: blur(2vh);
+    opacity: 0.4;
+    transform: scale(2);
+}
+.Player iframe {
+    border-radius: 1vh;
+    border: none;
+    box-shadow: 0vh 0vh 8vh 2vh black;
+}
+.MainMovieInfos {
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    line-height: 0;
+    font-size: small;
+    align-content: center;
+    align-items: center;
+    left: 0;
+    right: 0;
+    color: white;
+    margin: 0vh 7vh;
 }

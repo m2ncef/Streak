@@ -37,11 +37,12 @@ export default function Movie(){
                 document.querySelector(".backdrop").src = `https://image.tmdb.org/t/p/w500${data.backdrop_path}`
             }
             document.querySelector(".MovieInfos img").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
+            document.querySelector(".Player iframe").src = `/scrapeMovie/${data.id}/${data.release_date.substring(0, 4)}/${data.title}`
             document.querySelector(".MovieInfos div h3").innerHTML = data.title
             document.querySelector(".MovieBackground").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
             document.querySelector(".MovieInfos div p").innerHTML = `<i>"${data.tagline}"</i>`
-            document.querySelector(".rating").innerHTML =  `⭐️ ${data.vote_average}/10 &nbsp;•&nbsp; 👥 ${data.popularity}`
-            document.querySelector(".DateAndLangs").innerHTML =  `🌐 ${data.spoken_languages[0].english_name} &nbsp;•&nbsp; 📅 ${data.release_date}`
+            document.querySelector(".rating").innerHTML =  `⭐️ ${data.vote_average}/10 • 👥 ${data.popularity}`
+            document.querySelector(".DateAndLangs").innerHTML =  `🌐 ${data.spoken_languages[0].english_name} • 📅 ${data.release_date}`
             document.querySelector(".desc").innerHTML = data.overview
             document.title = `Streak  | ${data.title}`
             for(const i in data.genres){
@@ -106,10 +107,7 @@ export default function Movie(){
                     </section>
                 </div>
                 <div className="Player">
-                    <div style={{margin:'0vh 5vh', textAlign:'center'}}>
-                        <h6>if you're experiencing any issues, change the <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>Echo</font> server and use  <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>Infinity</font> / <font style={{background:'Orange', padding:'1px 2px', borderRadius:'3px'}}>Karma</font> instead 👍.</h6>
-                    </div>
-                    <iframe sandbox = "allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" title="Player" frameBorder="0" gesture="media" allow="encrypted-media" allowFullScreen src={`https://tvembed.cc/movie/${params.id}`}></iframe>
+                    <iframe title="Player" gesture="media" allow="encrypted-media" allowFullScreen></iframe>
                 </div>
             </div>
             <Footer/>

@@ -6,6 +6,7 @@ import Movie from './Pages/Movie'
 import Show from './Pages/Show'
 import List from './Pages/List'
 import Explore from './Pages/Explore'
+import MovieScraper from './Components/MovieScraper'
 import { useEffect } from 'react'
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home/>}></Route>
+                <Route path='/scrapeMovie/:id/:year/:title' element={<MovieScraper/>}></Route>
                 <Route path='/list' element={<List/>}></Route>
                 <Route path='/explore/:q' element={<Explore/>}></Route>
                 <Route path='/movie/:id' element={<Movie/>}></Route>

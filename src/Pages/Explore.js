@@ -7,10 +7,10 @@ export default function Explore () {
     const params = useParams()
     const [movie, setMovie] = useState([])
     const [pageCounter, setPageCounter] = useState(1)
+    const imgPath = 'https://image.tmdb.org/t/p/w342'
     async function fetchSearch(q){
         const search = await fetch(`https://api.themoviedb.org/3/search/${params.q}?query=${q}&api_key=84120436235fe71398e95a662f44db8b`)
         const searchData = await search.json()
-        const imgPath = 'https://image.tmdb.org/t/p/w185'
         const card = []
         for(const i in searchData.results){
             card.push({
@@ -28,7 +28,6 @@ export default function Explore () {
         async function fetchExplore(){
             const explore = await fetch(`https://api.themoviedb.org/3/discover/${params.q}?api_key=84120436235fe71398e95a662f44db8b&page=${pageCounter}`)
             const exploreData = await explore.json()
-            const imgPath = 'https://image.tmdb.org/t/p/w185'
             const card = []
             for(const i in exploreData.results){
                 card.push({
@@ -48,8 +47,8 @@ export default function Explore () {
                 <button onClick={HandleSearch}>Search</button>
             </div>
             <div className="exploreTypes">
+                <Link to={'/explore/tv'}>Shows</Link>
                 <Link to={'/explore/movie'}>Movie</Link>
-                <Link to={'/explore/tv'}>TV Shows</Link>
             </div>
              <section className="explore">
                 {movie.map((m)=>{

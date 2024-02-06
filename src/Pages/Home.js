@@ -19,6 +19,9 @@ export default function Home(){
             setLink(trendingData.results[randomIndex].id)
             document.querySelector(".MainMovie img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
             document.querySelector(".MainBackdrop img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
+            document.querySelector(".MainMovieInfos h2").innerHTML = trendingData.results[randomIndex].title
+            document.querySelector(".MainMovieInfos h4").innerHTML = `${trendingData.results[randomIndex].release_date} • ${trendingData.results[randomIndex].vote_average}/10`
+            console.log(trendingData.results[randomIndex])
             const card = []
             for(const i in trendingData.results){
                 card.push({
@@ -66,6 +69,10 @@ export default function Home(){
             <div className="MainMovie">
                 <Link to={`/movie/${link}`}>
                     <img src></img>
+                    <div className="MainMovieInfos">
+                        <h2></h2>
+                        <h4></h4>
+                    </div>
                 </Link>
             </div>
             <div style={{margin:"1vh"}}>
