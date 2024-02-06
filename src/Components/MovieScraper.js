@@ -40,9 +40,11 @@ export default (props)=>{
                 controls={true}
                 height={'30%'}
                 width={'90%'}
+                playing={false}
                 config={{
                     file: {
                         attributes: {
+                            autostart: '0',
                             poster: thumbnail,
                             autoplay: 'false',
                             crossOrigin: 'true',

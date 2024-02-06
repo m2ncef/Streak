@@ -1,6 +1,15 @@
+:root {
+    touch-action: pan-x pan-y;
+    height: 100% 
+}
+html {
+    user-select: none;
+    user-zoom: none;
+}
 body {
     background-color: black;
     color: white;
+    touch-action: manipulation;
 }
 ::-webkit-scrollbar {
     opacity: 0;
@@ -34,7 +43,7 @@ body {
     background-color: black;
     box-shadow: 0vh 0vh 3vh 4px #151515;
     border-radius: 1Vh;
-    mask-image: linear-gradient(180deg, #ffff 75%, #0000 95%);
+    mask-image: linear-gradient(180deg, #ffff 75%, #0000 100%);
 }
 .MainMovie h3 {
     position: relative;
@@ -51,18 +60,18 @@ body {
 .Types {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 .Types h1 {
-    background: #252525;
+    background: #7b7b7b10;
     border-radius: 1.5vh;
     padding: 1vh 3vh;
     font-size: medium;
 }
 .Types a {
     text-decoration: none;
-    color: gray;
-    font-weight: 400;
+    color: #ffffff78;
+    font-weight: 500;
 }
 .trendingScroll {
     display: flex;
@@ -72,7 +81,7 @@ body {
 }
 .movieCard img {
     border-radius: 1vh;
-    width: 42vw;
+    width: 35vw;
 }
 .movieCard {
     margin: 0vh 1vh;
@@ -360,6 +369,8 @@ body {
     top: 0;
     left: 0;
     z-index: -1;
+    mask-image: linear-gradient(360deg, #fff 0%, #0000 100%);
+    transform: scale(2);
 }
 .MainBackdrop img {
     width: 100%;
@@ -377,7 +388,6 @@ body {
     bottom: 5px;
     display: flex;
     flex-direction: column;
-    line-height: 0;
     font-size: small;
     align-content: center;
     align-items: center;
@@ -385,7 +395,8 @@ body {
     right: 0;
     color: white;
     margin: 0vh 7vh;
-    bottom: -1vh;
+    bottom: -3vh;
+    gap: 0vh;
 }
 .close {
     position: fixed;

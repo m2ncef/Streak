@@ -80,8 +80,8 @@ export default function Home(){
                 <Link to={`/movie/${link}`}>
                     <img src></img>
                     <div className="MainMovieInfos">
-                        <h2></h2>
-                        <h4></h4>
+                        <h2 style={{margin:0}}></h2>
+                        <h4 style={{margin:'1vh'}}></h4>
                     </div>
                 </Link>
             </div>

@@ -78,6 +78,7 @@ export default (props) => {
             config={{
                 file: {
                     attributes: {
+                        autostart: '0',
                         poster: thumbnail,
                         autoplay: 'false',
                         crossOrigin: 'true',
