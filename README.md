@@ -14,7 +14,7 @@ Curious to see it in action? Check out our live demo [here](https://streaak.netl
 ### 2. Using movie-web.app API
    Get direct streaming links (.m3u8)
 ### 3. ZERO Ads
-   NO ADS, The movies/shows are displayed in a <video> tag ! no annoying embeded iframes, popups, ads and back-scripts.
+   NO ADS, The movies/shows are displayed in a `<video>` tag ! no annoying embeded iframes, popups, ads and back-scripts.
 
 ## Getting Started 🚀
 
