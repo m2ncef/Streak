@@ -2,14 +2,14 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MovieCard from '../Components/MovieCard'
 import Nav from "../Components/Nav";
-import Loading from "../Components/Loading";
+import Footer from "../Components/Footer";
 export default function Explore () {
     const params = useParams()
     const [movie, setMovie] = useState([])
     const [pageCounter, setPageCounter] = useState(1)
     const imgPath = 'https://image.tmdb.org/t/p/w342'
     async function fetchSearch(q){
-        const search = await fetch(`https://api.themoviedb.org/3/search/${params.q}?query=${q}&api_key=84120436235fe71398e95a662f44db8b`)
+        const search = await fetch(`https://api.themoviedb.org/3/search/${params.q}?query=${q}&api_key=84120436235fe71398e95a662f44db8b&include_adult=false`)
         const searchData = await search.json()
         const card = []
         for(const i in searchData.results){
@@ -26,7 +26,7 @@ export default function Explore () {
     }
     useEffect(()=>{
         async function fetchExplore(){
-            const explore = await fetch(`https://api.themoviedb.org/3/discover/${params.q}?api_key=84120436235fe71398e95a662f44db8b&page=${pageCounter}`)
+            const explore = await fetch(`https://api.themoviedb.org/3/discover/${params.q}?api_key=84120436235fe71398e95a662f44db8b&page=${pageCounter}?include_adult=false?sort_by=popularity.asc`)
             const exploreData = await explore.json()
             const card = []
             for(const i in exploreData.results){
@@ -51,11 +51,16 @@ export default function Explore () {
                 <Link to={'/explore/movie'}>Movie</Link>
             </div>
              <section className="explore">
-                {movie.map((m)=>{
-                    return <MovieCard img={m.img} id={m.id} show={params.q == 'tv' ? 'true' : 'false'}></MovieCard>
-                })}
+                <div>
+                    {movie.map((m)=>{
+                        if(!m.img.includes('null')){
+                            return <MovieCard img={m.img} id={m.id} show={params.q == 'tv' ? 'true' : 'false'}></MovieCard>
+                        }
+                    })}
+                </div>
                 <a href="#" className="loadMore" onClick={()=>setPageCounter(pageCounter + 1)}>Load More</a>
             </section>
+            <Footer/>
         </>
     )
 }

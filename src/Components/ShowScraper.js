@@ -6,12 +6,14 @@ export default (props) => {
     const [streamLink, setStreamLink] = useState("");
     const [thumbnail, setThumbnail] = useState("");
     const [captions, setCaptions] = useState([]);
+    const [loading, setLoading] = useState(true);
     const API_KEY = '84120436235fe71398e95a662f44db8b';
     const TV_ID = props.id;
     const SEASON_NUMBER = props.s;
     const EPISODE_NUMBER = props.e;
 
     useEffect(() => {
+        setLoading(true);
         async function fetchTMDBData(url) {
             try {
                 const response = await fetch(url);
@@ -63,35 +65,40 @@ export default (props) => {
                     });
                     setStreamLink(flixhqStream.stream.playlist);
                     setCaptions(flixhqStream.stream.captions);
+                    setLoading(false);
                 }
                 scrape();
             });
     }, [props.id, props.s, props.e]);
 
     return (
-        <ReactPlayer
-            style={{ display: 'flex', margin: '0 auto' }}
-            url={streamLink}
-            controls={true}
-            height={'30%'}
-            width={'90%'}
-            config={{
-                file: {
-                    attributes: {
-                        autostart: '0',
-                        poster: thumbnail,
-                        autoplay: 'false',
-                        crossOrigin: 'true',
-                        preload: 'none'
-                    },
-                    tracks: captions.map(caption => ({
-                        kind: 'subtitles',
-                        src: caption.url,
-                        srcLang: caption.language,
-                        default: true
-                    }))
-                }
-            }}
-        />
+        <>
+            {(!loading && streamLink) ? ( 
+                <ReactPlayer
+                    style={{ display: 'flex', margin: '0 auto' }}
+                    url={streamLink}
+                    controls={true}
+                    playing={false}
+                    width={'80%'}
+                    config={{
+                        file: {
+                            attributes: {
+                                allowfullscreen: 'true',
+                                poster: thumbnail,
+                                crossOrigin: 'true',
+                                preload: 'none',
+                                playsinline: true
+                            },
+                            tracks: captions.map(caption => ({
+                                kind: 'subtitles',
+                                src: caption.url,
+                                srcLang: caption.language,
+                                default: true
+                            }))
+                        }
+                    }}
+                />
+            ) : <div>Loading... sbr chwiya sahbi</div>}
+        </>
     );
 };

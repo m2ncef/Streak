@@ -9,6 +9,7 @@ import MovieScraper from "../Components/MovieScraper";
 export default function Movie(){
     const [similar, setSimilar] = useState([])
     const [recom, setRecom] = useState([])
+    const [player, setPlayer] = useState(false)
     const params = useParams()
     function saveToLibrary(data){
         document.querySelector(".ListButton").classList.add("buttonDisabled")
@@ -21,7 +22,8 @@ export default function Movie(){
           })
     }
     function openPlayer() {
-        document.querySelector(".Player").style.display = 'flex'
+        setPlayer(true)
+        document.querySelector(".Player").style.display = "flex"
     }
     useEffect(()=>{
         document.querySelector(".close").addEventListener('click', function(){
@@ -96,20 +98,23 @@ export default function Movie(){
                     <h3>Recommendations</h3>
                     <section className="recom">
                     {recom.map((m)=>{
-                        return <MovieCard img={m.img} id={m.id}></MovieCard>
+                        if(!m.img.includes('null')){
+                            return <MovieCard img={m.img} id={m.id}></MovieCard>
+                        }
                     })}
                     </section>
                     <h3>Similar</h3>
                     <section className="recom">
                     {similar.map((m)=>{
-                        return <MovieCard img={m.img} id={m.id}></MovieCard>
+                        if(!m.img.includes('null')){
+                            return <MovieCard img={m.img} id={m.id}></MovieCard>
+                        }
                     })}
                     </section>
                 </div>
                 <div className="Player">
                     <div className="close"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    <MovieScraper id={params.id}></MovieScraper>
-                    <div style={{zIndex:'-1', margin:'0vh 5vh', position:'fixed'}}>Fetching Data...</div>
+                    {player && (<MovieScraper id={params.id}/>)}
                 </div>
             </div>
             <Footer/>

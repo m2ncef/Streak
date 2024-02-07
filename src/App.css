@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 :root {
     touch-action: pan-x pan-y;
     height: 100% 
@@ -7,18 +8,25 @@ html {
     user-zoom: none;
 }
 body {
+    font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     background-color: black;
     color: white;
     touch-action: manipulation;
 }
 ::-webkit-scrollbar {
     opacity: 0;
+    display: none;
 }
 .Header {
+    margin: 0vh 3vh;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     z-index: 1;
+    align-items: center;
+}
+.Header i {
+    font-size: larger;
 }
 .Header div {
     display: flex;
@@ -81,24 +89,30 @@ body {
 }
 .movieCard img {
     border-radius: 1vh;
-    width: 35vw;
+    width: 20vh;
 }
 .movieCard {
     margin: 0vh 1vh;
 }
-.explore {
+.explore div {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     margin: 2vh;
 }
-.explore a {
+.explore div a {
     flex: 0 0 50%;
     box-sizing: border-box;
     width: -moz-fit-content;
     text-align: center;
-    margin: 1vh 0vh;
+    margin: 2vh 0vh;
+}
+.explore {
+    text-align: center;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
 }
 .loadMore {
     background: gray;
@@ -108,16 +122,16 @@ body {
     padding: 1vh;
     border-radius: 1vh;
     flex: 1;
-    margin: 1vh;
+    margin: 0vh 5vh;
 }
 .backdrop {
     top: 0;
     position: fixed;
     z-index: -1;
-    opacity: 0.5;
+    opacity: 0.7;
     mask-image: linear-gradient(180deg, #ffffff 60%, #0000 100%);
     width: -webkit-fill-available;
-    filter: blur(2px);
+    filter: blur(1px);
     transform: scale(1.1);
 }
 .MovieInfos img {
@@ -167,6 +181,7 @@ body {
     width: 100%;
     height: 100%;
     opacity: 0.3;
+    animation: idleAnimation 10s infinite linear;
     filter: blur(20px);
 }
 .NavBar {
@@ -368,16 +383,43 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     z-index: -1;
-    mask-image: linear-gradient(360deg, #fff 0%, #0000 100%);
-    transform: scale(2);
+    animation: idleAnimation 10s infinite linear;
+}
+@keyframes idleAnimation {
+    0% {
+        filter: blur(3vh);
+        transform: scale(1.5) rotate(0deg);
+    }
+    25% {
+        filter: blur(4vh);
+        transform: scale(1.6) rotate(15deg);
+    }
+    50% {
+        filter: blur(5vh);
+        transform: scale(1.7) rotate(30deg);
+    }
+    75% {
+        filter: blur(4vh);
+        transform: scale(1.6) rotate(15deg);
+    }
+    100% {
+        filter: blur(3vh);
+        transform: scale(1.5) rotate(0deg);
+    }
 }
 .MainBackdrop img {
     width: 100%;
-    filter: blur(2vh);
     opacity: 0.4;
-    transform: scale(2);
+    transition: opacity 0.5s ease;
 }
+
+.MainBackdrop:hover img {
+    opacity: 0.6;
+}
+
 .Player iframe {
     border-radius: 1vh;
     border: none;

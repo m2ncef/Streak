@@ -13,6 +13,7 @@ export default function Movie(){
     const [epCount, setepCount] = useState(1)
     const [sCount, setsCount] = useState(1)
     const [epCard, setEpCard] = useState([])
+    const [player, setPlayer] = useState(false)
     const params = useParams()
     function saveToLibrary(data){
         document.querySelector(".ListButton").classList.add("buttonDisabled")
@@ -29,6 +30,7 @@ export default function Movie(){
             document.querySelector(".Player").style.display = "none"
         })
         document.querySelectorAll(".EPCard").forEach(card => card.onclick = function () {
+            setPlayer(true)
             var epNumber = card.querySelector('p').textContent.replace(/\D/g, '')
             setepCount(epNumber)
         });
@@ -133,20 +135,23 @@ export default function Movie(){
                     <h3>Recommendations</h3>
                     <section className="recom">
                     {recom.map((m)=>{
-                        return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
+                        if(!m.img.includes('null')){
+                            return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
+                        }
                     })}
                     </section>
                     <h3>Similar</h3>
                     <section className="recom">
                     {similar.map((m)=>{
-                        return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
+                        if(!m.img.includes('null')){
+                            return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
+                        }
                     })}
                     </section>
                 </div>
                 <div className="Player">
                     <div className="close"><i class="fa fa-times" aria-hidden="true"></i></div>
-                    <ShowScraper id={params.id} s={sCount} e={epCount}></ShowScraper>
-                    <div style={{zIndex:'-1', margin:'0vh 5vh', position:'fixed'}}>Fetching Data...</div>
+                    {player && (<ShowScraper id={params.id} s={sCount} e={epCount}/>)}
                 </div>
             </div>
             <Footer/>
