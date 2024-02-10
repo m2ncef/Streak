@@ -539,5 +539,15 @@ a {
     background-color: #151515;
     flex-direction: column;
     position: relative;
-    top: 7vh;
+    margin-top: 4vh;
+}
+.settingsList {
+    margin: 1vh 3vh;
+}
+.settingsList h4 {
+    background-color: #151515;
+    border-radius: 1.3vh;
+    padding: 1vh;
+    font-weight: 300;
+    padding-left: 3vh;
 }

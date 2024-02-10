@@ -2,6 +2,9 @@ import { EmojiButton } from '@joeattardi/emoji-button';
 import { useEffect } from 'react';
 import Footer from '../Components/Footer';
 import { useNavigate } from 'react-router-dom';
+import toastify from 'toastify-js';
+import "toastify-js/src/toastify.css"
+
 export default () => {
     var navigate = useNavigate()
     function startWatching () {
@@ -12,10 +15,36 @@ export default () => {
             setTimeout(() => {
                 navigate('/home')
             }, 500);
-        if(!localStorage.getItem("UserEmoji")){
+        } else if(!localStorage.getItem("UserEmoji")){
+            toastify({
+                text: "Select Your Emoji.",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                stopOnFocus: true,
+                style: {
+                  background: "white",
+                  color:'black',
+                  borderRadius: '1vh'
+                },
+                onClick: function(){}
+              }).showToast();
             document.querySelector(".User h1").style.border = "1px solid red"
         }
-        } else {
+        else {
+            toastify({
+                text: "Enter a 4 digits pin for your profile.",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                stopOnFocus: true,
+                style: {
+                  background: "white",
+                  color:'black',
+                  borderRadius: '1vh'
+                },
+                onClick: function(){}
+              }).showToast();
             document.querySelector(".User input").style.border = '1px solid red'
         }
     }
@@ -28,6 +57,19 @@ export default () => {
             }, 500);
         } else {
             document.querySelector(".User input").style.border = '1px solid red'
+            toastify({
+                text: "Incorrect PIN, Try again.",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                stopOnFocus: true,
+                style: {
+                  background: "white",
+                  color:'black',
+                  borderRadius: '1vh'
+                },
+                onClick: function(){}
+              }).showToast();
         }
     }
     useEffect(()=>{
@@ -49,7 +91,7 @@ export default () => {
                 <div className='User'>
                     <p style={{marginBottom:'5vh'}}>Create Your Watching Profile</p>
                     <h1 className='trigger'>🧑🏻‍🦱</h1>
-                    <input type='password' maxLength={4} placeholder='4 Digits' id='pinCode'></input>
+                    <input type='password' maxLength={4} placeholder='4 Digits Code' id='pinCode'></input>
                     <button onClick={()=>startWatching()}>Start Watching</button>
                 </div>
                 <Footer style={{position:'fixed', bottom:0}}/>
