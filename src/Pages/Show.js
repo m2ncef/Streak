@@ -52,7 +52,8 @@ export default function Movie(){
             setsCount(document.querySelector("#seasonSelector").value.replace(/\D/g, ""))
             EPS()
         })
-        document.querySelector(".Loader").style.display = "flex"
+        document.querySelector(".Loader").style.opacity = '1'
+        document.querySelector(".Loader").style.zIndex = '999999'
         const fetchData = async () =>{
             const res = await fetch(`https://api.themoviedb.org/3/tv/${params.id}?api_key=84120436235fe71398e95a662f44db8b`)
             const data = await res.json()

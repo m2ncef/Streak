@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 import MovieCard from '../Components/MovieCard'
 import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
+import { useNavigate } from "react-router-dom";
 export default function Home(){
+    let navigate = useNavigate()
+    useEffect(()=>{
+        if(sessionStorage.getItem("L") || !localStorage.getItem("UserPIN")){
+            navigate('/')
+        }
+    })
     const [link, setLink] = useState(null)
     const [latest, setLatest] = useState([])
     const [trending, setTrending] = useState([])

@@ -29,7 +29,6 @@ export default (props) => {
                     };
                     const flixhqStream = await providers.runAll({
                         media: media,
-                        sourceOrder: ['flixhq']
                     });
                     setStreamLink(flixhqStream.stream.playlist);
                     setCaptions(flixhqStream.stream.captions);
@@ -38,7 +37,6 @@ export default (props) => {
                 scrape();
             })
     }, [props.id])
-
     return (
         <>
             {(!loading && streamLink) ? ( 

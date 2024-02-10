@@ -9,7 +9,6 @@ export default () => {
             fetch(`https://api.themoviedb.org/3/${id}?api_key=84120436235fe71398e95a662f44db8b`)
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data)
                     if(id.includes('movie')){
                         const row = `
                         <a href=${id}>

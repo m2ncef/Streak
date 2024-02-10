@@ -5,8 +5,9 @@ export default () => {
     useEffect(()=>{
         window.location.href = "#"
         setTimeout(function(){
-            document.querySelector(".Loader").style.display = 'none'
-        }, 2000)
+            document.querySelector(".Loader").style.opacity = '0'
+            document.querySelector(".Loader").style.zIndex = '-1'
+        }, 3500)
     })
     return (
         <div className={`Loader`}>
