@@ -13,7 +13,7 @@ export default () => {
                 navigate('/home')
             }, 500);
         if(!localStorage.getItem("UserEmoji")){
-            document.querySelector(".trigger").style.border = "1px solid red"
+            document.querySelector(".User h1").style.border = "1px solid red"
         }
         } else {
             document.querySelector(".User input").style.border = '1px solid red'
