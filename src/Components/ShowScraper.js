@@ -40,7 +40,7 @@ export default (props) => {
             .then(data => {
                 setThumbnail(`https://image.tmdb.org/t/p/w500${data.backdrop_path}`);
                 async function scrape() {
-                    const proxyUrl = 'https://proxy.f53.dev/';
+                    const proxyUrl = 'https://streak-api.netlify.app/';
                     const providers = makeProviders({
                         fetcher: makeStandardFetcher(fetch),
                         proxiedFetcher: makeSimpleProxyFetcher(proxyUrl, fetch),
@@ -60,11 +60,23 @@ export default (props) => {
                             tmdbId: await episodeID()
                         }
                     };
-                    const flixhqStream = await providers.runAll({
+                    const output = await providers.runAll({
                         media: media,
+                        sourceOrder: ['flixhq']
                     });
-                    setStreamLink(flixhqStream.stream.playlist);
-                    setCaptions(flixhqStream.stream.captions);
+                    setStreamLink(output.stream.playlist);
+                    if (!output.stream.playlist) {
+                        if (output.stream.qualities && output.stream.qualities["1080"] && output.stream.qualities["1080"].url) {
+                            setStreamLink(output.stream.qualities["1080"].url);
+                        } else if (output.stream.qualities && output.stream.qualities["720"] && output.stream.qualities["720"].url) {
+                            setStreamLink(output.stream.qualities["720"].url);
+                        } else if (output.stream.qualities && output.stream.qualities["420"] && output.stream.qualities["420"].url) {
+                            setStreamLink(output.stream.qualities["420"].url);
+                        } else if (output.stream.qualities && output.stream.qualities["360"] && output.stream.qualities["360"].url) {
+                            setStreamLink(output.stream.qualities["360"].url);
+                        }
+                    }
+                    setCaptions(output.stream.captions);
                     setLoading(false);
                 }
                 scrape();

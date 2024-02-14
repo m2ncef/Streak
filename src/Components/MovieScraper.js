@@ -1,4 +1,4 @@
-import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets } from '@movie-web/providers'
+import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 
@@ -15,10 +15,11 @@ export default (props) => {
             .then(data => {
                 setThumbnail(`https://image.tmdb.org/t/p/w500${data.backdrop_path}`);
                 async function scrape() {
-                    const proxyUrl = 'https://proxy.f53.dev/';
+                    const proxyUrl = 'https://streak-api.netlify.app/';
                     const providers = makeProviders({
                         fetcher: makeStandardFetcher(fetch),
-                        target: targets.ANY,
+                        proxiedFetcher: makeSimpleProxyFetcher(proxyUrl, fetch),
+                        target: targets.BROWSER,
                       })
                     const media = {
                         type: 'movie',
@@ -26,15 +27,28 @@ export default (props) => {
                         releaseYear: data.release_date.substring(0, 4),
                         tmdbId: props.id
                     };
-                    const flixhqStream = await providers.runAll({
+                    const output = await providers.runAll({
                         media: media,
+                        sourceOrder: ['flixhq']
                     });
-                    setStreamLink(flixhqStream.stream.playlist);
-                    setCaptions(flixhqStream.stream.captions);
+                    console.log(output)
+                    setStreamLink(output.stream.playlist);
+                    if (!output.stream.playlist) {
+                        if (output.stream.qualities && output.stream.qualities["1080"] && output.stream.qualities["1080"].url) {
+                            setStreamLink(output.stream.qualities["1080"].url);
+                        } else if (output.stream.qualities && output.stream.qualities["720"] && output.stream.qualities["720"].url) {
+                            setStreamLink(output.stream.qualities["720"].url);
+                        } else if (output.stream.qualities && output.stream.qualities["420"] && output.stream.qualities["420"].url) {
+                            setStreamLink(output.stream.qualities["420"].url);
+                        } else if (output.stream.qualities && output.stream.qualities["360"] && output.stream.qualities["360"].url) {
+                            setStreamLink(output.stream.qualities["360"].url);
+                        }
+                    }                    
+                    setCaptions(output.stream.captions);
                     setLoading(false);
-                }
-                scrape();
-            })
+            }
+            scrape();
+        })
     }, [props.id])
     return (
         <>
