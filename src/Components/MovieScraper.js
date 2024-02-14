@@ -7,7 +7,6 @@ export default (props) => {
     const [captions, setCaptions] = useState([]);
     const [thumbnail, setThumbnail] = useState("");
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         setLoading(true);
         fetch(`https://api.themoviedb.org/3/movie/${props.id}?api_key=84120436235fe71398e95a662f44db8b`)
@@ -31,7 +30,6 @@ export default (props) => {
                         media: media,
                         sourceOrder: ['flixhq']
                     });
-                    console.log(output)
                     setStreamLink(output.stream.playlist);
                     if (!output.stream.playlist) {
                         if (output.stream.qualities && output.stream.qualities["1080"] && output.stream.qualities["1080"].url) {

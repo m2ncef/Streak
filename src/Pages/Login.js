@@ -9,7 +9,8 @@ export default () => {
     var navigate = useNavigate()
     function startWatching () {
         if(document.querySelector(".User input").value.length==4 && localStorage.getItem("UserEmoji")){
-            document.querySelector(".User input").style.border = '1px solid green'
+            document.querySelector(".User h1").style.border = "1px solid green"
+            document.querySelector(".User input").style.border = "1px solid green"
             localStorage.setItem("UserPIN", document.querySelector(".User input").value)
             sessionStorage.setItem("L", true)
             setTimeout(() => {
@@ -51,6 +52,7 @@ export default () => {
     function login(){
         if((document.querySelector(".User input").value==localStorage.getItem("UserPIN")) && localStorage.getItem("UserEmoji")){
             document.querySelector(".User input").style.border = '1px solid green'
+            document.querySelector(".User h1").style.border = "1px solid green"
             sessionStorage.clear()
             setTimeout(() => {
                 navigate('/home')
@@ -99,6 +101,13 @@ export default () => {
         )
     }
     else {
+        useEffect(()=>{
+            document.querySelector("#createNewProfile").addEventListener('click', function(){
+                localStorage.clear()
+                sessionStorage.clear()
+                window.location.reload()
+            })
+        })
         return(
             <div className='loginContainer'>
                 <div className='User'>
@@ -106,6 +115,7 @@ export default () => {
                     <h1>{localStorage.getItem("UserEmoji")}</h1>
                     <input type='password' maxLength={4} placeholder='Your PIN' id='pinCode'></input>
                     <button onClick={()=>login()}>Start Watching</button>
+                    <p id='createNewProfile'>Forgot PIN?</p>
                 </div>
                 <Footer style={{position:'fixed', bottom:0}}/>
             </div>

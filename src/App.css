@@ -551,3 +551,7 @@ a {
     font-weight: 300;
     padding-left: 3vh;
 }
+#createNewProfile {
+    font-size: small;
+    color: red;
+}
