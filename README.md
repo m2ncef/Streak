@@ -11,10 +11,10 @@ Curious to see it in action? Check out our live demo [here](https://streaak.netl
 
 ### 1. Using TMDB API
    TheMovieDB API stands out for its comprehensive coverage of desired TV shows, offering a wealth of information that extends beyond basic details. Furthermore, its consistent updates ensure users have access to the latest news, movies, shows, and emerging trends.
-### 2. Using movie-web.app API
+### 2. Using [movie-web.app](movie-web.app) API
    Get direct streaming links (.m3u8)
 ### 3. ZERO Ads
-   NO ADS, The movies/shows are displayed in a `<video>` tag ! no annoying embeded iframes, popups, ads and back-scripts.
+   NO ADS, The movies/shows are displayed in a `<video>` tag ! no annoying embeded iframes, popups, ads and back-scripts. thanks to [movie-web.app](movie-web.app)'s providers library
 
 ## Getting Started 🚀
 
