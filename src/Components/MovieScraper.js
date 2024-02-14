@@ -18,9 +18,8 @@ export default (props) => {
                     const proxyUrl = 'https://proxy.f53.dev/';
                     const providers = makeProviders({
                         fetcher: makeStandardFetcher(fetch),
-                        proxiedFetcher: makeSimpleProxyFetcher(proxyUrl, fetch),
-                        target: targets.BROWSER,
-                    });
+                        target: targets.ANY,
+                      })
                     const media = {
                         type: 'movie',
                         title: data.title,
