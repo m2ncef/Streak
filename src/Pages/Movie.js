@@ -73,6 +73,10 @@ export default function Movie(){
             }
         }
         fetchData()
+        setTimeout(function(){
+            document.querySelector(".Loader").style.opacity = '0'
+            document.querySelector(".Loader").style.zIndex = '-1'
+        }, 2000)
         document.querySelector(".genres").innerHTML = ""
     }, [params.id])
     return(

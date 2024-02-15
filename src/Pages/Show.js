@@ -47,6 +47,10 @@ export default function Movie(){
                 })
                 setEpCard(EPs)
             }
+            setTimeout(function(){
+                document.querySelector(".Loader").style.opacity = '0'
+                document.querySelector(".Loader").style.zIndex = '-1'
+            }, 1500)
         }
         document.querySelector("#seasonSelector").addEventListener('change', function(){
             setsCount(document.querySelector("#seasonSelector").value.replace(/\D/g, ""))
