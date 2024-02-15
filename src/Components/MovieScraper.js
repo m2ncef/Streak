@@ -1,7 +1,7 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
-import Plyr from "plyr-react"
-import "plyr-react/plyr.css"
+import ShakaPlayer from 'shaka-player-react';
+import 'shaka-player-react/dist/controls.css';
 
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
@@ -50,25 +50,7 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? ( 
-                <Plyr
-                    source={{
-                        type: 'video',
-                        sources: [{
-                            src: streamLink
-                        }],
-                        playsinline: true,
-                        autoplay: true,
-                        fullscreen: { enabled: true, fallback: true, iosNative: false, container: null },
-                        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-                        poster: thumbnail,
-                        tracks: captions.map(caption=>({
-                            kind: 'captions',
-                            src: caption.url,
-                            srclang: caption.language,
-                            label: caption.language,
-                        }))
-                    }}
-                />
+                <ShakaPlayer autoPlay src={streamLink} />
             ) : <div>Loading... sbr chwiya sahbi</div>}
         </>
     )
