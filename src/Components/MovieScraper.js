@@ -1,6 +1,7 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player';
+import Plyr from "plyr-react"
+import "plyr-react/plyr.css"
 
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
@@ -32,13 +33,11 @@ export default (props) => {
                     });
                     setStreamLink(output.stream.playlist);
                     if (!output.stream.playlist) {
-                        if (output.stream.qualities && output.stream.qualities["1080"] && output.stream.qualities["1080"].url) {
-                            setStreamLink(output.stream.qualities["1080"].url);
-                        } else if (output.stream.qualities && output.stream.qualities["720"] && output.stream.qualities["720"].url) {
+                        if (output.stream.qualities && output.stream.qualities["720"] && output.stream.qualities["720"].url) {
                             setStreamLink(output.stream.qualities["720"].url);
                         } else if (output.stream.qualities && output.stream.qualities["420"] && output.stream.qualities["420"].url) {
                             setStreamLink(output.stream.qualities["420"].url);
-                        } else if (output.stream.qualities && output.stream.qualities["360"] && output.stream.qualities["360"].url) {
+                        } else {
                             setStreamLink(output.stream.qualities["360"].url);
                         }
                     }                    
@@ -51,28 +50,23 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? ( 
-                <ReactPlayer
-                    style={{ display: 'flex', margin: '0 auto' }}
-                    url={streamLink}
-                    controls={true}
-                    playing={false}
-                    width={'90%'}
-                    config={{
-                        file: {
-                            attributes: {
-                                allowfullscreen: 'true',
-                                poster: thumbnail,
-                                crossOrigin: 'true',
-                                preload: 'none',
-                                playsinline: true
-                            },
-                            tracks: captions.map(caption => ({
-                                kind: 'subtitles',
-                                src: caption.url,
-                                srcLang: caption.language,
-                                default: true
-                            }))
-                        }
+                <Plyr
+                    source={{
+                        type: 'video',
+                        sources: [{
+                            src: streamLink
+                        }],
+                        playsinline: true,
+                        autoplay: true,
+                        fullscreen: { enabled: true, fallback: true, iosNative: false, container: null },
+                        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+                        poster: thumbnail,
+                        tracks: captions.map(caption=>({
+                            kind: 'captions',
+                            src: caption.url,
+                            srclang: caption.language,
+                            label: caption.language,
+                        }))
                     }}
                 />
             ) : <div>Loading... sbr chwiya sahbi</div>}

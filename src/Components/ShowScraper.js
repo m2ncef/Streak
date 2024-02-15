@@ -1,7 +1,7 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player';
-
+import Plyr from "plyr-react"
+import "plyr-react/plyr.css"
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
     const [thumbnail, setThumbnail] = useState("");
@@ -32,13 +32,12 @@ export default (props) => {
         async function episodeID() {
             const url = `https://api.themoviedb.org/3/tv/${TV_ID}/season/${SEASON_NUMBER}/episode/${EPISODE_NUMBER}?api_key=${API_KEY}`;
             const episodeData = await fetchTMDBData(url);
-            setThumbnail(episodeData.still_path);
+            setThumbnail(`https://image.tmdb.org/t/p/w500${episodeData.still_path}`);
             return episodeData.id;
         }
         fetch(`https://api.themoviedb.org/3/tv/${props.id}?api_key=84120436235fe71398e95a662f44db8b`)
             .then(r => r.json())
             .then(data => {
-                setThumbnail(`https://image.tmdb.org/t/p/w500${data.backdrop_path}`);
                 async function scrape() {
                     const proxyUrl = 'https://streak-api.netlify.app/';
                     const providers = makeProviders({
@@ -65,6 +64,7 @@ export default (props) => {
                         sourceOrder: ['flixhq']
                     });
                     setStreamLink(output.stream.playlist);
+                    console.log(output.stream)
                     if (!output.stream.playlist) {
                         if (output.stream.qualities && output.stream.qualities["1080"] && output.stream.qualities["1080"].url) {
                             setStreamLink(output.stream.qualities["1080"].url);
@@ -86,28 +86,23 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? ( 
-                <ReactPlayer
-                    style={{ display: 'flex', margin: '0 auto' }}
-                    url={streamLink}
-                    controls={true}
-                    playing={false}
-                    width={'80%'}
-                    config={{
-                        file: {
-                            attributes: {
-                                allowfullscreen: 'true',
-                                poster: thumbnail,
-                                crossOrigin: 'true',
-                                preload: 'none',
-                                playsinline: true
-                            },
-                            tracks: captions.map(caption => ({
-                                kind: 'subtitles',
-                                src: caption.url,
-                                srcLang: caption.language,
-                                default: true
-                            }))
-                        }
+                <Plyr
+                    source={{
+                        type: 'video',
+                        sources: [{
+                            src: streamLink
+                        }],
+                        playsinline: true,
+                        autoplay: true,
+                        fullscreen: { enabled: true, fallback: true, iosNative: false, container: null },
+                        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+                        poster: thumbnail,
+                        tracks: captions.map(caption=>({
+                            kind: 'captions',
+                            src: caption.url,
+                            srclang: caption.language,
+                            label: caption.language,
+                        }))
                     }}
                 />
             ) : <div>Loading... sbr chwiya sahbi</div>}

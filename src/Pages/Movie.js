@@ -48,6 +48,10 @@ export default function Movie(){
             document.querySelector(".DateAndLangs").innerHTML =  `🌐 ${data.spoken_languages[0].english_name} • 📅 ${data.release_date}`
             document.querySelector(".desc").innerHTML = data.overview
             document.title = `Streak  | ${data.title}`
+            await setTimeout(function(){
+                document.querySelector(".Loader").style.opacity = '0'
+                document.querySelector(".Loader").style.zIndex = '-1'
+            }, 2000)
             for(const i in data.genres){
                 document.querySelector(".genres").innerHTML += `<span>${data.genres[i].name}</span>`
             }
@@ -73,10 +77,6 @@ export default function Movie(){
             }
         }
         fetchData()
-        setTimeout(function(){
-            document.querySelector(".Loader").style.opacity = '0'
-            document.querySelector(".Loader").style.zIndex = '-1'
-        }, 2000)
         document.querySelector(".genres").innerHTML = ""
     }, [params.id])
     return(

@@ -47,10 +47,6 @@ export default function Movie(){
                 })
                 setEpCard(EPs)
             }
-            setTimeout(function(){
-                document.querySelector(".Loader").style.opacity = '0'
-                document.querySelector(".Loader").style.zIndex = '-1'
-            }, 1500)
         }
         document.querySelector("#seasonSelector").addEventListener('change', function(){
             setsCount(document.querySelector("#seasonSelector").value.replace(/\D/g, ""))
@@ -80,6 +76,10 @@ export default function Movie(){
             document.querySelector(".DateAndLangs").innerHTML =  `🌐 ${data.spoken_languages[0].english_name} • 📅 ${data.first_air_date}`
             document.querySelector(".desc").innerHTML = data.overview
             document.title = `Streak  | ${data.name}`
+            await setTimeout(function(){
+                document.querySelector(".Loader").style.opacity = '0'
+                document.querySelector(".Loader").style.zIndex = '-1'
+            }, 2000)
             for(const i in data.genres){
                 document.querySelector(".genres").innerHTML += `<span>${data.genres[i].name}</span>`
             }

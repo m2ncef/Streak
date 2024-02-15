@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 :root {
     touch-action: pan-x pan-y;
-    height: 100% 
+    height: 100%;
+    --plyr-color-main: red
 }
 html {
     user-select: none;
@@ -554,4 +555,8 @@ a {
 #createNewProfile {
     font-size: small;
     color: red;
+}
+.plyr__menu__container [role=menu]{
+    overflow-y: scroll;
+    height: 20vh;
 }
