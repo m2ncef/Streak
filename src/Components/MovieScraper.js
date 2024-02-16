@@ -2,6 +2,7 @@ import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, No
 import { useEffect, useState } from 'react';
 import "video-react/dist/video-react.css";
 import { Player, ControlBar, ClosedCaptionButton, BigPlayButton } from 'video-react';
+import DownloadButton from './DownloadButton';
 
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
@@ -50,7 +51,7 @@ export default (props) => {
         <>
             {(!loading && streamLink) ? ( 
                 <Player
-                    crossOrigin="use-credentials"  
+                    crossOrigin='anonymous'
                     poster={thumbnail}
                     width={'80%'}
                     src={streamLink}
@@ -58,6 +59,7 @@ export default (props) => {
                     <BigPlayButton position="center" />
                     {captions.map(caption=> <track kind='captions' src={caption.url} label={caption.language}/>)}
                     <ControlBar autoHide={true}>
+                        {(streamLink.includes(".mp4")) && <DownloadButton/>}
                         <ClosedCaptionButton order={7} />
                     </ControlBar>
                 </Player>

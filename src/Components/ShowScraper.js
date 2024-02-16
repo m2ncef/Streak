@@ -87,6 +87,7 @@ export default (props) => {
         <>
             {(!loading && streamLink) ? (
                 <Player
+                    crossOrigin='anonymous'
                     poster={thumbnail}
                     width={'80%'}
                     src={streamLink}
@@ -94,6 +95,7 @@ export default (props) => {
                     <BigPlayButton position="center" />
                     {captions.map(caption=> <track kind='captions' src={caption.url} label={caption.language}/>)}
                     <ControlBar autoHide={true}>
+                        {(streamLink.includes(".mp4")) && <DownloadButton/>}
                         <ClosedCaptionButton order={7} />
                     </ControlBar>
                 </Player>

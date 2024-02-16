@@ -305,11 +305,11 @@ a {
     border-radius: 1vh;
     transition: all .3s;
 }
-.exploreTypes a:hover {
+.selected {
     position:relative;
-    background-color: gray;
-    color: #11111199;
-    box-shadow: 0px 0px 6px white;
+    background-color: gray !important;
+    color: #11111199 !important;
+    box-shadow: 0px 0px 6px white !important;
 }
 .EPCard {
     display: flex;
@@ -493,7 +493,7 @@ a {
     text-align: center;
     font-size: 2vh;
 }
-::placeholder {
+#pinCode::placeholder {
     text-align: center;
 }
 .User button {
