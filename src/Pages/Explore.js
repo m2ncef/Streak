@@ -23,11 +23,6 @@ export default function Explore () {
             setMovie(card)
         }
     }
-    const HandleSearch = () => {
-        var search = document.querySelector(".searchBar input").value
-        fetchSearch(search)
-        handleClick()
-    }
     useEffect(()=>{
         if(params.q == 'tv'){
             document.querySelector("#root > div.exploreTypes > a:nth-child(2)").classList.remove('selected')
@@ -36,6 +31,9 @@ export default function Explore () {
             document.querySelector("#root > div.exploreTypes > a:nth-child(2)").classList.add('selected')
             document.querySelector("#root > div.exploreTypes > a:nth-child(1)").classList.remove('selected')
         }
+        document.querySelector(".searchBar input").addEventListener('change', function(){
+            fetchSearch(document.querySelector(".searchBar input").value)
+        })
         async function fetchExplore(){
             const explore = await fetch(`https://api.themoviedb.org/3/discover/${params.q}?api_key=84120436235fe71398e95a662f44db8b&page=${pageCounter}?include_adult=false?sort_by=popularity.asc`)
             const exploreData = await explore.json()
@@ -61,8 +59,7 @@ export default function Explore () {
         {loader && <Loading time={2000}/>}
             <Nav/>
             <div className="searchBar">
-                <input type="text" placeholder="Type to search..."></input>
-                <button onClick={HandleSearch}>Search</button>
+                <input type="text" placeholder="Type to search..." onChange={(e)=>fetchSearch(e.target.value)}></input>
             </div>
             <div className="exploreTypes">
                 <Link to={'/explore/tv'} onClick={handleClick}>Shows</Link>

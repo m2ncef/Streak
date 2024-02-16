@@ -9,7 +9,7 @@ export default function Header(){
             <div>
                 <h1>Streak</h1>
             </div>
-            <Link to={'/explore/movie'}>
+            <Link to={'/explore/tv'}>
                 <i class="fa fa-search" aria-hidden="true"></i>
             </Link>
         </div>
