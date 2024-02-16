@@ -7,7 +7,7 @@ export default () => {
         setTimeout(function(){
             document.querySelector(".Loader").style.opacity = '0'
             document.querySelector(".Loader").style.zIndex = '-1'
-        }, 3500)
+        }, 3000)
     })
     return (
         <div className={`Loader`}>

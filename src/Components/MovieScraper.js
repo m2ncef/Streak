@@ -50,6 +50,7 @@ export default (props) => {
         <>
             {(!loading && streamLink) ? ( 
                 <Player
+                    crossOrigin="use-credentials"  
                     poster={thumbnail}
                     width={'80%'}
                     src={streamLink}

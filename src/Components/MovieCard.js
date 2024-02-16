@@ -6,9 +6,10 @@ export default function Card(props){
     }
     else {
         useEffect(()=>{
-            if (document.querySelector("#root > div:nth-child(5) > div:nth-child(2) > section:nth-child(6)") || document.querySelector("#root > div:nth-child(5) > div:nth-child(2) > section:nth-child(8)")) {
-                document.querySelector("#root > div:nth-child(5) > div:nth-child(2) > section:nth-child(6)").scrollTo(0, 0);
-                document.querySelector("#root > div:nth-child(5) > div:nth-child(2) > section:nth-child(8)").scrollTo(0, 0);
+            if (document.querySelector(".recom")) {
+                document.querySelectorAll(".recom").forEach(sct=>{
+                    sct.scrollTo(0, 0)
+                })
             }
         })
         return(
