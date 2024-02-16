@@ -1,7 +1,8 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
-import ShakaPlayer from 'shaka-player-react';
-import 'shaka-player-react/dist/controls.css';
+import "video-react/dist/video-react.css";
+import { Player, ControlBar, ClosedCaptionButton, BigPlayButton } from 'video-react';
+
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
     const [thumbnail, setThumbnail] = useState("");
@@ -61,7 +62,6 @@ export default (props) => {
                     };
                     const output = await providers.runAll({
                         media: media,
-                        sourceOrder: ['flixhq']
                     });
                     setStreamLink(output.stream.playlist);
                     console.log(output.stream)
@@ -86,7 +86,17 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? (
-                <ShakaPlayer autoPlay src={streamLink} />
+                <Player
+                    poster={thumbnail}
+                    width={'80%'}
+                    src={streamLink}
+                >
+                    <BigPlayButton position="center" />
+                    {captions.map(caption=> <track kind='captions' src={caption.url} label={caption.language}/>)}
+                    <ControlBar autoHide={true}>
+                        <ClosedCaptionButton order={7} />
+                    </ControlBar>
+                </Player>
             ) : <div>Loading... sbr chwiya sahbi</div>}
         </>
     );

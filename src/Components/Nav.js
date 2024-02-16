@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export default (props) => {
+export default () => {
     return(
         <div className={`NavBar`}>
             <Link style={{textDecoration:'none', color:'white', padding:"1vh", fontWeight:'600'}} to={'/home'}><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;</Link>
