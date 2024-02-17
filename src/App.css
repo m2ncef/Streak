@@ -49,6 +49,8 @@ a {
     top: 1vh;
     text-align: center;
     margin: 4vh 0vh;
+    display: flex;
+    place-content: center;
 }
 .MainMovie img {
     width: 35vh;
@@ -67,8 +69,11 @@ a {
 .MainMovie a {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 120vw;
     display: block;
+    background: black;
+    width: min-content;
+    border-radius: 1vh;
 }
 .Types {
     display: flex;
@@ -136,8 +141,8 @@ a {
     opacity: 0.7;
     mask-image: linear-gradient(180deg, #ffffff 60%, #0000 100%);
     width: -webkit-fill-available;
-    filter: blur(1vh);
     transform: scale(1.1);
+    filter: blur(2px);
 }
 .MovieInfos img {
     width: 17vh;
@@ -426,7 +431,6 @@ a {
 }
 .MainMovieInfos {
     position: absolute;
-    bottom: 5px;
     display: flex;
     flex-direction: column;
     font-size: small;
@@ -434,9 +438,9 @@ a {
     align-items: center;
     left: 0;
     right: 0;
+    bottom: 10px;
     color: white;
     margin: 0vh 7vh;
-    bottom: -3vh;
     gap: 0vh;
 }
 .close {
@@ -584,4 +588,18 @@ a {
     border-bottom-right-radius: 1vh;
     border-bottom-left-radius: 1vh;
     backdrop-filter: blur(5px);
+}
+@media (min-width:961px)  {
+    .MainBackdrop {
+        animation: none;
+        filter: blur(5vh);
+        scale: 1.2;
+        opacity: 0.8;
+    }
+    .MovieBackground {
+        animation: none;
+    }
+    .backdrop {
+        filter: blur(2vh);
+    }
 }
