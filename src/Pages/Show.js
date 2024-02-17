@@ -49,6 +49,7 @@ export default function Movie(){
             }
         }
         document.querySelector("#seasonSelector").addEventListener('change', function(){
+            document.querySelector(".EPslider").scrollTo(0, 0)
             setsCount(document.querySelector("#seasonSelector").value.replace(/\D/g, ""))
             EPS()
         })
