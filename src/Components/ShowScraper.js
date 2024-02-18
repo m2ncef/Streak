@@ -1,7 +1,7 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
 import "video-react/dist/video-react.css";
-import { Player, ControlBar, ClosedCaptionButton, BigPlayButton } from 'video-react';
+import { Player, ControlBar, ClosedCaptionButton, BigPlayButton, LoadingSpinner, PlayToggle } from 'video-react';
 import DownloadButton from './DownloadButton';
 
 export default (props) => {
@@ -88,18 +88,21 @@ export default (props) => {
         <>
             {(!loading && streamLink) ? (
                 <Player
+                    autoPlay='true'
+                    preload='auto'
                     poster={thumbnail}
                     width={'80%'}
                     src={streamLink}
                 >
+                    <LoadingSpinner />
                     <BigPlayButton position="center" />
                     {captions.map(caption=> <track kind='captions' src={caption.url} label={caption.language}/>)}
-                    <ControlBar autoHide={true}>
-                        <ClosedCaptionButton order={7} />
+                    <ControlBar autoHide={true} autoHideTime={1000}>
                         {(streamLink.includes(".mp4")) && <DownloadButton/>}
+                        <ClosedCaptionButton order={7} />
                     </ControlBar>
                 </Player>
-            ) : <div>Loading... sbr chwiya sahbi</div>}
-        </>
+            ) : <div>sbr chwiya sahbi...</div>}
+            </>
     );
 };

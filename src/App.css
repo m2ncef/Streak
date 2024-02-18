@@ -69,7 +69,7 @@ a {
 .MainMovie a {
     position: relative;
     width: 100%;
-    height: 120vw;
+    height: auto;
     display: block;
     background: black;
     width: min-content;
@@ -81,10 +81,11 @@ a {
     justify-content: space-evenly;
 }
 .Types h1 {
-    background: #7b7b7b10;
+    background: #00000022;
     border-radius: 1.5vh;
-    padding: 1vh 3vh;
+    padding: 1vh 2vh;
     font-size: medium;
+    backdrop-filter: blur(1vh);
 }
 .Types a {
     text-decoration: none;
@@ -166,13 +167,14 @@ a {
 }
 .genres span {
     padding: 1vh 1.4vh;
-    background: #151515;
+    background: #1515159e;
     margin-right: 1vh;
     border-radius: 1.5vh;
     color: dimgray;
     font-size: x-small;
     text-decoration: none;
     white-space: nowrap;
+    backdrop-filter: blur(1vh);
 }
 .MovieInfos div a {
     box-shadow: 0vh 0vh 3vw black;
@@ -205,6 +207,7 @@ a {
     z-index: 10;
 }
 .Player {
+    touch-action: none;
     z-index: 9999;
     position: fixed;
     display: none;
@@ -311,10 +314,10 @@ a {
     transition: all .3s;
 }
 .selected {
-    position:relative;
-    background-color: gray !important;
-    color: #11111199 !important;
-    box-shadow: 0px 0px 6px white !important;
+    position: relative;
+    background-color: #a7a7a73b !important;
+    color: #dddddd99 !important;
+    box-shadow: 0px 0px 6px #80808066 !important;
 }
 .EPCard {
     display: flex;
@@ -359,12 +362,15 @@ a {
     align-items: center;
     gap: 1vh;
     background-color: #151515;
+    backdrop-filter: blur(2vh);
     border-radius: 2vh;
+    position: relative;
 }
 .ListCard img {
     padding: 1vh;
-    width: 10vh;
+    width: 15vh;
     border-radius: 2vh;
+    margin: 1vh;
 }
 .ListCard p {
     width: fit-content;
@@ -402,15 +408,15 @@ a {
 }
 @keyframes idleAnimation {
     0% {
-        filter: blur(2vh) hue-rotate(0deg);
+        filter: blur(2vh) hue-rotate(0deg) invert(0%);
         transform: scale(2);
     }
     50% {
-        filter: blur(3vh) hue-rotate(80deg);
+        filter: blur(3vh) hue-rotate(10deg) invert(100%);
         transform: scale(3);
     }
     100% {
-        filter: blur(2vh) hue-rotate(0deg);
+        filter: blur(2vh) hue-rotate(0deg) invert(0%);
         transform: scale(2);
     }
 }
@@ -588,6 +594,18 @@ a {
     border-bottom-right-radius: 1vh;
     border-bottom-left-radius: 1vh;
     backdrop-filter: blur(5px);
+}
+.background-image {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: -2;
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(3px);
+    border-radius: 2vh;
+    opacity: 0.2;
 }
 @media (min-width:961px)  {
     .MainBackdrop {

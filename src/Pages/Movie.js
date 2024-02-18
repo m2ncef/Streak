@@ -28,6 +28,9 @@ export default function Movie(){
     useEffect(()=>{
         document.querySelector(".close").addEventListener('click', function(){
             document.querySelector(".Player").style.display = "none"
+            if(document.querySelector(".Player video")){
+                document.querySelector(".Player video").pause()
+            }
         })
         document.querySelector(".Loader").style.opacity = '1'
         document.querySelector(".Loader").style.zIndex = '999999'

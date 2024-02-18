@@ -1,8 +1,15 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
-import "video-react/dist/video-react.css";
-import { Player, ControlBar, ClosedCaptionButton, BigPlayButton } from 'video-react';
+
+import { Player, ControlBar, ClosedCaptionButton, BigPlayButton, LoadingSpinner, PlayToggle } from 'video-react';
 import DownloadButton from './DownloadButton';
+
+// import ReactPlayer from 'react-player';
+// import "video-react/dist/video-react.css";
+
+// import { Player } from "react-tuby";
+// import "react-tuby/css/main.css";
+// import ReactHlsPlayer from 'react-hls-player';
 
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
@@ -50,19 +57,50 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? ( 
+                // <ReactPlayer
+                //     url={streamLink}
+                //     controls
+                //     width="80%"
+                //     height="30%"
+                //     config={{
+                //     file: {
+                //         tracks: captions.map(subtitle => ({
+                //         kind: 'subtitles',
+                //         src: subtitle.url,
+                //         srcLang: subtitle.language,
+                //         })),
+                //     },
+                //     }}
+                // />
+
                 <Player
+                    autoPlay='true'
+                    preload='auto'
                     poster={thumbnail}
                     width={'80%'}
                     src={streamLink}
                 >
+                    <LoadingSpinner />
                     <BigPlayButton position="center" />
                     {captions.map(caption=> <track kind='captions' src={caption.url} label={caption.language}/>)}
-                    <ControlBar autoHide={true}>
+                    <ControlBar autoHide={true} autoHideTime={1000}>
                         {(streamLink.includes(".mp4")) && <DownloadButton/>}
                         <ClosedCaptionButton order={7} />
                     </ControlBar>
                 </Player>
-            ) : <div>Loading... sbr chwiya sahbi</div>}
+
+                // <Player
+                //     src={streamLink}
+                //     subtitles={captions.map((caption) => ({
+                //         url: caption.url,
+                //         lang: caption.language,
+                //         language: caption.language
+                //     }))}
+                //     poster={thumbnail}
+                // >
+                //     {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} />}
+                // </Player>
+            ) : <div>sbr chwiya sahbi...</div>}
         </>
     )
 }

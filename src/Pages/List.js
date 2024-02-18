@@ -13,10 +13,12 @@ export default () => {
                         const row = `
                         <a href=${id}>
                             <div class="ListCard">
-                                <img src='https://image.tmdb.org/t/p/w500${data.poster_path}'></img>
+                            <div class="background-image" style="background-image: url(https://image.tmdb.org/t/p/w500${data.backdrop_path});"></div>
+                            <img src='https://image.tmdb.org/t/p/w500${data.poster_path}'></img>
                                 <div>
                                     <p>Movie</p>
                                     <h3>${data.title}</h3>
+                                    <h5>⭐️ ${data.vote_average}/10</h5>
                                     <h5>${data.release_date}</h5>
                                 </div>
                             </div>
@@ -27,10 +29,12 @@ export default () => {
                         const row = `
                         <a href=${id}>
                             <div class="ListCard">
-                                <img src='https://image.tmdb.org/t/p/w500${data.poster_path}'></img>
+                            <div class="background-image" style="background-image: url(https://image.tmdb.org/t/p/w500${data.backdrop_path});"></div>
+                            <img src='https://image.tmdb.org/t/p/w500${data.poster_path}'></img>
                                 <div>
                                     <p>TV Show</p>
                                     <h3>${data.name}</h3>
+                                    <h5>⭐️ ${data.vote_average}/10</h5>
                                     <h5>${data.first_air_date}</h5>
                                 </div>
                             </div>
