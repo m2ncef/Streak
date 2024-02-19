@@ -3,9 +3,11 @@
 
 Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https://github.com/m2ncef) using ReactJS 🚀
 
-## Demo 🌐
+# Demo 🌐
 
 Curious to see it in action? Check out our live demo [here](https://streaak.netlify.app)!
+
+# Made for educational purposes only
 
 ## Features 🌈
 

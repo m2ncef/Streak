@@ -32,7 +32,7 @@ export default () => {
                 <br/>
                 <div style={{color:'gray', margin:'2vh 0vh -2vh 0vh', fontSize:'small', textAlign:'center'}}>
                     <p>Last Update:</p>
-                    <p>{lastMessage} at {lastUpdate}</p>
+                    <p style={{lineHeight:"3vh"}}>{lastMessage} at {lastUpdate}</p>
                 </div>
             </div>
             <div className="infosContainer">
