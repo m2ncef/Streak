@@ -2,7 +2,8 @@
 :root {
     touch-action: pan-x pan-y;
     height: 100%;
-    --plyr-color-main: red
+    --plyr-color-main: red;
+    --art-theme: orange;
 }
 html {
     user-select: none;
@@ -247,6 +248,11 @@ a {
 }
 .Loader img {
     width: 10vh;
+}
+.infosContainer p {
+    margin: 2vh;
+    font-size: small;
+    color: darkgray;
 }
 .searchBar {
     display: flex;
@@ -556,16 +562,24 @@ a {
     flex-direction: column;
     position: relative;
     margin-top: 4vh;
+    padding: 1vh;
 }
 .settingsList {
     margin: 1vh 1.5vh;
 }
 .settingsList h4 {
     background-color: #151515;
-    border-radius: 1.3vh;
+    border-radius: 1vh;
     padding: 1vh;
     font-weight: 300;
-    padding-left: 3vh;
+    padding-left: 2vh;
+}
+.infosContainer a {
+    background: #232323;
+    padding: 1vh;
+    margin: 1vh 2vh;
+    font-size: smaller;
+    border-radius: 1vh;
 }
 #createNewProfile {
     font-size: small;

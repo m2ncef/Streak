@@ -1,19 +1,33 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets } from '@movie-web/providers'
 import { useEffect, useState } from 'react';
 import "video-react/dist/video-react.css";
-import { Player, ControlBar, ClosedCaptionButton, BigPlayButton, LoadingSpinner, PlayToggle } from 'video-react';
-import DownloadButton from './DownloadButton';
+import Artplayer from './ArtPlayer';
+import Hls from 'hls.js';
 
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
     const [thumbnail, setThumbnail] = useState("");
     const [captions, setCaptions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isHls, setIsHls] = useState(false)
     const API_KEY = '84120436235fe71398e95a662f44db8b';
     const TV_ID = props.id;
     const SEASON_NUMBER = props.s;
     const EPISODE_NUMBER = props.e;
-
+    function playM3u8(video, url, art) {
+        if (Hls.isSupported()) {
+            if (art.hls) art.hls.destroy();
+            const hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(video);
+            art.hls = hls;
+            art.on('destroy', () => hls.destroy());
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = url;
+        } else {
+            art.notice.show = 'Unsupported playback format: m3u8';
+        }
+    }
     useEffect(() => {
         setLoading(true);
         async function fetchTMDBData(url) {
@@ -64,6 +78,7 @@ export default (props) => {
                     const output = await providers.runAll({
                         media: media,
                     });
+                    setIsHls(true)
                     setStreamLink(output.stream.playlist);
                     console.log(output.stream)
                     if (!output.stream.playlist) {
@@ -87,22 +102,43 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? (
-                <Player
-                    autoPlay='true'
-                    preload='auto'
-                    poster={thumbnail}
-                    width={'80%'}
-                    src={streamLink}
-                >
-                    <LoadingSpinner />
-                    <BigPlayButton position="center" />
-                    {captions.map(caption=> <track kind='captions' src={caption.url} label={caption.language}/>)}
-                    <ControlBar autoHide={true} autoHideTime={1000}>
-                        {(streamLink.includes(".mp4")) && <DownloadButton/>}
-                        <ClosedCaptionButton order={7} />
-                    </ControlBar>
-                </Player>
+                <Artplayer
+                    option={{
+                        url: (isHls && streamLink),
+                        fullscreen: true,
+                        poster: thumbnail,
+                        setting: true,
+                        playbackRate: true,
+                        autoplay: true,
+                        customType: {
+                            m3u8: playM3u8,
+                        },
+                        settings: [
+                            {
+                                html: 'Subtitles',
+                                selector: (captions == []) ? 'Not Available' : (captions.map(caption => ({ html: caption.language, url: caption.url }))),
+                                onSelect: function (item) {
+                                    this.subtitle.url = item.url;
+                                    this.subtitle.srcLang = item.language;
+                                    this.subtitle.language = item.language;
+                                    this.subtitle.kind = "subtitles"
+                                    return item.html;
+                                },
+                            }
+                        ],
+                        moreVideoAttr: {
+                            playsInline: true,
+                            src: (!isHls && streamLink),
+                            crossorigin: "anonymous",
+                        },
+                    }}
+                    style={{
+                        width: '40vh',
+                        height: '26vh',
+                        margin: '60px auto 0',
+                    }}
+                />
             ) : <div>sbr chwiya sahbi...</div>}
-            </>
+        </>
     );
 };

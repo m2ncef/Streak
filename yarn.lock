@@ -3213,6 +3213,13 @@ arraybuffer.prototype.slice@^1.0.2:
     is-array-buffer "^3.0.2"
     is-shared-array-buffer "^1.0.2"
 
+artplayer@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.npmjs.org/artplayer/-/artplayer-5.1.1.tgz"
+  integrity sha512-pZ2/lB+Oo3g0CVLqkFuB86bMBPMtZaABaq5e1LPKubYDBW46+mzin2wzdVmk3tvFyfQoVnb+MBFU7nJYvI3qNg==
+  dependencies:
+    option-validator "^2.0.6"
+
 asap@^2.0.3, asap@~2.0.6:
   version "2.0.6"
   resolved "https://registry.npmjs.org/asap/-/asap-2.0.6.tgz"
@@ -6377,10 +6384,10 @@ hls.js@^0.6.14:
   resolved "https://registry.npmjs.org/hls.js/-/hls.js-0.6.21.tgz"
   integrity sha512-3mjRB1y/FYJKaQ/4nVsAqRUWwddcDfSCCNpuNF4faL0Mpo66QH6DoXwImUKv8DlzzDEVEh9mku+hvIDOYgfYGw==
 
-hls.js@^1.1.5, hls.js@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.npmjs.org/hls.js/-/hls.js-1.5.3.tgz"
-  integrity sha512-gonnYpZ5bxuVdwpcbzfylUlNZ8917LjACUjpWXiaeo8zPAIDfPcMZjEQPy6CeeRSJbcg1P+aVqwxrXr2J+SeUg==
+hls.js@^1.1.5, hls.js@^1.5.6:
+  version "1.5.6"
+  resolved "https://registry.npmjs.org/hls.js/-/hls.js-1.5.6.tgz"
+  integrity sha512-rmlaIEfLuSwqRtYLeTk30ebYli5qNK2urdkEcqYoBezRpV+MFHhZnMX77lHWW+EMjNlwr2sx2apfqq54E3yXnA==
 
 hls.js@0.7.11:
   version "0.7.11"
@@ -7956,7 +7963,7 @@ keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
-kind-of@^6.0.2:
+kind-of@^6.0.2, kind-of@^6.0.3:
   version "6.0.3"
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
@@ -8884,6 +8891,13 @@ opener@1:
   version "1.5.2"
   resolved "https://registry.npmjs.org/opener/-/opener-1.5.2.tgz"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
+
+option-validator@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.npmjs.org/option-validator/-/option-validator-2.0.6.tgz"
+  integrity sha512-tmZDan2LRIRQyhUGvkff68/O0R8UmF+Btmiiz0SmSw2ng3CfPZB9wJlIjHpe/MKUZqyIZkVIXCrwr1tIN+0Dzg==
+  dependencies:
+    kind-of "^6.0.3"
 
 optionator@^0.8.1:
   version "0.8.3"
