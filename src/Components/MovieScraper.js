@@ -100,8 +100,8 @@ export default (props) => {
                         },
                     }}
                     style={{
-                        width: '40vh',
-                        height: '26vh',
+                        width: '90vw',
+                        height: '40vw',
                         margin: '60px auto 0',
                     }}
                 />

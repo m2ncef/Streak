@@ -44,7 +44,7 @@ export default function Movie() {
                 document.querySelector(".backdrop").src = `https://image.tmdb.org/t/p/w500${data.backdrop_path}`
             }
             document.querySelector(".MovieInfos img").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
-            document.querySelector(".MovieInfos div h3").innerHTML = data.title
+            document.querySelector(".MovieInfos div h2").innerHTML = data.title
             document.querySelector(".MovieBackground").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
             document.querySelector(".MovieInfos div p").innerHTML = `<i>"${data.tagline}"</i>`
             document.querySelector(".rating").innerHTML = `⭐️ ${data.vote_average}/10 • 👥 ${data.popularity}`
@@ -93,8 +93,8 @@ export default function Movie() {
                     <div className="MovieInfos">
                         <img src=""></img>
                         <div>
-                            <h3></h3>
-                            <p style={{ color: 'gray', fontSize: 'small', fontWeight: '500' }}></p><br />
+                            <h2></h2>
+                            <p style={{ color: 'gray', fontSize: '15px', fontWeight: '500', textShadow:'0 0 5px #151515' }}></p><br />
                             <a className="ListButton" href="#" onClick={() => saveToLibrary(`/movie/${params.id}`)}><i className="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;List</a>
                             <a href="#" onClick={() => openPlayer()}><i className="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;Play</a>
                         </div>
