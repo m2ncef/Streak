@@ -1,23 +1,13 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import { useEffect, useState, useRef } from 'react';
-
-// import { Player, ControlBar, ClosedCaptionButton, BigPlayButton, LoadingSpinner, PlayToggle } from 'video-react';
-// import DownloadButton from './DownloadButton';
-
 import Artplayer from './ArtPlayer';
 import Hls from 'hls.js';
-
-// import ReactPlayer from 'react-player';
-// import "video-react/dist/video-react.css";
-
-// import { Player } from "react-tuby";
-// import "react-tuby/css/main.css";
-// import ReactHlsPlayer from 'react-hls-player';
 
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
     const [captions, setCaptions] = useState([]);
     const [isHls, setIsHls] = useState(false)
+    const [OutputError, setOutputError] = useState(false)
     const [thumbnail, setThumbnail] = useState("");
     const [loading, setLoading] = useState(true);
     function playM3u8(video, url, art) {
@@ -56,6 +46,9 @@ export default (props) => {
                     const output = await providers.runAll({
                         media: media,
                     });
+                    if (!output) {
+                        setOutputError(true)
+                    }
                     setStreamLink(output.stream.playlist);
                     setIsHls(true)
                     if (!output.stream.playlist) {
@@ -76,50 +69,6 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? (
-                // <ReactPlayer
-                //     url={streamLink}
-                //     controls
-                //     width="80%"
-                //     height="30%"
-                //     config={{
-                //     file: {
-                //         tracks: captions.map(subtitle => ({
-                //         kind: 'subtitles',
-                //         src: subtitle.url,
-                //         srcLang: subtitle.language,
-                //         })),
-                //     },
-                //     }}
-                // />
-
-                // <Player
-                //     autoPlay='true'
-                //     preload='auto'
-                //     poster={thumbnail}
-                //     width={'80%'}
-                //     src={streamLink}
-                // >
-                //     <LoadingSpinner />
-                //     <BigPlayButton position="center" />
-                //     {captions.map(caption=> <track kind='captions' src={caption.url} label={caption.language}/>)}
-                //     <ControlBar autoHide={true} autoHideTime={1000}>
-                //         {(streamLink.includes(".mp4")) && <DownloadButton/>}
-                //         <ClosedCaptionButton order={7} />
-                //     </ControlBar>
-                // </Player>
-
-                // <Player
-                //     src={streamLink}
-                //     subtitles={captions.map((caption) => ({
-                //         url: caption.url,
-                //         lang: caption.language,
-                //         language: caption.language
-                //     }))}
-                //     poster={thumbnail}
-                // >
-                //     {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} />}
-                // </Player>
-
                 <Artplayer
                     option={{
                         url: (isHls && streamLink),
@@ -156,7 +105,7 @@ export default (props) => {
                         margin: '60px auto 0',
                     }}
                 />
-            ) : <div>sbr chwiya sahbi...</div>}
+            ) : (OutputError ? (<div>Source Not Found<br />m9drtch nelgah, smhli hbb hhhh</div>) : (<div>sbr chwiya sahbi...</div>))}
         </>
     )
 }

@@ -10,6 +10,7 @@ export default (props) => {
     const [captions, setCaptions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isHls, setIsHls] = useState(false)
+    const [OutputError, setOutputError] = useState(false)
     const API_KEY = '84120436235fe71398e95a662f44db8b';
     const TV_ID = props.id;
     const SEASON_NUMBER = props.s;
@@ -79,6 +80,9 @@ export default (props) => {
                         media: media,
                     });
                     setIsHls(true)
+                    if(!output){
+                        setOutputError(true)
+                    }
                     setStreamLink(output.stream.playlist);
                     console.log(output.stream)
                     if (!output.stream.playlist) {
@@ -138,7 +142,7 @@ export default (props) => {
                         margin: '60px auto 0',
                     }}
                 />
-            ) : <div>sbr chwiya sahbi...</div>}
+            ) : (OutputError ? (<div>Source Not Found<br/>m9drtch nelgah, smhli hbb hhhh</div>) : (<div>sbr chwiya sahbi...</div>))}
         </>
     );
 };

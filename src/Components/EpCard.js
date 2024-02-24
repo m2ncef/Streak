@@ -6,8 +6,9 @@ export default (props) => {
     }
     return(
     <div className="EPCard" onClick={openIframe}>
-        <p>Episode {props.number}</p>
+        <p style={{margin:0, fontSize:'small', color:'dimgray'}}>Ep {props.number} • {props.minutes}mins • {props.vote}/10</p>
         <img src={props.img}></img>
+        <p style={{margin:0}}>{props.title}</p>
     </div>
     )
 }

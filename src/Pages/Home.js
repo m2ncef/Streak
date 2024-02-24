@@ -6,12 +6,6 @@ import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
 import { useNavigate } from "react-router-dom";
 export default function Home(){
-    let navigate = useNavigate()
-    useEffect(()=>{
-        if(sessionStorage.getItem("L") || !localStorage.getItem("UserPIN")){
-            navigate('/')
-        }
-    })
     const [link, setLink] = useState(null)
     const [latest, setLatest] = useState([])
     const [trending, setTrending] = useState([])
@@ -20,7 +14,6 @@ export default function Home(){
     useEffect(()=>{
         document.title = 'Streak '
             const fetchData = async () =>{
-            const imgPath = 'https://image.tmdb.org/t/p/w500'
             const trending = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=84120436235fe71398e95a662f44db8b')
             const trendingData = await trending.json()
             const randomIndex = Math.floor(Math.random()*20)
@@ -32,7 +25,7 @@ export default function Home(){
             const card = []
             for(const i in trendingData.results){
                 card.push({
-                    img: `${imgPath}${trendingData.results[i].poster_path}`,
+                    img: trendingData.results[i].poster_path,
                     id: trendingData.results[i].id
                 })
                 setTrending(card)
@@ -42,7 +35,7 @@ export default function Home(){
             const popular = []
             for(const i in popularData.results){
                 popular.push({
-                    img: `${imgPath}${popularData.results[i].poster_path}`,
+                    img: popularData.results[i].poster_path,
                     id: popularData.results[i].id
                 })
                 setPopular(popular)
@@ -52,7 +45,7 @@ export default function Home(){
             const l = []
             for(const i in latestData.results){
                 l.push({
-                    img: `${imgPath}${latestData.results[i].poster_path}`,
+                    img: latestData.results[i].poster_path,
                     id: latestData.results[i].id
                 })
                 setLatest(l)
@@ -62,7 +55,7 @@ export default function Home(){
             const popularTV = []
             for(const i in popularTData.results){
                 popularTV.push({
-                    img: `${imgPath}${popularTData.results[i].poster_path}`,
+                    img: popularTData.results[i].poster_path,
                     id: popularTData.results[i].id
                 })
                 setPopularTV(popularTV)
@@ -87,8 +80,8 @@ export default function Home(){
                 <Link to={`/movie/${link}`}>
                     <img src></img>
                     <div className="MainMovieInfos">
-                        <h2 style={{margin:0}}></h2>
-                        <h4 style={{margin:'1vh'}}></h4>
+                        <h2></h2>
+                        <h4></h4>
                     </div>
                 </Link>
             </div>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@consumet/extensions": "^1.5.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@joeattardi/emoji-button": "^4.6.4",
@@ -17,6 +18,7 @@
     "cors": "^2.8.5",
     "express-basic-auth": "^1.2.1",
     "express-rate-limit": "^7.1.5",
+    "flixhq-core": "^1.1.1",
     "griffith": "^1.30.0",
     "hls.js": "^1.5.6",
     "indigo-player": "^1.5.1",

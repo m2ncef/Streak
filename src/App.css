@@ -194,7 +194,7 @@ a {
     width: 100%;
     height: 100%;
     opacity: 0.3;
-    animation: idleAnimation 10s infinite linear;
+    animation: idleAnimation 15s infinite ease-in-out;
     filter: blur(20px);
 }
 .NavBar {
@@ -327,20 +327,23 @@ a {
 }
 .EPCard {
     display: flex;
-    line-height: 0px;
     margin: 1vh;
     background: #15151566;
-    padding: 1vh 2Vh;
+    padding: 2vh 3Vh;
     border-radius: 1vh;
     flex-direction: column;
     gap: 1vh;
     transition: all .3s;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 .EPCard:hover {
-    background: #252525;
+    background: #151515EE;
 }
 .EPCard img {
     width: 20vh;
+    box-shadow: 0px 0px 10px 0px black;
     border-radius: .7vh;
 }
 .EPslider {
@@ -388,6 +391,16 @@ a {
     font-weight: 400;
     color: gray;
 }
+.returning {
+    color: springgreen;
+    font-size: small;
+    font-weight: 500;
+    width: fit-content;
+    padding: 1vh;
+    backdrop-filter: blur(1vh);
+    border-radius: 1vh;
+    background: #00ff7f22;
+}
 .Cards a {
     text-decoration: none;
     color: white;
@@ -410,19 +423,19 @@ a {
     right: 0;
     bottom: 0;
     z-index: -1;
-    animation: idleAnimation 7s infinite linear;
+    animation: idleAnimation 15s infinite ease-in-out;
 }
 @keyframes idleAnimation {
     0% {
-        filter: blur(2vh) hue-rotate(0deg) invert(0%);
+        filter: blur(2vh) hue-rotate(0deg);
         transform: scale(2);
     }
     50% {
-        filter: blur(3vh) hue-rotate(10deg) invert(100%);
+        filter: blur(3vh) hue-rotate(10deg);
         transform: scale(3);
     }
     100% {
-        filter: blur(2vh) hue-rotate(0deg) invert(0%);
+        filter: blur(2vh) hue-rotate(0deg);
         transform: scale(2);
     }
 }
@@ -454,6 +467,16 @@ a {
     color: white;
     margin: 0vh 7vh;
     gap: 0vh;
+}
+.MainMovieInfos h2 {
+    margin: 0px;
+    text-shadow: 0px 1px 1vh black;
+}
+.MainMovieInfos h4 {
+    margin: 1vh;
+    font-size: x-small;
+    color: #ffffff75;
+    text-shadow: 0vh 0px 2px #ffffff75;
 }
 .close {
     position: fixed;
@@ -602,6 +625,10 @@ a {
     border-radius: 2vh !important;
     border: none !important;
 }
+.mainInfosContainer {
+    display: flex;
+    flex-direction: column;
+}
 .video-react .video-react-control-bar {
     background: #1515158b !important;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -633,5 +660,39 @@ a {
     }
     .backdrop {
         filter: blur(2vh);
+    }
+    .mainInfosContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .mainInfosContainer div {
+        font-size: larger;
+        justify-content: center;
+        margin: 0vh 5vh;
+    }
+    .mainInfosContainer div:nth-child(1){
+        flex-basis: 40%;
+    }
+    .mainInfosContainer div:nth-child(2){
+        flex-basis: 40%;
+    }
+    .mainInfosContainer div img {
+        width: 30vh;
+        box-shadow: 0px 0px 1vh black !important;
+    }
+    .genres {
+        justify-content: flex-start !important;
+        margin: 0vh !important;
+        font-size: x-large !important;
+    }
+    .genres span {
+        font-size: medium;
+    }
+    .movieCard img {
+        width: 23vh !important;
+        height: 34vh !important;
+        box-shadow: 0px 0px 1vh black !important;
+        margin: 1vh !important;
     }
 }

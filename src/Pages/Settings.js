@@ -54,11 +54,6 @@ export default () => {
                 <h4 onClick={()=>{
                     localStorage.setItem("Library", '')
                 }}>Clear Library</h4>
-                <h4 onClick={()=>{
-                    localStorage.setItem("UserPIN", '')
-                    localStorage.setItem("UserEmoji", '')
-                    navigate('/')
-                }} style={{color:'red'}}>Delete Profile</h4>
             </div>
         </div>
         <Footer/>
