@@ -16,8 +16,14 @@ body {
     touch-action: manipulation;
 }
 ::-webkit-scrollbar {
-    opacity: 0;
-    display: none;
+    background: none;
+    height: 1vh;
+    width: 1vh;
+}
+::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 1vh;
+    width: 15px;
 }
 a {
     text-decoration: none;
@@ -49,16 +55,19 @@ a {
     position: relative;
     top: 1vh;
     text-align: center;
-    margin: 4vh 0vh;
+    margin: 4vh 4vh;
     display: flex;
     place-content: center;
+    align-items: center;
+    justify-content: center;
+    gap: 1vh;
 }
 .MainMovie img {
     width: 35vh;
     position: relative;
     background-color: black;
     box-shadow: 0vh 0vh 3vh 4px #151515;
-    border-radius: 1Vh;
+    border-radius: 2vh;
     mask-image: linear-gradient(180deg, #ffff 75%, #0000 100%);
 }
 .MainMovie h3 {
@@ -74,7 +83,8 @@ a {
     display: block;
     background: black;
     width: min-content;
-    border-radius: 1vh;
+    border-radius: 2vh;
+    box-shadow: 0vh 0vh 20px 1px #151515;
 }
 .Types {
     display: flex;
@@ -649,7 +659,20 @@ a {
     opacity: 0.5;
     mask-image: linear-gradient(270deg, #ffff 35%, #0000 73%);
 }
+.MainMovieDesktop {
+    display: none;
+}
 @media (min-width:961px)  {
+    .MainMovieDesktop {
+        display: block;
+        font-size: x-large;
+        margin: 0vh 2vh;
+        text-align: start;
+    }
+    .MainMovie {
+        margin: 5vh 10vh;
+        gap: 8vh;
+    }
     .MainBackdrop {
         animation: none;
         filter: blur(5vh);
@@ -676,7 +699,7 @@ a {
         flex-basis: 40%;
     }
     .mainInfosContainer div:nth-child(2){
-        flex-basis: 40%;
+        flex-basis: 60%;
     }
     .mainInfosContainer div img {
         width: 30vh;
@@ -695,5 +718,16 @@ a {
         height: 34vh !important;
         box-shadow: 0px 0px 1vh black !important;
         margin: 1vh !important;
+    }
+    .DesktopBtn {
+        display: flex !important;
+        padding: 1.2vh 2vh !important;
+        margin: 2vh 0vh !important;
+        border-radius: 1.4vh !important;
+        background: #03030377 !important;
+    }
+    .Types {
+        justify-content: center;
+        gap: 10%;
     }
 }

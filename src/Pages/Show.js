@@ -28,10 +28,11 @@ export default function Movie() {
     useEffect(() => {
         document.querySelector(".close").addEventListener('click', function () {
             document.querySelector(".Player").style.display = "none"
+            setPlayer(false)
         })
         document.querySelectorAll(".EPCard").forEach(card => card.onclick = function () {
             setPlayer(true)
-            setepCount(document.querySelector("#epNumber").textContent)
+            setepCount(card.querySelector("#epNumber").textContent)
         });
     })
     useEffect(() => {

@@ -1,6 +1,5 @@
-import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets } from '@movie-web/providers'
-import { useEffect, useState } from 'react';
-import "video-react/dist/video-react.css";
+import React, { useEffect, useState } from 'react';
+import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import Artplayer from './ArtPlayer';
 import Hls from 'hls.js';
 
@@ -136,8 +135,8 @@ export default (props) => {
                         },
                     }}
                     style={{
-                        width: '40vh',
-                        height: '26vh',
+                        width: '90vw',
+                        height: '40vw',
                         margin: '60px auto 0',
                     }}
                 />
