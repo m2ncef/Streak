@@ -76,7 +76,7 @@ export default (props) => {
                         poster: thumbnail,
                         setting: true,
                         playbackRate: true,
-                        autoplay: true,
+                        autoplay: false,
                         customType: {
                             m3u8: playM3u8,
                         },

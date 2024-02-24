@@ -9,8 +9,8 @@ export default (props) => {
     const [thumbnail, setThumbnail] = useState("");
     const [captions, setCaptions] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isHls, setIsHls] = useState(false)
     const [OutputError, setOutputError] = useState(false)
+    const [isHls, setIsHls] = useState(false)
     const API_KEY = '84120436235fe71398e95a662f44db8b';
     const TV_ID = props.id;
     const SEASON_NUMBER = props.s;
@@ -79,12 +79,11 @@ export default (props) => {
                     const output = await providers.runAll({
                         media: media,
                     });
-                    setIsHls(true)
-                    if(!output){
+                    if (!output) {
                         setOutputError(true)
                     }
+                    setIsHls(true)
                     setStreamLink(output.stream.playlist);
-                    console.log(output.stream)
                     if (!output.stream.playlist) {
                         if (output.stream.qualities && output.stream.qualities["1080"] && output.stream.qualities["1080"].url) {
                             setStreamLink(output.stream.qualities["1080"].url);
@@ -113,7 +112,7 @@ export default (props) => {
                         poster: thumbnail,
                         setting: true,
                         playbackRate: true,
-                        autoplay: true,
+                        autoplay: false,
                         customType: {
                             m3u8: playM3u8,
                         },
@@ -142,7 +141,7 @@ export default (props) => {
                         margin: '60px auto 0',
                     }}
                 />
-            ) : (OutputError ? (<div>Source Not Found<br/>m9drtch nelgah, smhli hbb hhhh</div>) : (<div>sbr chwiya sahbi...</div>))}
+            ) : (OutputError ? (<div>Source Not Found<br />m9drtch nelgah, smhli hbb hhhh</div>) : (<div>sbr chwiya sahbi...</div>))}
         </>
     );
 };

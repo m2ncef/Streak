@@ -328,9 +328,9 @@ a {
 .EPCard {
     display: flex;
     margin: 1vh;
-    background: #15151566;
-    padding: 2vh 3Vh;
-    border-radius: 1vh;
+    background: linear-gradient(40deg, #01010199, #15151599);
+    padding: 1vh 2Vh;
+    border-radius: 2vh;
     flex-direction: column;
     gap: 1vh;
     transition: all .3s;
@@ -370,7 +370,7 @@ a {
     flex-direction: row;
     align-items: center;
     gap: 1vh;
-    background-color: #151515;
+    background-color: #101010;
     backdrop-filter: blur(2vh);
     border-radius: 2vh;
     position: relative;
@@ -644,9 +644,10 @@ a {
     display: block;
     height: 100%;
     object-fit: cover;
-    filter: blur(3px);
+    filter: blur(5px);
     border-radius: 2vh;
-    opacity: 0.2;
+    opacity: 0.5;
+    mask-image: linear-gradient(270deg, #ffff 35%, #0000 73%);
 }
 @media (min-width:961px)  {
     .MainBackdrop {

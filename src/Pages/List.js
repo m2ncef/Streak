@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Loading from "../Components/Loading";
 import Nav from '../Components/Nav'
+import Footer from '../Components/Footer'
 export default () => {
     useEffect(()=>{
         const libraryArray = JSON.parse(localStorage.getItem("library"));
@@ -31,7 +32,7 @@ export default () => {
                             <div class="ListCard">
                             <div class="background-image" style="background-image: url(https://image.tmdb.org/t/p/w500${data.backdrop_path});"></div>
                             <img src='https://image.tmdb.org/t/p/w500${data.poster_path}'></img>
-                                <div>
+                                <div style='line-height:1;'>
                                     <p>TV Show</p>
                                     <h3>${data.name}</h3>
                                     <h5>⭐️ ${data.vote_average}/10</h5>
@@ -54,6 +55,7 @@ export default () => {
             <h3 style={{marginLeft:'2vh'}}>My List</h3>
             <div className="Cards"></div>
         </div>
+        <Footer/>
         </>
     )
 }

@@ -31,8 +31,7 @@ export default function Movie() {
         })
         document.querySelectorAll(".EPCard").forEach(card => card.onclick = function () {
             setPlayer(true)
-            var epNumber = card.querySelector('p').textContent.replace(/\D/g, '')
-            setepCount(epNumber)
+            setepCount(document.querySelector("#epNumber").textContent)
         });
     })
     useEffect(() => {
@@ -43,6 +42,7 @@ export default function Movie() {
             for (const i in data.episodes) {
                 EPs.push({
                     title: data.episodes[i].name,
+                    epNumber: data.episodes[i].episode_number,
                     runtime: data.episodes[i].runtime,
                     number: data.episodes[i].episode_number,
                     vote: data.episodes[i].vote_average,
@@ -142,7 +142,7 @@ export default function Movie() {
                         <div className="EPslider">
                             {
                                 epCard.map(card => {
-                                    return (<EpCard number={card.number} img={card.img} minutes={card.runtime} title={card.title} vote={card.vote} />)
+                                    return (<EpCard number={card.number} img={card.img} minutes={card.runtime} title={card.title} vote={card.vote} epNumber={card.epNumber}/>)
                                 })
                             }
                         </div>
