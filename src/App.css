@@ -17,12 +17,12 @@ body {
     touch-action: manipulation;
 }
 ::-webkit-scrollbar {
-    background: none;
+    background: #e5e5e511;
     height: 1vh;
     width: 1vh;
 }
 ::-webkit-scrollbar-thumb {
-    background: black;
+    background: #e5e5e533;
     border-radius: 1vh;
     width: 15px;
 }
@@ -115,7 +115,8 @@ a {
     width: 20vh;
 }
 .movieCard {
-    margin: 0vh 1vh;
+    transition: all .3s;
+    margin: 0 1vh;
 }
 .explore div {
     display: flex;
@@ -174,7 +175,7 @@ a {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    overflow-y: scroll;
+    overflow-x: auto;
     justify-content: flex-start;
 }
 .genres span {
@@ -187,10 +188,11 @@ a {
     text-decoration: none;
     white-space: nowrap;
     backdrop-filter: blur(1vh);
+    filter: blur(.4px);
 }
 .MovieInfos div a {
-    box-shadow: 0vh 0vh 3vw black;
-    padding: 1vh 1.4vh;
+    box-shadow: 0vh 0vh 1vh #000000dd;
+    padding: 1vh 1.5vh;
     background: #151515BB;
     margin-right: 1vh;
     border-radius: 1vh;
@@ -205,7 +207,6 @@ a {
     width: 100%;
     height: 100%;
     opacity: 0.3;
-    animation: idleAnimation 15s infinite ease-in-out;
     filter: blur(20px);
 }
 .NavBar {
@@ -231,7 +232,7 @@ a {
     height: 100%;
     width: 100%;
     background: #0e0e0ec4;
-    backdrop-filter: blur(1vh);
+    backdrop-filter: blur(2vh);
 }
 .Loader {
     position: fixed;
@@ -242,7 +243,7 @@ a {
     width: 100%;
     height: 100%;
     background-color: #000000dd;
-    backdrop-filter: blur(1.3vh);
+    backdrop-filter: blur(1.5vh);
     z-index: 9999999;
     text-align: center;
     flex-direction: column;
@@ -283,12 +284,11 @@ a {
 .searchBar button {
     border-radius: 0vh 1vh 1vh 0vh;
     border: none;
-    background: #111;
     color: white;
-}
-.searchBar button:is(:hover, :active) {
-    border-radius: 0vh 2vh 2vh 0vh;
-    background: #11111199;
+    font-weight: 500;
+    text-shadow: 0 0 3px white;
+    background: none;
+    cursor: pointer;
 }
 .previewNavBar {
     display: flex;
@@ -340,17 +340,18 @@ a {
     display: flex;
     margin: 1vh;
     background: linear-gradient(40deg, #01010199, #15151599);
-    padding: 1vh 2Vh;
+    padding: 1vh 2vh;
     border-radius: 2vh;
     flex-direction: column;
     gap: 1vh;
-    transition: all .3s;
+    transition: all .15s ease-in-out;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
-.EPCard:hover {
-    background: #151515EE;
+.EPCard:is(:active,:hover) {
+    padding: 1vh 3vh;
+    background: linear-gradient(40deg, #010101BB, #151515BB);
 }
 .EPCard img {
     width: 20vh;
@@ -360,7 +361,7 @@ a {
 .EPslider {
     display: flex;
     flex-direction: row;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 #seasonSelector {
     background: #dfdfdf66;
@@ -434,7 +435,8 @@ a {
     right: 0;
     bottom: 0;
     z-index: -1;
-    animation: idleAnimation 15s infinite ease-in-out;
+    filter: blur(5vh);
+    /* animation: idleAnimation 15s infinite ease-in-out; */
 }
 @keyframes idleAnimation {
     0% {
@@ -493,10 +495,14 @@ a {
     position: fixed;
     top: 3vh;
     right: 3vh;
-    font-size: large;
-    background-color: #ff00042c;
-    border-radius: 5px;
-    padding: 1vh 2vh;
+    font-size: larger;
+    color: #ff000099;
+    text-shadow: 0px 0px 2px red;
+    cursor: pointer;
+}
+.art-video-player,.art-video video, .art-video, .art-bottom, .art-poster {
+    border-radius: 3vh !important;
+    padding: 1vh;
 }
 .loginContainer {
     display: flex;
@@ -648,6 +654,7 @@ a {
     backdrop-filter: blur(5px);
 }
 .background-image {
+    background-position: right;
     position: absolute;
     left: 0;
     right: 0;
@@ -655,7 +662,7 @@ a {
     display: block;
     height: 100%;
     object-fit: cover;
-    filter: blur(5px);
+    filter: blur(10px);
     border-radius: 2vh;
     opacity: 0.5;
     mask-image: linear-gradient(270deg, #ffff 35%, #0000 73%);
@@ -675,13 +682,9 @@ a {
         gap: 8vh;
     }
     .MainBackdrop {
-        animation: none;
         filter: blur(5vh);
         scale: 1.2;
         opacity: 0.8;
-    }
-    .MovieBackground {
-        animation: none;
     }
     .backdrop {
         filter: blur(2vh);
@@ -694,10 +697,7 @@ a {
     .mainInfosContainer div {
         font-size: larger;
         justify-content: center;
-        margin: 0vh 5vh;
-    }
-    .mainInfosContainer div:nth-child(1){
-        flex-basis: 40%;
+        margin: 0vh 3vh;
     }
     .mainInfosContainer div:nth-child(2){
         flex-basis: 60%;
@@ -739,5 +739,9 @@ a {
     }
     .MainMovieInfos h2, .MainMovieInfos h4 {
         display: none;
+    }
+    .MovieInfos div a {
+        padding: 1vh 2vh;
+        border-radius: 2vh;
     }
 }

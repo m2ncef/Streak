@@ -8,6 +8,7 @@ Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https:
 Curious to see it in action? Check out our live demo [here](https://streaak.netlify.app)!
 
 # Made for educational purposes only
+## Streak does not host any files, it merely links to 3rd party services. Legal issues should be taken up with the file hosts and providers. Streak is not responsible for any media files shown by the video providers.
 
 ## Features 🌈
 

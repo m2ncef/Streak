@@ -137,7 +137,6 @@ export default (props) => {
                     style={{
                         width: '90vw',
                         height: '40vw',
-                        margin: '60px auto 0',
                     }}
                 />
             ) : (OutputError ? (<div>Source Not Found<br />m9drtch nelgah, smhli hbb hhhh</div>) : (<div>sbr chwiya sahbi...</div>))}

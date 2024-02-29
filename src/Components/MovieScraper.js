@@ -82,8 +82,8 @@ export default (props) => {
                         },
                         settings: [
                             {
-                                html: 'Subtitles',
-                                selector: (captions == []) ? 'Not Available' : (captions.map(caption => ({ html: caption.language, url: caption.url }))),
+                                html: (captions == []) ? 'Subtitles' : 'Subtitles Not Available',
+                                selector: (captions) && (captions.map(caption => ({ html: caption.language, url: caption.url }))),
                                 onSelect: function (item) {
                                     this.subtitle.url = item.url;
                                     this.subtitle.srcLang = item.language;
@@ -102,7 +102,6 @@ export default (props) => {
                     style={{
                         width: '90vw',
                         height: '40vw',
-                        margin: '60px auto 0',
                     }}
                 />
             ) : (OutputError ? (<div>Source Not Found<br />m9drtch nelgah, smhli hbb hhhh</div>) : (<div>sbr chwiya sahbi...</div>))}

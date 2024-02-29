@@ -21,7 +21,6 @@ export default function App() {
                 <Route path='/login' element={<Login/>}></Route>
                 <Route path='/list' element={<List/>}></Route>
                 <Route path='/settings' element={<Settings/>}></Route>
-                <Route path='/explore/:q' element={<Explore/>}></Route>
                 <Route path='/movie/:id' element={<Movie/>}></Route>
                 <Route path='/tv/:id' element={<Show/>}></Route>
                 <Route path='/movie/' element={<Explore type='movie'/>}></Route>

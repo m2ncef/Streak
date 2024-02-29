@@ -94,7 +94,7 @@ export default function Movie() {
                         <img src=""></img>
                         <div>
                             <h2></h2>
-                            <p style={{ color: 'gray', fontSize: '15px', fontWeight: '500', textShadow:'0 0 5px #151515' }}></p><br />
+                            <p style={{ color: '#202020', fontSize: '15px', fontWeight: '500', textShadow:'0 0 5px #151515' }}></p><br />
                             <a className="ListButton" href="#" onClick={() => saveToLibrary(`/movie/${params.id}`)}><i className="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;List</a>
                             <a href="#" onClick={() => openPlayer()}><i className="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;Play</a>
                         </div>
@@ -121,7 +121,7 @@ export default function Movie() {
                     </section>
                 </div>
                 <div className="Player">
-                    <div className="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    <div className="close"><i className="fa fa-times" aria-hidden="true"></i></div>
                     {player && (<MovieScraper id={params.id} />)}
                 </div>
             </div>

@@ -11,7 +11,7 @@ export default function Explore (props) {
     const [loader, setLoader] = useState(false)
     const [pageCounter, setPageCounter] = useState(1)
     async function fetchSearch(q){
-        const search = await fetch(`https://api.themoviedb.org/3/search/${params.q}?query=${q}&api_key=84120436235fe71398e95a662f44db8b&include_adult=false`)
+        const search = await fetch(`https://api.themoviedb.org/3/search/${params.q ? params.q : props.type}?query=${q}&api_key=84120436235fe71398e95a662f44db8b&include_adult=false`)
         const searchData = await search.json()
         const card = []
         for(const i in searchData.results){
@@ -46,7 +46,7 @@ export default function Explore (props) {
             }
         }
         fetchExplore()
-    }, [params.q, pageCounter])
+    }, [params.q, pageCounter, props.type])
     function handleClick() {
         setLoader(true);
         setTimeout(() => {
@@ -59,10 +59,11 @@ export default function Explore (props) {
             <Nav/>
             <div className="searchBar">
                 <input type="text" placeholder="Type to search..." onChange={(e)=>fetchSearch(e.target.value)}></input>
+                <button onClick={()=>fetchSearch(document.querySelector(".searchBar input[type='text']").value)}>Search</button>
             </div>
             <div className="exploreTypes">
-                <Link to={'/explore/tv'} onClick={handleClick}>Shows</Link>
-                <Link to={'/explore/movie'} onClick={handleClick}>Movie</Link>
+                <Link to={'/tv'} onClick={handleClick}>Shows</Link>
+                <Link to={'/movie'} onClick={handleClick}>Movie</Link>
             </div>
              <section className="explore">
                 <div>

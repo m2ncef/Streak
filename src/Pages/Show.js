@@ -162,7 +162,7 @@ export default function Movie() {
                     </section>
                 </div>
                 <div className="Player">
-                    <div className="close"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    <div className="close"><i className="fa fa-times" aria-hidden="true"></i></div>
                     {player && (<ShowScraper id={params.id} s={sCount} e={epCount} />)}
                 </div>
             </div>

@@ -17,7 +17,6 @@ export default function Home() {
             const trending = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=84120436235fe71398e95a662f44db8b')
             const trendingData = await trending.json()
             const randomIndex = Math.floor(Math.random() * 20)
-            console.log(trendingData.results[randomIndex])
             setLink(trendingData.results[randomIndex].id)
             document.querySelector(".MainMovie img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
             document.querySelector(".MainBackdrop img").src = `https://image.tmdb.org/t/p/w500${trendingData.results[randomIndex].poster_path}`
