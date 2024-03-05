@@ -73,8 +73,8 @@ export default function Home() {
             <Header></Header>
             <div className="Container">
                 <div className="Types">
-                    <h1><Link to='/explore/tv'>Shows</Link></h1>
-                    <h1><Link to='/explore/movie'>Movies</Link></h1>
+                    <h1><Link to='/tv'>Shows</Link></h1>
+                    <h1><Link to='/movie'>Movies</Link></h1>
                     <h1><Link to='/list'>My List</Link></h1>
                 </div>
                 <div className="MainBackdrop">
