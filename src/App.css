@@ -260,6 +260,17 @@ a {
 }
 .Loader img {
     width: 10vh;
+    animation: fadeinout 2s infinite;
+}
+@keyframes fadeinout
+{
+  0%, 100%{
+    opacity:1;
+  }
+  50%
+  {
+    opacity:0.1;
+  }
 }
 .infosContainer p {
     margin: 2vh;
@@ -273,12 +284,11 @@ a {
     justify-content: center;
 }
 .searchBar input {
-    width: 85%;
+    width: 70%;
     color: white;
     border: none;
-    padding: 2vh 1vh;
-    border-radius: 0;
-    border-radius: 1vh;
+    padding: 1.3vh 1vh;
+    border-radius: 1vh 0vh 0vh 1vh;
     background-color: #111;
 }
 .searchBar button {
@@ -289,6 +299,7 @@ a {
     text-shadow: 0 0 3px white;
     background: none;
     cursor: pointer;
+    background: #16161666;
 }
 .previewNavBar {
     display: flex;
