@@ -8,10 +8,10 @@ Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https:
 Curious to see it in action? Check out our live demo [here](https://streaak.netlify.app)!
 
 ## Preview
-### 📱
+### 🖥
 ![DesktopHome](https://i.imgur.com/1yAIaGp.png)
 ![DesktopWatch](https://i.imgur.com/cYf3gzs.png)
-### 🖥
+### 📱
 ![PhoneHome](https://i.imgur.com/Upoy5kS.png)
 ![PhoneWatch](https://i.imgur.com/ly5pY7I.png)
 
