@@ -28,8 +28,6 @@ If you find Streak helpful, don't forget to give it a ⭐️ star on GitHub and 
 
 ### 📺 Using TMDB API
    TheMovieDB API stands out for its comprehensive coverage of desired TV shows, offering a wealth of information that extends beyond basic details. Furthermore, its consistent updates ensure users have access to the latest news, movies, shows, and emerging trends.
-### ❌ ZERO Ads
-   NO ADS, The movies/shows are displayed in a `<video>` tag ! no annoying embeded iframes, popups, ads and back-scripts.
 ### 👍 Good Quality Streaming
    Watch your favorite movies, tv shows with such a good quality.
 ### 📐 Optimized UI

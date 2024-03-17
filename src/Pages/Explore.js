@@ -4,6 +4,7 @@ import MovieCard from '../Components/MovieCard'
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
+import AdBanner from '../Components/AdBanner'
 export default function Explore (props) {
     const loc = useLocation()
     const params = useParams()
@@ -65,6 +66,7 @@ export default function Explore (props) {
                 <Link to={'/tv'} onClick={handleClick}>Shows</Link>
                 <Link to={'/movie'} onClick={handleClick}>Movie</Link>
             </div>
+            <AdBanner/>
              <section className="explore">
                 <div>
                     {movie.map((m)=>{

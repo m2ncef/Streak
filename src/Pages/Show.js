@@ -7,6 +7,7 @@ import Loading from "../Components/Loading";
 import { toast } from "react-hot-toast";
 import EpCard from "../Components/EpCard";
 import ShowScraper from "../Components/ShowScraper";
+import AdBanner from '../Components/AdBanner';
 export default function Movie() {
     const [similar, setSimilar] = useState([])
     const [recom, setRecom] = useState([])
@@ -130,12 +131,13 @@ export default function Movie() {
                             <a className="ListButton" href="#" onClick={() => saveToLibrary(`/tv/${params.id}`)}><i className="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;List</a>
                         </div>
                     </div>
-                    <div style={{ margin: '3vh' }}>
+                    <div style={{ margin: '0 3vh' }}>
                         <div className="genres"></div>
                         <p className="rating"></p>
                         <p className="desc"></p>
                         <p className="DateAndLangs"></p>
                     </div>
+                    <AdBanner />
                 </div>
                 <div style={{ margin: '3vh' }}>
                     <div className="EPS">

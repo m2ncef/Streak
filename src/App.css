@@ -188,7 +188,6 @@ a {
     text-decoration: none;
     white-space: nowrap;
     backdrop-filter: blur(1vh);
-    filter: blur(.4px);
 }
 .MovieInfos div a {
     box-shadow: 0vh 0vh 1vh #000000dd;
@@ -233,6 +232,7 @@ a {
     width: 100%;
     background: #0e0e0ec4;
     backdrop-filter: blur(2vh);
+    gap: 2vh;
 }
 .Loader {
     position: fixed;

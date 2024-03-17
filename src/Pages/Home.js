@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import MovieCard from '../Components/MovieCard'
 import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
+import AdBanner from '../Components/AdBanner'
 import { useNavigate } from "react-router-dom";
 export default function Home() {
     const [link, setLink] = useState(null)
@@ -108,6 +109,8 @@ export default function Home() {
                             return <MovieCard img={m.img} id={m.id}></MovieCard>
                         })}
                     </section>
+                    <br/>
+                    <AdBanner/>
                     <h2 style={{ marginLeft: '1vh' }}>Latest TV Series</h2>
                     <section className="trendingScroll">
                         {latest.map((m) => {

@@ -6,10 +6,12 @@ import Footer from "../Components/Footer";
 import Loading from "../Components/Loading";
 import { toast } from "react-hot-toast";
 import MovieScraper from "../Components/MovieScraper";
+import AdBanner from '../Components/AdBanner'
 export default function Movie() {
     const [similar, setSimilar] = useState([])
     const [recom, setRecom] = useState([])
     const [player, setPlayer] = useState(false)
+    const [data, setData] = useState("")
     const params = useParams()
     function saveToLibrary(data) {
         document.querySelector(".ListButton").classList.add("buttonDisabled")
@@ -37,27 +39,16 @@ export default function Movie() {
         const fetchData = async () => {
             const res = await fetch(`https://api.themoviedb.org/3/movie/${params.id}?api_key=84120436235fe71398e95a662f44db8b`)
             const data = await res.json()
-            document.querySelector(".ListButton").classList.remove("buttonDisabled")
-            if (data.backdrop_path == null) {
-                document.querySelector(".backdrop").style.display = "none"
-            } else {
-                document.querySelector(".backdrop").src = `https://image.tmdb.org/t/p/w500${data.backdrop_path}`
+            setData(data)
+            for (const i in data.genres) {
+                document.querySelector(".genres").innerHTML += `<span>${data.genres[i].name}</span>`
             }
-            document.querySelector(".MovieInfos img").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
-            document.querySelector(".MovieInfos div h2").innerHTML = data.title
-            document.querySelector(".MovieBackground").src = `https://image.tmdb.org/t/p/w500${data.poster_path}`
-            document.querySelector(".MovieInfos div p").innerHTML = `<i>"${data.tagline}"</i>`
-            document.querySelector(".rating").innerHTML = `⭐️ ${data.vote_average}/10 • 👥 ${data.popularity}`
-            document.querySelector(".DateAndLangs").innerHTML = `🌐 ${data.spoken_languages[0].english_name} • 📅 ${data.release_date}`
-            document.querySelector(".desc").innerHTML = data.overview
+            document.querySelector(".ListButton").classList.remove("buttonDisabled")
             document.title = `Streak  | ${data.title}`
             await setTimeout(function () {
                 document.querySelector(".Loader").style.opacity = '0'
                 document.querySelector(".Loader").style.zIndex = '-1'
             }, 2000)
-            for (const i in data.genres) {
-                document.querySelector(".genres").innerHTML += `<span>${data.genres[i].name}</span>`
-            }
             const recommendations = await fetch(`https://api.themoviedb.org/3/movie/${params.id}/recommendations?api_key=84120436235fe71398e95a662f44db8b`)
             const recomData = await recommendations.json()
             const card = []
@@ -85,31 +76,32 @@ export default function Movie() {
     return (
         <>
             <Loading />
-            <img className="MovieBackground"></img>
-            <img className="backdrop" src></img>
+            <img className="MovieBackground" src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}></img>
+            <img className="backdrop" src={data.backdrop_path && `https://image.tmdb.org/t/p/w500${data.backdrop_path}`}></img>
             <Nav />
             <div>
                 <div className="mainInfosContainer">
                     <div className="MovieInfos">
-                        <img src=""></img>
+                        <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}></img>
                         <div>
-                            <h2></h2>
-                            <p style={{ color: '#202020', fontSize: '15px', fontWeight: '500', textShadow:'0 0 5px #151515' }}></p><br />
+                            <h2>{data.title}</h2>
+                            <p style={{ color: '#505050', fontSize: '15px', fontStyle: 'italic', fontWeight: '500', textShadow: '0 0 5px #151515' }}>{data.tagline}</p><br />
                             <a className="ListButton" href="#" onClick={() => saveToLibrary(`/movie/${params.id}`)}><i className="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;List</a>
                             <a href="#" onClick={() => openPlayer()}><i className="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;Play</a>
                         </div>
                     </div>
-                    <div style={{ margin: '3vh' }}>
+                    <div style={{ margin: '0 3vh' }}>
                         <div className="genres"></div>
-                        <p className="rating"></p>
-                        <p className="desc"></p>
-                        <p className="DateAndLangs"></p>
+                        <p className="rating">⭐️ {data.vote_average}/10 • 👥 {data.popularity}</p>
+                        <p className="desc">{data.overview}</p>
+                        <p className="DateAndLangs">🌐 {data ? data.spoken_languages[0].english_name : 'English'} • 📅 {data.release_date}</p>
                     </div>
                 </div>
+                <AdBanner/>
                 <div style={{ margin: '3vh' }}>
                     <h3>Recommendations</h3>
                     <section className="recom">
-                        {recom.map((m) => {
+                        {recom.map((m, i) => {
                             return <MovieCard img={m.img} id={m.id}></MovieCard>
                         })}
                     </section>

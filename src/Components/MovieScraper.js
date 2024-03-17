@@ -2,6 +2,8 @@ import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, No
 import { useEffect, useState, useRef } from 'react';
 import Artplayer from './ArtPlayer';
 import Hls from 'hls.js';
+import AdBig from './AdBig'
+import AdBanner from './AdBanner'
 
 export default (props) => {
     const [streamLink, setStreamLink] = useState("");
@@ -69,42 +71,53 @@ export default (props) => {
     return (
         <>
             {(!loading && streamLink) ? (
-                <Artplayer
-                    option={{
-                        url: (isHls && streamLink),
-                        fullscreen: true,
-                        poster: thumbnail,
-                        setting: true,
-                        playbackRate: true,
-                        autoplay: false,
-                        customType: {
-                            m3u8: playM3u8,
-                        },
-                        settings: [
-                            {
-                                html: (captions == []) ? 'Subtitles' : 'Subtitles Not Available',
-                                selector: (captions) && (captions.map(caption => ({ html: caption.language, url: caption.url }))),
-                                onSelect: function (item) {
-                                    this.subtitle.url = item.url;
-                                    this.subtitle.srcLang = item.language;
-                                    this.subtitle.language = item.language;
-                                    this.subtitle.kind = "subtitles"
-                                    return item.html;
-                                },
-                            }
-                        ],
-                        moreVideoAttr: {
-                            playsInline: true,
-                            src: (!isHls && streamLink),
-                            crossorigin: "anonymous",
-                        },
-                    }}
-                    style={{
-                        width: '90vw',
-                        height: '40vw',
-                    }}
-                />
-            ) : (OutputError ? (<div>Source Not Found<br />m9drtch nelgah, smhli hbb hhhh</div>) : (<div>sbr chwiya sahbi...</div>))}
+                <>
+                    <AdBanner />
+                    <Artplayer
+                        option={{
+                            url: (isHls && streamLink),
+                            fullscreen: true,
+                            poster: thumbnail,
+                            setting: true,
+                            playbackRate: true,
+                            autoplay: false,
+                            customType: {
+                                m3u8: playM3u8,
+                            },
+                            settings: [
+                                {
+                                    html: (captions == []) ? 'Subtitles' : 'Subtitles Not Available',
+                                    selector: (captions) && (captions.map(caption => ({ html: caption.language, url: caption.url }))),
+                                    onSelect: function (item) {
+                                        this.subtitle.url = item.url;
+                                        this.subtitle.srcLang = item.language;
+                                        this.subtitle.language = item.language;
+                                        this.subtitle.kind = "subtitles"
+                                        return item.html;
+                                    },
+                                }
+                            ],
+                            moreVideoAttr: {
+                                playsInline: true,
+                                src: (!isHls && streamLink),
+                                crossorigin: "anonymous",
+                            },
+                        }}
+                        style={{
+                            width: '90vw',
+                            height: '40vw',
+                        }}
+                    />
+                </>
+            ) : (OutputError ? (
+                <div>
+                    <AdBanner />
+                    Source Not Found<br />m9drtch nelgah, smhli hbb hhhh
+                </div>) : (
+                <div>
+                    <AdBig />
+                    <p>sbr chwiya sahbi...</p>
+                </div>))}
         </>
     )
 }
