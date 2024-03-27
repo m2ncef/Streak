@@ -73,22 +73,19 @@ export default (props) => {
     }, [props.id])
     const plugins = [
         ui({
-            pictureInPicture: true,
             slideToSeek: 'always',
-            screenshot: true,
-            keyboard: { global: true },
             subtitle: {
                 source: captions.map((caption) => ({ name: caption.language, src: caption.url }))
             },
             theme: {
                 primaryColor: "rgb(255 69 12)",
                 watermark: {
-                    src: "https://ohplayer.netlify.app/vercel.svg",
+                    src: "https://i.imgur.com/A694eJi.png",
                     style: {
                         position: 'absolute',
                         top: '10px',
                         right: '10px',
-                        width: '100px',
+                        width: '150px',
                         height: 'auto',
                         filter: 'contrast(0.1) opacity(0.5)'
                     },
