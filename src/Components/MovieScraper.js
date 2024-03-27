@@ -85,7 +85,7 @@ export default (props) => {
                         position: 'absolute',
                         top: '10px',
                         right: '10px',
-                        width: '150px',
+                        width: '100px',
                         height: 'auto',
                         filter: 'contrast(0.1) opacity(0.5)'
                     },
