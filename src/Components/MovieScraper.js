@@ -1,6 +1,9 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import { useEffect, useState, useRef } from 'react';
 import Artplayer from './ArtPlayer';
+import ReactOPlayer from '@oplayer/react';
+import hls from '@oplayer/hls'
+import ui from '@oplayer/ui'
 import Hls from 'hls.js';
 import AdBig from './AdBig'
 import AdBanner from './AdBanner'
@@ -68,12 +71,41 @@ export default (props) => {
                 scrape();
             })
     }, [props.id])
+    const plugins = [
+        ui({
+            pictureInPicture: true,
+            slideToSeek: 'always',
+            screenshot: true,
+            keyboard: { global: true },
+            subtitle: {
+                source: captions.map((caption) => ({ name: caption.language, src: caption.url }))
+            },
+            theme: {
+                primaryColor: "rgb(255 69 12)",
+                watermark: {
+                    src: "https://ohplayer.netlify.app/vercel.svg",
+                    style: {
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        width: '100px',
+                        height: 'auto',
+                        filter: 'contrast(0.1) opacity(0.5)'
+                    },
+                    attrs: {
+                        class: "watermark",
+                    },
+                },
+            },
+        }),
+        hls({ forceHLS: true, withBitrate: true }),
+    ]
     return (
         <>
             {(!loading && streamLink) ? (
-                <>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2vh', width: '75vw' }}>
                     <AdBanner />
-                    <Artplayer
+                    {/* <Artplayer
                         option={{
                             url: (isHls && streamLink),
                             fullscreen: true,
@@ -107,16 +139,21 @@ export default (props) => {
                             width: '90vw',
                             height: '40vw',
                         }}
-                    />
-                </>
+                    /> */}
+                    <ReactOPlayer plugins={plugins} source={{
+                        src: streamLink,
+                        poster: thumbnail
+                    }} />
+                </div>
             ) : (OutputError ? (
-                <div>
-                    <AdBanner />
-                    Source Not Found<br />m9drtch nelgah, smhli hbb hhhh
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1vh' }}>
+                    Source Not Found
+                    <br /><AdBig /><br />
+                    m9drtch nelgah, smhli hbb hhhh
                 </div>) : (
-                <div>
-                    <AdBig />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1vh' }}>
                     <p>sbr chwiya sahbi...</p>
+                    <AdBig />
                 </div>))}
         </>
     )

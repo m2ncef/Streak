@@ -1852,6 +1852,26 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@oplayer/core@^1.2.33":
+  version "1.2.33"
+  resolved "https://registry.npmjs.org/@oplayer/core/-/core-1.2.33.tgz"
+  integrity sha512-MFPHO7QDsLNILpVOvdxOWLlbcVZgvs9vPAEDi2eByKmrkudeAgx5CTydcTSBZ8IhU0a2nY8aL1MrC7m9DQnnrg==
+
+"@oplayer/hls@^1.2.24":
+  version "1.2.24"
+  resolved "https://registry.npmjs.org/@oplayer/hls/-/hls-1.2.24.tgz"
+  integrity sha512-o+C9SZzU2a+DKtWRDuCwrPriZ0Z8L/EyNGlVcmayOZQFTDuQpJNuZ7mUTzYW8ZlAoIx3qo6A+kcvIQ8swJUPcw==
+
+"@oplayer/react@^1.2.10":
+  version "1.2.10"
+  resolved "https://registry.npmjs.org/@oplayer/react/-/react-1.2.10.tgz"
+  integrity sha512-lemUyen4u5os7j9WNEpHmamhRXPcqPXwiNOkaITma8KfUqdS5DY8U4QazwjDf6j+uBXrtyZ+cZP9/QFPt6lKyA==
+
+"@oplayer/ui@^1.3.0-beta.0":
+  version "1.3.0-beta.0"
+  resolved "https://registry.npmjs.org/@oplayer/ui/-/ui-1.3.0-beta.0.tgz"
+  integrity sha512-5lB0lnmDW1MO0V2aQ/+OBBsbrjXpO5aeEy3heaulhn3P89knVx2119QSYpVnb/cultpcV9wUUVXbbZij0Jq37w==
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
@@ -6426,10 +6446,10 @@ hls.js@^0.6.14:
   resolved "https://registry.npmjs.org/hls.js/-/hls.js-0.6.21.tgz"
   integrity sha512-3mjRB1y/FYJKaQ/4nVsAqRUWwddcDfSCCNpuNF4faL0Mpo66QH6DoXwImUKv8DlzzDEVEh9mku+hvIDOYgfYGw==
 
-hls.js@^1.1.5, hls.js@^1.5.6:
-  version "1.5.6"
-  resolved "https://registry.npmjs.org/hls.js/-/hls.js-1.5.6.tgz"
-  integrity sha512-rmlaIEfLuSwqRtYLeTk30ebYli5qNK2urdkEcqYoBezRpV+MFHhZnMX77lHWW+EMjNlwr2sx2apfqq54E3yXnA==
+hls.js@^1.1.5, hls.js@^1.5.7:
+  version "1.5.7"
+  resolved "https://registry.npmjs.org/hls.js/-/hls.js-1.5.7.tgz"
+  integrity sha512-Hnyf7ojTBtXHeOW1/t6wCBJSiK1WpoKF9yg7juxldDx8u3iswrkPt2wbOA/1NiwU4j27DSIVoIEJRAhcdMef/A==
 
 hls.js@0.7.11:
   version "0.7.11"
@@ -8933,6 +8953,11 @@ opener@1:
   version "1.5.2"
   resolved "https://registry.npmjs.org/opener/-/opener-1.5.2.tgz"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
+
+oplayer@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/oplayer/-/oplayer-0.0.1.tgz"
+  integrity sha512-yGEvKjALeJCbXQQIDwIZXBEqsu2xhdplTG8dAx8zHjej7y6dAc7DsAraDefKWsZZCHQJMn+HtB0/PpOAf2q4LQ==
 
 option-validator@^2.0.6:
   version "2.0.6"

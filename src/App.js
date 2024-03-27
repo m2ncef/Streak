@@ -9,6 +9,7 @@ import Explore from './Pages/Explore'
 import { useEffect } from 'react'
 import Login from './Pages/Login'
 import Settings from './Pages/Settings'
+import AdTest from './Components/AdTest'
 
 export default function App() {
     useEffect(()=>{
