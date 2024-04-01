@@ -26,6 +26,7 @@
     "griffith": "^1.30.0",
     "hls.js": "^1.5.7",
     "indigo-player": "^1.5.1",
+    "iso-639-1": "^3.1.2",
     "lion-plyr": "^1.0.5",
     "mediaelement": "^7.0.3",
     "oplayer": "^0.0.1",

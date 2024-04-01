@@ -1,6 +1,6 @@
 import { makeProviders, makeSimpleProxyFetcher, makeStandardFetcher, targets, NotFoundError } from '@movie-web/providers'
 import { useEffect, useState, useRef } from 'react';
-import Artplayer from './ArtPlayer';
+import { getName } from 'iso-639-1';
 import ReactOPlayer from '@oplayer/react';
 import hls from '@oplayer/hls'
 import ui from '@oplayer/ui'
@@ -75,7 +75,7 @@ export default (props) => {
         ui({
             slideToSeek: 'always',
             subtitle: {
-                source: captions.map((caption) => ({ name: caption.language, src: caption.url }))
+                source: captions.map((caption) => ({ name: getName(`${caption.language}`), src: caption.url }))
             },
             theme: {
                 primaryColor: "rgb(255 69 12)",
