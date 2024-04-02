@@ -28,7 +28,7 @@ export default () => {
                 <img src={Icon}></img>
                 <h3 style={{margin:"1vh"}}>Streak</h3>
                 <h4>TV Shows & Movies streaming webapp.</h4>
-                <h5 style={{margin:'5px'}}>Developed by <font style={{color:'#ff742d'}} onClick={()=>window.open('https://instagram.com/m2ncef', '_blank')}>moncef</font></h5>
+                <h5 style={{margin:'5px'}}><font style={{color:'#ff742d'}} onClick={()=>window.open('', '_blank')}></font></h5>
                 <br/>
                 <div style={{color:'gray', margin:'2vh 0vh -2vh 0vh', fontSize:'small', textAlign:'center'}}>
                     <p style={{lineHeight:"2vh", margin:"1vh 3vh"}}>{lastMessage} at {lastUpdate}</p>
