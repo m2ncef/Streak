@@ -80,12 +80,12 @@ export default (props) => {
             theme: {
                 primaryColor: "rgb(255 69 12)",
                 watermark: {
-                    src: "https://i.imgur.com/A694eJi.png",
+                    src: "https://i.imgur.com/nYUdCJR.png",
                     style: {
                         position: 'absolute',
                         top: '10px',
                         right: '10px',
-                        width: '100px',
+                        width: '120px',
                         height: 'auto',
                         filter: 'contrast(0.1) opacity(0.5)'
                     },
@@ -101,7 +101,6 @@ export default (props) => {
         <>
             {(!loading && streamLink) ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2vh', width: '75vw' }}>
-                    <AdBanner />
                     {/* <Artplayer
                         option={{
                             url: (isHls && streamLink),
@@ -145,12 +144,12 @@ export default (props) => {
             ) : (OutputError ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1vh' }}>
                     Source Not Found
-                    <br /><AdBig /><br />
+                    {/* <br /><AdBig /><br /> */}
                     m9drtch nelgah, smhli hbb hhhh
                 </div>) : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1vh' }}>
                     <p>sbr chwiya sahbi...</p>
-                    <AdBig />
+                    {/* <AdBig /> */}
                 </div>))}
         </>
     )

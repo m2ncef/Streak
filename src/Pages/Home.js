@@ -110,7 +110,6 @@ export default function Home() {
                         })}
                     </section>
                     <br/>
-                    <AdBanner/>
                     <h2 style={{ marginLeft: '1vh' }}>Latest TV Series</h2>
                     <section className="trendingScroll">
                         {latest.map((m) => {
