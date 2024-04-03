@@ -71,6 +71,7 @@ export default function Movie() {
             }
         }
         fetchData()
+        console.log(recom)
         document.querySelector(".genres").innerHTML = ""
     }, [params.id])
     return (
@@ -98,18 +99,24 @@ export default function Movie() {
                     </div>
                 </div>
                 <div style={{ margin: '3vh' }}>
-                    <h3>Recommendations</h3>
-                    <section className="recom">
-                        {recom.map((m, i) => {
-                            return <MovieCard img={m.img} id={m.id}></MovieCard>
-                        })}
-                    </section>
-                    <h3>Similar</h3>
-                    <section className="recom">
-                        {similar.map((m) => {
-                            return <MovieCard img={m.img} id={m.id}></MovieCard>
-                        })}
-                    </section>
+                    {(recom.length > 1) && (<>
+                        <h3>Recommendations</h3>
+                        <section className="recom">
+                            {recom.map((m, i) => {
+                                return <MovieCard img={m.img} id={m.id}></MovieCard>
+                            })}
+                        </section>
+                    </>)}
+                    {(similar.length > 1) && (
+                        <>
+                            <h3>Similar</h3>
+                            <section className="recom">
+                                {similar.map((m) => {
+                                    return <MovieCard img={m.img} id={m.id}></MovieCard>
+                                })}
+                            </section>
+                        </>
+                    )}
                 </div>
                 <div className="Player">
                     <div className="close"><i className="fa fa-times" aria-hidden="true"></i></div>

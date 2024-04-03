@@ -144,23 +144,31 @@ export default function Movie() {
                         <div className="EPslider">
                             {
                                 epCard.map(card => {
-                                    return (<EpCard number={card.number} img={card.img} minutes={card.runtime} title={card.title} vote={card.vote} epNumber={card.epNumber}/>)
+                                    return (<EpCard number={card.number} img={card.img} minutes={card.runtime} title={card.title} vote={card.vote} epNumber={card.epNumber} />)
                                 })
                             }
                         </div>
                     </div>
-                    <h3>Recommendations</h3>
-                    <section className="recom">
-                        {recom.map((m) => {
-                            return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
-                        })}
-                    </section>
-                    <h3>Similar</h3>
-                    <section className="recom">
-                        {similar.map((m) => {
-                            return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
-                        })}
-                    </section>
+                    {(recom.length > 1) && (
+                        <>
+                            <h3>Recommendations</h3>
+                            <section className="recom">
+                                {recom.map((m) => {
+                                    return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
+                                })}
+                            </section>
+                        </>
+                    )}
+                    {(similar.length > 1) && (
+                        <>
+                            <h3>Similar</h3>
+                            <section className="recom">
+                                {similar.map((m) => {
+                                    return <MovieCard img={m.img} id={m.id} show='true'></MovieCard>
+                                })}
+                            </section>
+                        </>
+                    )}
                 </div>
                 <div className="Player">
                     <div className="close"><i className="fa fa-times" aria-hidden="true"></i></div>
