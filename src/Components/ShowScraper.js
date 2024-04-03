@@ -114,12 +114,12 @@ export default (props) => {
             theme: {
                 primaryColor: "rgb(255 69 12)",
                 watermark: {
-                    src: "https://i.imgur.com/A694eJi.png",
+                    src: "https://i.imgur.com/nYUdCJR.png",
                     style: {
                         position: 'absolute',
                         top: '10px',
                         right: '10px',
-                        width: '100px',
+                        width: '120px',
                         height: 'auto',
                         filter: 'contrast(0.1) opacity(0.5)'
                     },
@@ -135,42 +135,6 @@ export default (props) => {
         <>
             {(!loading && streamLink) ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2vh', width: '75vw' }}>
-                    <AdBanner />
-                    {/* <Artplayer
-                        option={{
-                            url: (isHls && streamLink),
-                            fullscreen: true,
-                            poster: thumbnail,
-                            setting: true,
-                            playbackRate: true,
-                            autoplay: false,
-                            customType: {
-                                m3u8: playM3u8,
-                            },
-                            settings: [
-                                {
-                                    html: 'Subtitles',
-                                    selector: (captions == []) ? 'Not Available' : (captions.map(caption => ({ html: caption.language, url: caption.url }))),
-                                    onSelect: function (item) {
-                                        this.subtitle.url = item.url;
-                                        this.subtitle.srcLang = item.language;
-                                        this.subtitle.language = item.language;
-                                        this.subtitle.kind = "subtitles"
-                                        return item.html;
-                                    },
-                                }
-                            ],
-                            moreVideoAttr: {
-                                playsInline: true,
-                                src: (!isHls && streamLink),
-                                crossorigin: "anonymous",
-                            },
-                        }}
-                        style={{
-                            width: '90vw',
-                            height: '40vw',
-                        }}
-                    /> */}
                     <ReactOPlayer plugins={plugins} source={{
                         src: streamLink,
                         poster: thumbnail
@@ -179,12 +143,10 @@ export default (props) => {
             ) : (OutputError ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1vh' }}>
                     Source Not Found
-                    <br /><AdBig /><br />
                     m9drtch nelgah, smhli hbb hhhh
                 </div>) : (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1vh' }}>
                     <p>sbr chwiya sahbi...</p>
-                    <AdBig />
                 </div>))
             }
         </>

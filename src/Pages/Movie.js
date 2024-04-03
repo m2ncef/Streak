@@ -97,7 +97,6 @@ export default function Movie() {
                         <p className="DateAndLangs">🌐 {data ? data.spoken_languages[0].english_name : 'English'} • 📅 {data.release_date}</p>
                     </div>
                 </div>
-                <AdBanner/>
                 <div style={{ margin: '3vh' }}>
                     <h3>Recommendations</h3>
                     <section className="recom">

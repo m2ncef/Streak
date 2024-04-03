@@ -32,6 +32,7 @@ If you find Streak helpful, don't forget to give it a ⭐️ star on GitHub and 
    Watch your favorite movies, tv shows with such a good quality.
 ### 📐 Optimized UI
    Streak is fully responsive on all your devices, whether its a mobile phone, desktop, or even a tablet
+### ⚙️ Using movie-web API
 
 ## Getting Started 🚀
 

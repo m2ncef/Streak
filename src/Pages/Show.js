@@ -137,7 +137,6 @@ export default function Movie() {
                         <p className="desc"></p>
                         <p className="DateAndLangs"></p>
                     </div>
-                    <AdBanner />
                 </div>
                 <div style={{ margin: '3vh' }}>
                     <div className="EPS">

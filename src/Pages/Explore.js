@@ -66,7 +66,6 @@ export default function Explore (props) {
                 <Link to={'/tv'} onClick={handleClick}>Shows</Link>
                 <Link to={'/movie'} onClick={handleClick}>Movie</Link>
             </div>
-            <AdBanner/>
              <section className="explore">
                 <div>
                     {movie.map((m)=>{
