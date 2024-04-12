@@ -190,6 +190,9 @@ a {
     backdrop-filter: blur(1vh);
 }
 .MovieInfos div a {
+    align-items: center;
+    display: flex;
+    height: fit-content;
     box-shadow: 0vh 0vh 1vh #000000dd;
     padding: 1vh 1.5vh;
     background: #151515BB;

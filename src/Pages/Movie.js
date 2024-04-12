@@ -71,7 +71,6 @@ export default function Movie() {
             }
         }
         fetchData()
-        console.log(recom)
         document.querySelector(".genres").innerHTML = ""
     }, [params.id])
     return (
@@ -87,8 +86,10 @@ export default function Movie() {
                         <div>
                             <h2>{data.title}</h2>
                             <p style={{ color: '#505050', fontSize: '15px', fontStyle: 'italic', fontWeight: '500', textShadow: '0 0 5px #151515' }}>{data.tagline}</p><br />
-                            <a className="ListButton" href="#" onClick={() => saveToLibrary(`/movie/${params.id}`)}><i className="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;List</a>
-                            <a href="#" onClick={() => openPlayer()}><i className="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;Play</a>
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <a className="ListButton" href="#" onClick={() => saveToLibrary(`/movie/${params.id}`)}><i className="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;List</a>
+                                <a href="#" onClick={() => openPlayer()}><i className="fa fa-play" aria-hidden="true"></i>&nbsp;&nbsp;Play</a>
+                            </div>
                         </div>
                     </div>
                     <div style={{ margin: '0 3vh' }}>
