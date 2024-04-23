@@ -64,7 +64,7 @@ export default (props) => {
                     const providers = makeProviders({
                         fetcher: makeStandardFetcher(fetch),
                         proxiedFetcher: makeSimpleProxyFetcher(proxyUrl, fetch),
-                        target: targets.BROWSER,
+                        target: targets.ANY,
                     });
                     const media = {
                         type: 'show',

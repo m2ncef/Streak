@@ -40,7 +40,7 @@ export default (props) => {
                     const providers = makeProviders({
                         fetcher: makeStandardFetcher(fetch),
                         proxiedFetcher: makeSimpleProxyFetcher(proxyUrl, fetch),
-                        target: targets.BROWSER,
+                        target: targets.ANY,
                     })
                     const media = {
                         type: 'movie',
@@ -50,6 +50,7 @@ export default (props) => {
                     };
                     const output = await providers.runAll({
                         media: media,
+                        sourceOrder: ['flixhq']
                     });
                     if (!output) {
                         setOutputError(true)
