@@ -1,4 +1,4 @@
-# Streak 🔥📺 (NOT WORKING TEMPORARLY)
+# Streak 🔥📺 (NOT WORKING TEMPORARILY)
 ![Streak](https://socialify.git.ci/m2ncef/Streak/image?description=1&font=Inter&language=1&name=1&owner=1&theme=Dark)
 
 Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https://github.com/m2ncef) using ReactJS 🚀
