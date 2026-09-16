@@ -162,6 +162,25 @@ export async function refreshModule(id) {
 }
 
 const BUILTIN_VIDSRC = '/modules/community/vidsrc.js'
+const BUILTIN_SUBS = '/modules/community/subs.js'
+
+async function ensureBuiltin(id, path) {
+  if (typeof window === 'undefined') return
+  const state = cache || (cache = readState())
+  const href = `${window.location.origin}${path}`
+  const entry = state.installed.find((m) => m.id === id)
+  const staleSubs =
+    id === 'subs' &&
+    entry &&
+    !String(entry.code || '').includes('/api/subtitles/search')
+  if (entry && !staleSubs) return
+  try {
+    if (staleSubs) instances.delete(id)
+    await installModule(href)
+  } catch {
+    /* user can install manually */
+  }
+}
 
 async function ensureVidSrcModule() {
   if (typeof window === 'undefined') return
@@ -178,7 +197,8 @@ async function ensureVidSrcModule() {
   }
   const stale =
     !String(entry.url || '').includes('/modules/community/vidsrc.js') ||
-    !String(entry.code || '').includes('onProgress')
+    String(entry.code || '').includes('vidsrc.xyz') ||
+    !String(entry.code || '').includes('/api/extract')
   if (stale) {
     try {
       instances.delete('vidsrc')
@@ -191,6 +211,7 @@ async function ensureVidSrcModule() {
 
 export async function resolveStreaming(ctx) {
   await ensureVidSrcModule()
+  await ensureBuiltin('subs', BUILTIN_SUBS)
   const enabled = getEnabledInstances()
   const report = (info) => {
     try {
@@ -207,6 +228,9 @@ export async function resolveStreaming(ctx) {
 
   for (let i = 0; i < enabled.length; i++) {
     const { instance } = enabled[i]
+    if (typeof instance.getMovieStream !== 'function' && typeof instance.getTvStream !== 'function') {
+      continue
+    }
     const pctBase = Math.round((i / enabled.length) * 80)
     report({
       phase: 'start',
@@ -253,11 +277,23 @@ export async function resolveStreaming(ctx) {
 }
 
 export async function resolveSubtitles(ctx) {
+  await ensureBuiltin('subs', BUILTIN_SUBS)
   const tracks = []
+  const report = (info) => {
+    try {
+      ctx.onProgress?.(info)
+    } catch {
+      /* ignore */
+    }
+  }
   for (const { instance } of getEnabledInstances()) {
     if (typeof instance.getSubtitles !== 'function') continue
+    report({ phase: 'fetch', module: instance.name, message: `${instance.name} subtitles…` })
     try {
-      const result = await instance.getSubtitles(ctx)
+      const result = await instance.getSubtitles({
+        ...ctx,
+        onProgress: (p) => report({ module: instance.name, ...p }),
+      })
       if (Array.isArray(result)) tracks.push(...result)
     } catch {
       /* skip */

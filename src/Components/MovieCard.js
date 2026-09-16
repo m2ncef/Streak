@@ -1,20 +1,15 @@
 'use client'
-import { useEffect } from "react";
+import Link from 'next/link'
 
-export default function Card(props) {
-    const imgPath = 'https://image.tmdb.org/t/p/w342'
-    if (!/null/.test(props.img)) {
-        useEffect(() => {
-            if (document.querySelector(".recom")) {
-                document.querySelectorAll(".recom").forEach(sct => {
-                    sct.scrollTo(0, 0)
-                })
-            }
-        })
-        return (
-            <a href={`/${props.show === 'true' ? 'tv' : 'movie'}/${props.id}`} className="movieCard">
-                <img src={`${imgPath}${props.img}`}></img>
-            </a>
-        )
-    }
+export default function Card({ img, id, show, rank }) {
+  if (!img || /null/.test(String(img))) return null
+  return (
+    <Link href={`/${show === 'true' || show === true ? 'tv' : 'movie'}/${id}`} className="movieCard">
+      <img src={`https://image.tmdb.org/t/p/w342${img}`} alt="" />
+      <span className="cardPlay" aria-hidden="true">
+        <i className="fa fa-play" />
+      </span>
+      {rank != null ? <span className="rankedNum">{rank}</span> : null}
+    </Link>
+  )
 }

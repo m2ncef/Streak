@@ -115,8 +115,10 @@ export async function GET(request) {
 
   const ct = (upstream.headers.get("content-type") || "").toLowerCase();
   const buf = Buffer.from(await upstream.arrayBuffer());
-  const peek = buf.subarray(0, 8).toString("utf8");
+  const peek = buf.subarray(0, 16).toString("utf8");
   const isPlaylist = peek.startsWith("#EXTM3U");
+  const isVtt = peek.startsWith("WEBVTT") || parsed.pathname.endsWith(".vtt");
+  const isSrt = parsed.pathname.endsWith(".srt");
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -130,6 +132,11 @@ export async function GET(request) {
     return new Response(rewritePlaylist(buf.toString("utf8"), parsed.href), {
       headers,
     });
+  }
+
+  if (isVtt || isSrt) {
+    headers["Content-Type"] = isSrt ? "application/x-subrip" : "text/vtt; charset=utf-8";
+    return new Response(buf.toString("utf8"), { headers });
   }
 
   const mime = sniffMime(buf, ct);

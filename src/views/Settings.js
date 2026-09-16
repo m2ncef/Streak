@@ -56,6 +56,9 @@ export default function Settings() {
         )}
 
         <ModulesSettings />
+        <p className="settingsLead">
+          <a href="/modules">How to write a module and contribute</a>
+        </p>
 
         <section className="settingsBlock">
           <h2>Library</h2>
@@ -75,8 +78,16 @@ export default function Settings() {
           <a href="https://artplayer.org/document/en" target="_blank" rel="noreferrer">
             ArtPlayer — HLS playback
           </a>
+          <a href="https://sub.wyzie.io/" target="_blank" rel="noreferrer">
+            Wyzie — Community Subs
+          </a>
+          <a href="https://www.opensubtitles.org/" target="_blank" rel="noreferrer">
+            OpenSubtitles — Community Subs
+          </a>
           <p className="settingsLegal">
-            Streak does not host files. Modules only link to third-party sources. Legal issues belong with those hosts.
+            Streak does not host, store, or serve video or subtitle files. This app is for
+            educational use. Modules only return links to third-party servers. Copyright claims
+            go to those hosts. See <a href="/modules">the modules page</a> for the full notice.
           </p>
         </section>
       </main>

@@ -1,7 +1,7 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { resolveStreaming, resolveSubtitles } from '../modules'
-import HlsPlayer from './HlsPlayer'
+import StreamPlayer from './StreamPlayer'
 
 export default function WatchPlayer({
   kind,
@@ -10,6 +10,7 @@ export default function WatchPlayer({
   episode,
   title,
   next,
+  runtime,
   onClose,
   onNext,
 }) {
@@ -36,9 +37,12 @@ export default function WatchPlayer({
         },
       }
       const stream = await resolveStreaming(ctx)
-      await resolveSubtitles(ctx)
+      const extraSubs = await resolveSubtitles(ctx)
       if (cancelled) return
-      if (stream?.url) setSource(stream)
+      if (stream?.url) {
+        const subtitles = [...(stream.subtitles || []), ...(extraSubs || [])]
+        setSource({ ...stream, subtitles })
+      }
       else setError('No enabled module returned a stream.')
     }
     run()
@@ -56,18 +60,23 @@ export default function WatchPlayer({
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose?.()
-      if (e.key === 'n' || e.key === 'N') next && onNext?.()
+      if ((e.key === 'n' || e.key === 'N') && next && offerNext) onNext?.()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose, onNext, next])
+  }, [onClose, onNext, next, offerNext])
 
   const onTime = useCallback(
     ({ current, duration }) => {
-      if (!next || !duration) return
-      setOfferNext(duration - current <= 12)
+      if (!next || !duration || duration < 20) return
+      const remain = duration - current
+      const tail = Math.min(30, Math.max(15, duration * 0.045))
+      const listed = runtime > 0 ? runtime * 60 : 0
+      const inCredits =
+        listed && duration > listed + 20 && current >= Math.max(0, listed - 10)
+      setOfferNext(remain <= tail || inCredits)
     },
-    [next]
+    [next, runtime]
   )
 
   const label =
@@ -79,14 +88,26 @@ export default function WatchPlayer({
       onMouseMove={() => setChrome(true)}
       onClick={() => setChrome(true)}
     >
-      <button type="button" className="watchClose" onClick={onClose} aria-label="Close">
-        <i className="fa fa-chevron-left" aria-hidden="true" />
-      </button>
-
-      <div className="watchTop">
-        <p>{label}</p>
-        {title && kind === 'tv' ? <span>{title}</span> : null}
-        {source?.module?.name ? <em>{source.module.name}</em> : null}
+      <div className="watchBar">
+        <button
+          type="button"
+          className="watchClose"
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            onClose?.()
+          }}
+          aria-label="Close"
+        >
+          <i className="fa fa-chevron-left" aria-hidden="true" />
+        </button>
+        <div className="watchTop">
+          <p>{label}</p>
+          <span>
+            {kind === 'tv' && title ? `${title} · ` : ''}
+            {source?.module?.name || ''}
+          </span>
+        </div>
       </div>
 
       {!source && !error && (
@@ -112,9 +133,12 @@ export default function WatchPlayer({
         (source.type === 'hls' ||
         /\.m3u8(\?|$)/i.test(source.url) ||
         source.url.includes('/api/hls-proxy') ? (
-          <HlsPlayer
+          <StreamPlayer
             url={source.url}
-            muted={false}
+            title={label}
+            subtitles={source.subtitles}
+            next={next}
+            onNext={onNext}
             onEnded={() => next && onNext?.()}
             onTime={onTime}
           />
@@ -127,10 +151,10 @@ export default function WatchPlayer({
           />
         ))}
 
-      {next && source && (
+      {next && source && offerNext && (
         <button
           type="button"
-          className={`watchNext ${offerNext ? 'is-offer' : ''}`}
+          className="watchNext is-offer"
           onClick={onNext}
         >
           Next episode

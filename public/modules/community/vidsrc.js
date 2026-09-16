@@ -1,33 +1,27 @@
 /**
  * Streak community module — VidSrc
  *
- * Playwright scrape lives on the host (/api/extract).
- * This file is the installable source module.
+ * Prefers host /api/extract (HLS) when present.
+ * Falls back to a client iframe embed — no scrape in the browser.
  *
- * Install:
- *   /modules/community/vidsrc.js
+ * Install: /modules/community/vidsrc.js
  */
 
-const PROVIDERS = [
-  'https://vidsrc2.ru',
-  'https://vidsrc.ir',
-  'https://vidsrcme.ru',
-  'https://vidsrcme.su',
-  'https://vidsrc-me.ru',
-  'https://vidsrc.me',
-  'https://vidsrc.io',
-  'https://vidsrc.tw',
+const EMBEDS = [
+  'https://vidsrcme.ru/embed',
+  'https://vidsrc.ir/embed',
+  'https://vidsrc2.ru/embed',
+  'https://vidsrcme.su/embed',
+  'https://vidsrc-me.ru/embed',
+  'https://vidsrc.me/embed',
+  'https://vidsrc.io/embed',
+  'https://vidsrc.tw/embed',
 ]
 
 function firstHls(data) {
   if (!data?.results) return { url: null, subs: [] }
-  const order = PROVIDERS.filter((d) => data.results[d])
-  const rest = Object.keys(data.results).filter((d) => !order.includes(d))
-  for (const domain of order.concat(rest)) {
-    const result = data.results[domain]
-    if (result?.hls_url) {
-      return { url: result.hls_url, subs: result.subtitles || [] }
-    }
+  for (const result of Object.values(data.results)) {
+    if (result?.hls_url) return { url: result.hls_url, subs: result.subtitles || [] }
   }
   return { url: null, subs: [] }
 }
@@ -38,63 +32,69 @@ function proxy(url, referer) {
   return '/api/hls-proxy?' + q.toString()
 }
 
-async function extract(params, ctx) {
+function iframe(kind, id, season, episode) {
+  const host = EMBEDS[0]
+  const url =
+    kind === 'tv'
+      ? `${host}/tv/${id}/${season}/${episode}`
+      : `${host}/movie/${id}`
+  return { type: 'iframe', url }
+}
+
+async function extract(kind, id, season, episode, ctx) {
   const progress = (p) => ctx?.onProgress?.(p)
-  progress({ phase: 'start', message: 'Contacting VidSrc…', pct: 15 })
-  const q = new URLSearchParams(params)
-  q.set('first', '1')
-  progress({ phase: 'fetch', message: 'Scraping providers…', pct: 40 })
-  const res = await fetch('/api/extract?' + q.toString())
-  progress({ phase: 'parse', message: 'Reading stream…', pct: 75 })
-  const data = await res.json()
-  const { url, subs } = firstHls(data)
-  if (!url) throw new Error(data.error || 'No HLS stream')
-  const origin = (() => {
-    try {
-      return new URL(url).origin + '/'
-    } catch {
-      return ''
-    }
-  })()
-  progress({ phase: 'ready', message: 'Stream ready', pct: 95 })
-  return {
-    type: 'hls',
-    url: proxy(url, origin),
-    subtitles: (subs || []).map((s, i) => ({
-      label: 'Caption ' + (i + 1),
-      lang: 'en',
-      url: s,
-    })),
+  progress({ message: 'Extracting stream…', pct: 25 })
+  const q = new URLSearchParams({ tmdb_id: String(id), type: kind, first: '1' })
+  if (kind === 'tv') {
+    q.set('season', String(season))
+    q.set('episode', String(episode))
   }
+  try {
+    const res = await fetch('/api/extract?' + q.toString())
+    if (res.ok) {
+      const data = await res.json()
+      const { url, subs } = firstHls(data)
+      if (url) {
+        let origin = ''
+        try {
+          origin = new URL(url).origin + '/'
+        } catch {
+          /* ignore */
+        }
+        progress({ message: 'Stream ready', pct: 90 })
+        return {
+          type: 'hls',
+          url: proxy(url, origin),
+          subtitles: (subs || []).map((s, i) => ({
+            label: 'Caption ' + (i + 1),
+            lang: 'en',
+            url: typeof s === 'string' ? s : s.url,
+          })),
+        }
+      }
+    }
+  } catch {
+    /* host extract missing — iframe */
+  }
+  progress({ message: 'Opening embed…', pct: 70 })
+  return iframe(kind, id, season, episode)
 }
 
 const MODULE = {
   id: 'vidsrc',
   name: 'VidSrc',
   author: 'Streak',
-  version: '2.2.0',
+  version: '3.1.0',
   icon: '/icon.png',
-  labels: ['community', 'hls', 'movies', 'tv'],
-  description: 'VidSrc HLS via host /api/extract (Playwright scrape)',
+  labels: ['community', 'hls', 'iframe', 'movies', 'tv'],
+  description: 'VidSrc HLS via extract, iframe fallback',
 
   async getMovieStream(id, ctx) {
-    return extract({ tmdb_id: String(id), type: 'movie' }, ctx)
+    return extract('movie', id, null, null, ctx)
   },
 
   async getTvStream(id, season, episode, ctx) {
-    return extract(
-      {
-        tmdb_id: String(id),
-        type: 'tv',
-        season: String(season),
-        episode: String(episode),
-      },
-      ctx
-    )
-  },
-
-  async getSubtitles(ctx) {
-    return ctx?.subtitles || []
+    return extract('tv', id, season, episode, ctx)
   },
 }
 

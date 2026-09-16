@@ -14,10 +14,10 @@ const ORIGINAL = 'https://image.tmdb.org/t/p/original'
 const LOGO = 'https://image.tmdb.org/t/p/w500'
 
 const GENRE_RAILS = [
-  { title: 'Action & thrillers', id: 28, type: 'movie' },
-  { title: 'Comedies', id: 35, type: 'movie' },
-  { title: 'Sci-fi & fantasy', id: 878, type: 'movie' },
-  { title: 'Crime dramas', id: 80, type: 'tv' },
+  { title: 'Action', id: 28, type: 'movie' },
+  { title: 'Comedy', id: 35, type: 'movie' },
+  { title: 'Science Fiction', id: 878, type: 'movie' },
+  { title: 'Crime', id: 80, type: 'tv' },
   { title: 'Animation', id: 16, type: 'movie' },
   { title: 'Documentaries', id: 99, type: 'tv' },
 ]
@@ -57,14 +57,13 @@ function Rail({ title, href, items, show, large, ranked }) {
       </div>
       <div className="trendingScroll">
         {items.map((m, i) => (
-          ranked ? (
-            <div className="rankedCard" key={m.id}>
-              <span className="rankedNum">{i + 1}</span>
-              <MovieCard img={m.img} id={m.id} show={show ? 'true' : undefined} />
-            </div>
-          ) : (
-            <MovieCard key={m.id} img={m.img} id={m.id} show={show ? 'true' : undefined} />
-          )
+          <MovieCard
+            key={m.id}
+            img={m.img}
+            id={m.id}
+            show={show || m.show ? 'true' : undefined}
+            rank={ranked ? i + 1 : undefined}
+          />
         ))}
       </div>
     </section>
@@ -368,17 +367,16 @@ export default function Home() {
         )}
 
         <Rail title="Continue watching" items={continueWatching} large />
-        <Rail title="Top 10 this week" items={top10} ranked />
+        <Rail title="Top 10" items={top10} ranked />
         <Rail
-          title="Now in theaters"
+          title="In theaters"
           href="/browse?type=movie&sort=popularity.desc"
           items={trending}
-          large
         />
         <Rail title="My List" href="/list" items={myList} />
-        <Rail title="Highest rated films" href="/browse?type=movie&sort=vote_average.desc" items={popular} />
-        <Rail title="Shows people are on" href="/browse?type=tv" items={latest} show />
-        <Rail title="TV worth finishing" href="/browse?type=tv&sort=vote_average.desc" items={popularTV} show />
+        <Rail title="Top rated movies" href="/browse?type=movie&sort=vote_average.desc" items={popular} />
+        <Rail title="Trending shows" href="/browse?type=tv" items={latest} show />
+        <Rail title="Top rated shows" href="/browse?type=tv&sort=vote_average.desc" items={popularTV} show />
         {genreRails.map((g) => (
           <Rail key={g.title} title={g.title} href={g.href} items={g.items} show={g.show} />
         ))}

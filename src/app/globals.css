@@ -297,7 +297,7 @@ a {
     align-items: baseline;
     justify-content: space-between;
     gap: 16px;
-    margin: 0 var(--gutter) 0.9rem;
+    margin: 0 var(--gutter) 10px;
 }
 .homeRail h2 {
     margin: 0;
@@ -306,111 +306,99 @@ a {
     letter-spacing: -0.02em;
 }
 .homeRailMore {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3em;
-    color: #aaa;
-    font-size: 0.82rem;
+    color: #888;
+    font-size: 0.8rem;
     font-weight: 600;
-    transition: color .15s ease, gap .15s ease;
 }
 .homeRailMore:hover {
     color: #fff;
-    gap: 0.5em;
-}
-.homeRail.is-ranked .trendingScroll {
-    gap: 0;
-}
-.rankedCard {
-    display: flex;
-    align-items: flex-end;
-    flex: 0 0 auto;
-}
-.rankedNum {
-    font-size: 7rem;
-    font-weight: 800;
-    line-height: 0.78;
-    color: transparent;
-    -webkit-text-stroke: 1.5px #4a4a4a;
-    padding: 0 0.1rem 0 1.1rem;
-    pointer-events: none;
-    letter-spacing: -0.05em;
-}
-
-.homeRailScroller {
-    position: relative;
 }
 .trendingScroll {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
     gap: 8px;
-    width: 100%;
     overflow-x: auto;
-    overflow-y: hidden;
-    padding: 4px 0 12px;
-    scroll-snap-type: x proximity;
+    padding: 0 var(--gutter) 4px;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
 }
 .trendingScroll::-webkit-scrollbar {
     display: none;
-}
-.homeRail .trendingScroll::before,
-.homeRail .trendingScroll::after {
-    content: "";
-    flex: 0 0 var(--gutter);
-    pointer-events: none;
 }
 
 .movieCard {
     position: relative;
     display: block;
     flex: 0 0 auto;
-    scroll-snap-align: start;
-    border-radius: 6px;
-    overflow: hidden;
-    isolation: isolate;
-    transition: transform .22s cubic-bezier(.2,.7,.3,1);
+    line-height: 0;
+    border-radius: 8px;
+    transform-origin: center center;
+    transition: transform .2s ease, z-index 0s linear .2s;
+    z-index: 1;
 }
 .movieCard img {
     display: block;
-    width: 132px;
-    aspect-ratio: 2 / 3;
+    width: 138px;
+    height: 207px;
     object-fit: cover;
-    background: #181818;
-    border-radius: 6px;
-    box-shadow: 0 2px 10px #0000006b;
-    transition: box-shadow .22s ease;
+    background: #161616;
+    border-radius: 8px;
+    box-shadow: 0 10px 24px #00000080;
 }
-.movieCard::after {
-    content: "";
+.cardPlay {
     position: absolute;
     inset: 0;
-    border-radius: 6px;
-    box-shadow: inset 0 0 0 1px #ffffff14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0006;
+    border-radius: 8px;
+    opacity: 0;
+    color: #fff;
+    font-size: 22px;
+    transition: opacity .18s ease;
+}
+@media (hover: hover) {
+    .movieCard:hover,
+    .movieCard:focus-visible {
+        transform: translateY(-6px) scale(1.04);
+        z-index: 6;
+        transition: transform .2s ease, z-index 0s;
+    }
+}
+.movieCard:hover .cardPlay,
+.movieCard:focus-visible .cardPlay {
+    opacity: 1;
+}
+.rankedNum {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 4px;
+    background: #000000cc;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
-}
-.movieCard:hover,
-.movieCard:focus-visible {
-    transform: translateY(-6px) scale(1.06);
-    z-index: 3;
-}
-.movieCard:hover img {
-    box-shadow: 0 16px 32px #000000a8, 0 0 0 1.5px #ffffff40;
 }
 
 .homeRail.is-large .movieCard img {
-    width: 168px;
+    width: 148px;
+    height: 222px;
 }
 @media (min-width: 640px) {
     .movieCard img {
-        width: 150px;
+        width: 156px;
+        height: 234px;
     }
     .homeRail.is-large .movieCard img {
         width: 196px;
-    }
-    .rankedNum {
-        font-size: 8.5rem;
+        height: 294px;
     }
     .browseGrid {
         grid-template-columns: repeat(4, 1fr);
@@ -536,6 +524,10 @@ a {
 .browseGrid .movieCard {
     margin: 0;
     width: 100%;
+}
+.browseGrid .movieCard:hover,
+.browseGrid .movieCard:focus-visible {
+    transform: none;
 }
 .browseGrid .movieCard img {
     width: 100%;
@@ -861,20 +853,21 @@ a {
 }
 .titleBlock {
     margin: 0 0 4vh;
-    padding: 0 var(--gutter);
+    padding: 0;
 }
 .titleBlock h2 {
-    margin: 0 0 1.4vh;
+    margin: 0 0 10px;
+    padding: 0 var(--gutter);
     font-size: 1.05rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
 }
 .titleBlockHead {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.6vh;
-    margin: 0 0 1.4vh;
+    gap: 12px;
+    margin: 0 0 10px;
+    padding: 0 var(--gutter);
 }
 .titleBlockHead h2 {
     margin: 0;
@@ -890,21 +883,25 @@ a {
 }
 .titleEps {
     display: flex;
-    gap: 1.2vh;
+    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 0.8vh;
+    padding: 0 var(--gutter) 8px;
+    scrollbar-width: none;
+}
+.titleEps::-webkit-scrollbar {
+    display: none;
 }
 .titleEp {
-    flex: 0 0 22vh;
+    flex: 0 0 220px;
     border: none;
-    background: #151515;
+    background: #141414;
     color: #fff;
     text-align: left;
-    border-radius: 1.2vh;
-    padding: 1.1vh;
+    border-radius: 4px;
+    padding: 0 0 8px;
     display: flex;
     flex-direction: column;
-    gap: 0.7vh;
+    gap: 6px;
     cursor: pointer;
 }
 .titleEp img,
@@ -912,29 +909,33 @@ a {
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: 0.8vh;
+    border-radius: 3px 3px 0 0;
     background: #101010;
     display: block;
+}
+.titleEp:hover {
+    outline: 2px solid #fff;
+    outline-offset: -2px;
 }
 .titleEpMeta {
     color: #888;
     font-size: 0.72rem;
+    padding: 0 8px;
 }
 .titleEpName {
     font-size: 0.86rem;
     line-height: 1.3;
     font-weight: 600;
+    padding: 0 8px;
 }
 .titleBlock .trendingScroll {
-    padding: 0;
+    padding: 0 var(--gutter) 4px;
 }
+.Player,
 .Player.is-open {
-    display: flex;
-}
-.Player {
     z-index: 9999;
     position: fixed;
-    display: none;
+    display: flex;
     inset: 0;
     background: #000;
 }
@@ -945,46 +946,73 @@ a {
     background: #000;
 }
 .watchPlayer iframe,
-.watchPlayer .hlsPlayer {
+.watchPlayer .hlsPlayer,
+.watchPlayer .streamPlayer {
     position: absolute;
     inset: 0;
+    z-index: 1;
     width: 100%;
     height: 100%;
     border: none;
 }
-.watchClose,
-.watchTop,
+.streamPlayer {
+    background: #000;
+    pointer-events: auto;
+}
+.streamPlayer .art-video-player {
+    width: 100%;
+    height: 100%;
+}
+.streamPlayer .art-subtitle {
+    z-index: 20 !important;
+    bottom: 72px !important;
+    pointer-events: none;
+}
+.watchBar,
 .watchNext {
     opacity: 0;
     pointer-events: none;
     transition: opacity .2s ease;
 }
+.watchPlayer.is-chrome .watchBar {
+    opacity: 1;
+    pointer-events: none;
+}
 .watchPlayer.is-chrome .watchClose,
-.watchPlayer.is-chrome .watchTop,
-.watchPlayer.is-chrome .watchNext,
 .watchNext.is-offer {
     opacity: 1;
     pointer-events: auto;
 }
-.watchClose {
+.watchBar {
     position: absolute;
-    z-index: 4;
-    top: 18px;
-    left: var(--gutter);
-    width: 42px;
-    height: 42px;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px var(--gutter) 28px;
+    background: linear-gradient(180deg, #000000cc, transparent);
+}
+.watchClose {
+    position: relative;
+    z-index: 31;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
     border-radius: 50%;
     border: 1px solid #ffffff33;
     background: #00000088;
     color: #fff;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
 }
 .watchTop {
-    position: absolute;
-    z-index: 4;
-    top: 18px;
-    left: 76px;
-    right: var(--gutter);
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -994,12 +1022,11 @@ a {
     margin: 0;
     font-size: 1.05rem;
     font-weight: 700;
+    line-height: 1.2;
 }
-.watchTop span,
-.watchTop em {
+.watchTop span {
     font-size: 0.78rem;
     color: #bbb;
-    font-style: normal;
 }
 .watchLoad {
     position: absolute;
@@ -1452,6 +1479,90 @@ a {
     box-shadow: 0vh 0vh 8px 1px #ffffff88;
     background: #ffffff66;
 }
+.guidePage {
+    max-width: 720px;
+    margin: 0 auto 8vh;
+    padding: 24px var(--gutter) 48px;
+}
+.guidePage h1 {
+    margin: 8px 0 12px;
+    font-size: 1.6rem;
+    letter-spacing: -0.04em;
+}
+.guideLead {
+    color: #aaa;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 28px;
+}
+.guidePage h2 {
+    margin: 28px 0 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8a8a8a;
+}
+.guidePage p,
+.guidePage li {
+    color: #ccc;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+.guidePage ul,
+.guidePage ol {
+    margin: 0 0 12px;
+    padding-left: 1.2rem;
+}
+.guidePage section a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.guidePage code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.86em;
+    white-space: nowrap;
+    background: #ffffff12;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+}
+.guideLegal {
+    background: #141414;
+    border: 1px solid #ffffff22;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 0 0 8px;
+}
+.guideLegal h2 {
+    margin-top: 0;
+    color: #ddd;
+}
+.guideLegal p,
+.guideLegal li {
+    color: #bbb;
+    font-size: 0.86rem;
+}
+.guideCode {
+    background: #0e0e0e;
+    border: 1px solid #ffffff14;
+    border-radius: 10px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #ddd;
+}
+.guideCta {
+    display: inline-block;
+    margin-top: 8px;
+    background: #fff;
+    color: #111 !important;
+    text-decoration: none !important;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 8px;
+}
 .settingsPage {
     max-width: 720px;
     margin: 0 auto 6vh;
@@ -1579,6 +1690,49 @@ a {
     position: relative;
     margin-top: 4vh;
     padding: 1vh;
+}
+.moduleCatalog {
+    list-style: none;
+    margin: 0 0 1.6vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.moduleCatalog li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #151515;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.moduleCatalog strong {
+    display: block;
+    font-size: 0.92rem;
+}
+.moduleCatalog span {
+    display: block;
+    color: #888;
+    font-size: 0.78rem;
+    margin-top: 2px;
+}
+.moduleCatalog button {
+    flex-shrink: 0;
+    border: none;
+    background: #fff;
+    color: #111;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.moduleCatalog button:disabled {
+    background: #ffffff18;
+    color: #888;
+    cursor: default;
 }
 .moduleInstall {
     display: flex;
@@ -1870,8 +2024,14 @@ a {
     .homeRailHead {
         margin: 0 var(--gutter) 16px;
     }
-    .homeRail .trendingScroll {
-        gap: 10px;
+    .homeRail .movieCard img,
+    .titleBlock .movieCard img {
+        width: 168px;
+        height: 252px;
+    }
+    .homeRail.is-large .movieCard img {
+        width: 210px;
+        height: 315px;
     }
     .browseGrid {
         grid-template-columns: repeat(6, 1fr);
@@ -1906,8 +2066,8 @@ a {
         margin-bottom: 5vh;
     }
     .trendingScroll:not(.homeRail .trendingScroll):not(.titleBlock .trendingScroll) {
-        padding-left: 7vh;
-        padding-right: 7vh;
+        padding-left: var(--gutter);
+        padding-right: var(--gutter);
     }
     .MainMovie {
         margin: 5vh 10vh;
@@ -1946,11 +2106,11 @@ a {
     .genres span {
         font-size: medium;
     }
-    .movieCard img {
-        width: 23vh !important;
-        height: 34vh !important;
-        box-shadow: 0px 0px 1vh black !important;
-        margin: 1vh !important;
+    .MainMovie .movieCard img {
+        width: 23vh;
+        height: 34vh;
+        box-shadow: 0px 0px 1vh black;
+        margin: 1vh;
     }
     .DesktopBtn {
         display: flex !important;

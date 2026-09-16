@@ -10,6 +10,21 @@ import {
   uninstallModule,
 } from '../modules'
 
+const COMMUNITY = [
+  {
+    id: 'vidsrc',
+    name: 'VidSrc',
+    blurb: 'Browser embed — no server',
+    url: '/modules/community/vidsrc.js',
+  },
+  {
+    id: 'subs',
+    name: 'Community Subs',
+    blurb: 'Client-side subtitles',
+    url: '/modules/community/subs.js',
+  },
+]
+
 export default function ModulesSettings() {
   const [modules, setModules] = useState([])
   const [url, setUrl] = useState('')
@@ -54,12 +69,51 @@ export default function ModulesSettings() {
     uninstallModule(mod.id)
   }
 
+  async function installBuiltin(path) {
+    setStatus(null)
+    setBusy(true)
+    try {
+      const href =
+        path.startsWith('/') && typeof window !== 'undefined'
+          ? `${window.location.origin}${path}`
+          : path
+      const meta = await installModule(href)
+      setStatus({ ok: true, text: `Installed ${meta.name}` })
+    } catch (err) {
+      setStatus({ ok: false, text: err.message || 'Install failed' })
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
     <section className="settingsBlock">
       <h2>Modules</h2>
       <p className="settingsLead">
-        Paste a raw <code>.js</code> link. Enabled sources are tried from top to bottom.
+        Drop in any <code>.js</code> module. They run in the browser only — no host API.
+        Stream modules are tried top to bottom. Subtitle modules are merged.
       </p>
+
+      <ul className="moduleCatalog">
+        {COMMUNITY.map((item) => {
+          const on = modules.some((m) => m.id === item.id)
+          return (
+            <li key={item.id}>
+              <div>
+                <strong>{item.name}</strong>
+                <span>{item.blurb}</span>
+              </div>
+              <button
+                type="button"
+                disabled={busy || on}
+                onClick={() => installBuiltin(item.url)}
+              >
+                {on ? 'Installed' : 'Install'}
+              </button>
+            </li>
+          )
+        })}
+      </ul>
 
       <form className="moduleInstall" onSubmit={install}>
         <input

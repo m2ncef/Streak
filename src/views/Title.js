@@ -281,7 +281,13 @@ export default function Title({ kind }) {
             episode={player.e}
             title={title}
             next={isTv ? nextEpisode(player.s, player.e) : null}
+            runtime={
+              isTv && player.s === season
+                ? episodes.find((ep) => ep.n === player.e)?.runtime
+                : undefined
+            }
             onClose={() => setPlayer(null)}
+            key={`${player.s}-${player.e}`}
             onNext={() => {
               const n = nextEpisode(player.s, player.e)
               if (n) {
