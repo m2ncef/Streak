@@ -212,7 +212,7 @@ async function scrapeProvider(domain, url) {
     await context.close();
 
     if (!hlsUrl) throw new Error("HLS URL not found");
-    return { hls_url: hlsUrl, subtitles, error: null };
+    return { hls_url: hlsUrl, subtitles, referer: `${domain}/`, error: null };
   } catch (error) {
     await page.close().catch(() => {});
     await context.close().catch(() => {});

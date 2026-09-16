@@ -19,11 +19,13 @@ const EMBEDS = [
 ]
 
 function firstHls(data) {
-  if (!data?.results) return { url: null, subs: [] }
+  if (!data?.results) return { url: null, subs: [], referer: null }
   for (const result of Object.values(data.results)) {
-    if (result?.hls_url) return { url: result.hls_url, subs: result.subtitles || [] }
+    if (result?.hls_url) {
+      return { url: result.hls_url, subs: result.subtitles || [], referer: result.referer || null }
+    }
   }
-  return { url: null, subs: [] }
+  return { url: null, subs: [], referer: null }
 }
 
 function proxy(url, referer) {
@@ -53,18 +55,20 @@ async function extract(kind, id, season, episode, ctx) {
     const res = await fetch('/api/extract?' + q.toString())
     if (res.ok) {
       const data = await res.json()
-      const { url, subs } = firstHls(data)
+      const { url, subs, referer } = firstHls(data)
       if (url) {
-        let origin = ''
-        try {
-          origin = new URL(url).origin + '/'
-        } catch {
-          /* ignore */
+        let ref = referer
+        if (!ref) {
+          try {
+            ref = new URL(url).origin + '/'
+          } catch {
+            ref = ''
+          }
         }
         progress({ message: 'Stream ready', pct: 90 })
         return {
           type: 'hls',
-          url: proxy(url, origin),
+          url: proxy(url, ref),
           subtitles: (subs || []).map((s, i) => ({
             label: 'Caption ' + (i + 1),
             lang: 'en',
