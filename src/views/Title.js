@@ -1,13 +1,12 @@
 'use client'
-import { useParams } from 'next/navigation'
-import Nav from '../Components/Nav'
+import Link from 'next/link'
+import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import MovieCard from '../Components/MovieCard'
 import Footer from '../Components/Footer'
 import Loading from '../Components/Loading'
 import { Toaster, toast } from 'react-hot-toast'
-import MovieScraper from '../Components/MovieScraper'
-import ShowScraper from '../Components/ShowScraper'
+import WatchPlayer from '../Components/WatchPlayer'
 
 const API = 'https://api.themoviedb.org/3'
 const KEY = '84120436235fe71398e95a662f44db8b'
@@ -24,6 +23,7 @@ function posters(results) {
 export default function Title({ kind }) {
   const isTv = kind === 'tv'
   const { id } = useParams()
+  const router = useRouter()
   const [info, setInfo] = useState(null)
   const [recom, setRecom] = useState([])
   const [similar, setSimilar] = useState([])
@@ -116,10 +116,24 @@ export default function Title({ kind }) {
     toast.success('Added to My List', { position: 'bottom-center' })
   }
 
+  const bar = (
+    <div className="titleBar">
+      <button type="button" className="titleBarBtn" onClick={() => router.back()} aria-label="Back">
+        <i className="fa fa-chevron-left" aria-hidden="true" />
+      </button>
+      <Link href="/" className="titleBarBrand">
+        Streak
+      </Link>
+      <Link href="/browse" className="titleBarBtn" aria-label="Search">
+        <i className="fa fa-search" aria-hidden="true" />
+      </Link>
+    </div>
+  )
+
   if (error) {
     return (
       <>
-        <Nav />
+        {bar}
         <p className="homeError">{error}</p>
         <Footer />
       </>
@@ -135,12 +149,24 @@ export default function Title({ kind }) {
   const logoSrc = logo ? `${ORIGINAL}${logo}` : ''
   const seasons = info?.number_of_seasons || 0
 
+  function nextEpisode(s, e) {
+    if (!isTv || !info) return null
+    const list = (info.seasons || []).filter((x) => x.season_number > 0)
+    const cur = list.find((x) => x.season_number === s)
+    const count = cur?.episode_count || episodes.length
+    if (e < count) return { s, e: e + 1 }
+    const nxt = list.find((x) => x.season_number === s + 1)
+    if (nxt?.episode_count) return { s: s + 1, e: 1 }
+    if (!cur && e < episodes.length) return { s, e: e + 1 }
+    return null
+  }
+
   return (
     <>
       <Loading />
       <Toaster />
-      <Nav />
       <main className="titlePage">
+        {bar}
         {info && (
           <section className="titleHero" style={{ backgroundImage: backdrop ? `url(${backdrop})` : 'none' }}>
             <div className="titleHeroScrim" />
@@ -248,14 +274,22 @@ export default function Title({ kind }) {
 
       {player && (
         <div className="Player is-open">
-          <button type="button" className="close" onClick={() => setPlayer(null)} aria-label="Close player">
-            <i className="fa fa-times" aria-hidden="true" />
-          </button>
-          {isTv ? (
-            <ShowScraper id={id} s={player.s} e={player.e} />
-          ) : (
-            <MovieScraper id={id} />
-          )}
+          <WatchPlayer
+            kind={kind}
+            id={id}
+            season={player.s}
+            episode={player.e}
+            title={title}
+            next={isTv ? nextEpisode(player.s, player.e) : null}
+            onClose={() => setPlayer(null)}
+            onNext={() => {
+              const n = nextEpisode(player.s, player.e)
+              if (n) {
+                setSeason(n.s)
+                setPlayer(n)
+              }
+            }}
+          />
         </div>
       )}
       <Footer />

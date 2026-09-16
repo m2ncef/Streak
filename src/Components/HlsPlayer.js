@@ -8,7 +8,7 @@ function HlsCtor() {
   return null
 }
 
-export default function HlsPlayer({ url, ...rest }) {
+export default function HlsPlayer({ url, muted = false, onEnded, onTime, ...rest }) {
   const videoRef = useRef(null)
   const [error, setError] = useState('')
 
@@ -24,23 +24,37 @@ export default function HlsPlayer({ url, ...rest }) {
       hls = new Ctor({
         enableWorker: false,
         lowLatencyMode: false,
-        backBufferLength: 60,
+        backBufferLength: 90,
         maxBufferLength: 30,
         maxMaxBufferLength: 60,
-        startLevel: 0,
-        testBandwidth: false,
+        startLevel: -1,
+        testBandwidth: true,
         progressive: false,
-        maxFragLookUpTolerance: 0.25,
+        maxBufferHole: 1,
+        maxFragLookUpTolerance: 0.5,
         nudgeOffset: 0.1,
-        nudgeMaxRetry: 5,
+        nudgeMaxRetry: 10,
+        fragLoadingMaxRetry: 6,
+        fragLoadingRetryDelay: 500,
       })
       hls.on(Ctor.Events.ERROR, (_evt, data) => {
-        if (!data?.fatal) return
-        if (data.type === Ctor.ErrorTypes.MEDIA_ERROR && recovers < 2) {
-          recovers += 1
-          hls.recoverMediaError()
-          return
+        if (!data) return
+        const reset =
+          data.details === 'mediaSourceRequiresReset' ||
+          data.details === Ctor.ErrorDetails?.BUFFER_APPEND_ERROR
+        if (reset || (data.fatal && data.type === Ctor.ErrorTypes.MEDIA_ERROR)) {
+          if (recovers < 4) {
+            recovers += 1
+            try {
+              hls.recoverMediaError()
+              hls.startLoad()
+            } catch {
+              setError(data.details || 'Playback failed')
+            }
+            return
+          }
         }
+        if (!data.fatal) return
         setError(data.details || 'Playback failed')
       })
       hls.on(Ctor.Events.MANIFEST_PARSED, () => {
@@ -60,13 +74,36 @@ export default function HlsPlayer({ url, ...rest }) {
     }
   }, [url])
 
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = muted
+  }, [muted])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    const onEnd = () => onEnded?.()
+    const onT = () => {
+      if (!video.duration) return
+      onTime?.({ current: video.currentTime, duration: video.duration })
+    }
+    video.addEventListener('ended', onEnd)
+    video.addEventListener('timeupdate', onT)
+    return () => {
+      video.removeEventListener('ended', onEnd)
+      video.removeEventListener('timeupdate', onT)
+    }
+  }, [onEnded, onTime, url])
+
   return (
     <div className="hlsPlayer" {...rest}>
       <video
         ref={videoRef}
         controls
         playsInline
-        muted
+        muted={muted}
+        autoPlay
         preload="auto"
       />
       {error ? <p className="hlsError">{error}</p> : null}

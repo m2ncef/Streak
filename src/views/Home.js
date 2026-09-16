@@ -83,8 +83,16 @@ export default function Home() {
   const [myList, setMyList] = useState([])
   const [error, setError] = useState('')
   const [heroMuted, setHeroMuted] = useState(true)
+  const [heroPaused, setHeroPaused] = useState(false)
   const [trailerReady, setTrailerReady] = useState(false)
   const trailerRef = useRef(null)
+
+  function ytCmd(func) {
+    trailerRef.current?.contentWindow?.postMessage(
+      `{"event":"command","func":"${func}","args":""}`,
+      '*'
+    )
+  }
 
   useEffect(() => {
     document.title = 'Streak'
@@ -232,18 +240,19 @@ export default function Home() {
   useEffect(() => {
     if (!hero?.trailerKey) return
     setTrailerReady(false)
+    setHeroPaused(false)
     const t = setTimeout(() => setTrailerReady(true), 800)
     return () => clearTimeout(t)
   }, [hero?.trailerKey])
 
   useEffect(() => {
-    const w = trailerRef.current?.contentWindow
-    if (!w) return
-    w.postMessage(
-      `{"event":"command","func":"${heroMuted ? 'mute' : 'unMute'}","args":""}`,
-      '*'
-    )
+    ytCmd(heroMuted ? 'mute' : 'unMute')
   }, [heroMuted])
+
+  useEffect(() => {
+    if (!trailerReady) return
+    ytCmd(heroPaused ? 'pauseVideo' : 'playVideo')
+  }, [heroPaused, trailerReady])
 
   const field = hero?.backdrop ? `${ORIGINAL}${hero.backdrop}` : ''
   const logoSrc = hero?.logo ? `${LOGO}${hero.logo}` : ''
@@ -292,14 +301,9 @@ export default function Home() {
                   referrerPolicy="strict-origin-when-cross-origin"
                   allowFullScreen
                   tabIndex={-1}
-                  onLoad={(e) => {
-                    const w = e.currentTarget.contentWindow
-                    if (!w) return
-                    w.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
-                    w.postMessage(
-                      `{"event":"command","func":"${heroMuted ? 'mute' : 'unMute'}","args":""}`,
-                      '*'
-                    )
+                  onLoad={() => {
+                    ytCmd('playVideo')
+                    ytCmd(heroMuted ? 'mute' : 'unMute')
                   }}
                 />
                 <div className="homeHeroVideoShield" />
@@ -310,14 +314,24 @@ export default function Home() {
             <div className="homeHeroScrimBottom" />
 
             {showTrailer && (
-              <button
-                type="button"
-                className="heroMuteToggle"
-                onClick={() => setHeroMuted((m) => !m)}
-                aria-label={heroMuted ? 'Unmute' : 'Mute'}
-              >
-                <i className={`fa fa-volume-${heroMuted ? 'off' : 'up'}`} aria-hidden="true" />
-              </button>
+              <div className="heroControls">
+                <button
+                  type="button"
+                  className="heroCtrl"
+                  onClick={() => setHeroPaused((p) => !p)}
+                  aria-label={heroPaused ? 'Play trailer' : 'Pause trailer'}
+                >
+                  <i className={`fa fa-${heroPaused ? 'play' : 'pause'}`} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  className="heroCtrl"
+                  onClick={() => setHeroMuted((m) => !m)}
+                  aria-label={heroMuted ? 'Unmute' : 'Mute'}
+                >
+                  <i className={`fa fa-volume-${heroMuted ? 'off' : 'up'}`} aria-hidden="true" />
+                </button>
+              </div>
             )}
 
             <div className="homeHeroCopy">

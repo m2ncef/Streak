@@ -1,4 +1,4 @@
-import { extractFromQuery } from "../../../../vidsrc-scraper/extract.js";
+import { extractFromQuery } from "./extract.js";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

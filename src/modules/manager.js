@@ -161,7 +161,7 @@ export async function refreshModule(id) {
   return installModule(entry.url)
 }
 
-const BUILTIN_VIDSRC = '/modules/vidsrc.js'
+const BUILTIN_VIDSRC = '/modules/community/vidsrc.js'
 
 async function ensureVidSrcModule() {
   if (typeof window === 'undefined') return
@@ -176,9 +176,13 @@ async function ensureVidSrcModule() {
     }
     return
   }
-  if (!String(entry.code || '').includes('/api/extract')) {
+  const stale =
+    !String(entry.url || '').includes('/modules/community/vidsrc.js') ||
+    !String(entry.code || '').includes('onProgress')
+  if (stale) {
     try {
-      await refreshModule('vidsrc')
+      instances.delete('vidsrc')
+      await installModule(href)
     } catch {
       /* keep current */
     }
@@ -187,18 +191,64 @@ async function ensureVidSrcModule() {
 
 export async function resolveStreaming(ctx) {
   await ensureVidSrcModule()
-  for (const { instance } of getEnabledInstances()) {
+  const enabled = getEnabledInstances()
+  const report = (info) => {
+    try {
+      ctx.onProgress?.(info)
+    } catch {
+      /* ignore */
+    }
+  }
+
+  if (!enabled.length) {
+    report({ phase: 'error', message: 'No streaming modules enabled', pct: 0 })
+    return { type: 'error' }
+  }
+
+  for (let i = 0; i < enabled.length; i++) {
+    const { instance } = enabled[i]
+    const pctBase = Math.round((i / enabled.length) * 80)
+    report({
+      phase: 'start',
+      module: instance.name,
+      message: `Trying ${instance.name}…`,
+      pct: pctBase + 5,
+    })
+    const streamCtx = {
+      ...ctx,
+      onProgress: (p) =>
+        report({
+          phase: 'fetch',
+          module: instance.name,
+          pct: pctBase + 20,
+          ...p,
+        }),
+    }
     try {
       const result =
         ctx.kind === 'tv'
-          ? instance.getTvStream?.(ctx.id, ctx.season, ctx.episode, ctx)
-          : instance.getMovieStream?.(ctx.id, ctx)
+          ? instance.getTvStream?.(ctx.id, ctx.season, ctx.episode, streamCtx)
+          : instance.getMovieStream?.(ctx.id, streamCtx)
       const resolved = await result
-      if (resolved?.url) return { ...resolved, module: instance }
-    } catch {
-      /* try next module */
+      if (resolved?.url) {
+        report({
+          phase: 'ready',
+          module: instance.name,
+          message: `Playing via ${instance.name}`,
+          pct: 100,
+        })
+        return { ...resolved, module: instance }
+      }
+    } catch (err) {
+      report({
+        phase: 'error',
+        module: instance.name,
+        message: err?.message || `${instance.name} failed`,
+        pct: pctBase + 30,
+      })
     }
   }
+  report({ phase: 'error', message: 'No source found', pct: 100 })
   return { type: 'error' }
 }
 

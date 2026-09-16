@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import MovieCard from '../Components/MovieCard'
-import Nav from '../Components/Nav'
+import Header from '../Components/Header'
 import Footer from '../Components/Footer'
 
 const API = 'https://api.themoviedb.org/3'
@@ -122,78 +122,98 @@ export default function Explore() {
     setFilters({ q: draft.trim(), sort: '', genre: '' })
   }
 
+  const heading = q
+    ? `Results for “${q}”`
+    : type === 'tv'
+      ? 'Shows'
+      : 'Movies'
+  const activeSort = sorts.some((s) => s.value === sort) ? sort : sorts[0].value
+  const genreName = genres.find((g) => String(g.id) === String(genre))?.name
+
   return (
     <>
-      <Nav />
       <main className="browsePage">
+        <Header />
+
         <form className="browseSearch" onSubmit={onSearch}>
+          <i className="fa fa-search" aria-hidden="true" />
           <input
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            placeholder={type === 'tv' ? 'Search shows…' : 'Search movies…'}
+            placeholder={type === 'tv' ? 'Search shows' : 'Search movies'}
             aria-label="Search"
           />
-          <button type="submit">Search</button>
+          {draft && (
+            <button
+              type="button"
+              className="browseSearchClear"
+              onClick={() => {
+                setDraft('')
+                if (q) setFilters({ q: '' })
+              }}
+              aria-label="Clear"
+            >
+              <i className="fa fa-times" aria-hidden="true" />
+            </button>
+          )}
         </form>
 
-        <div className="browseFilters">
-          <div className="browseSeg" role="tablist">
-            <button
-              type="button"
-              className={type === 'tv' ? 'is-on' : ''}
-              onClick={() => setFilters({ type: 'tv', sort: 'popularity.desc', genre: '', q })}
-            >
-              Shows
-            </button>
-            <button
-              type="button"
-              className={type === 'movie' ? 'is-on' : ''}
-              onClick={() => setFilters({ type: 'movie', sort: 'popularity.desc', genre: '', q })}
-            >
-              Movies
-            </button>
-          </div>
-          {!q && (
-            <>
-              <select
-                value={sorts.some((s) => s.value === sort) ? sort : sorts[0].value}
-                onChange={(e) => setFilters({ sort: e.target.value })}
-                aria-label="Sort"
-              >
-                {sorts.map((s) => (
-                  <option key={s.value} value={s.value}>
-                    {s.label}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={genre}
-                onChange={(e) => setFilters({ genre: e.target.value })}
-                aria-label="Genre"
-              >
-                <option value="">All genres</option>
+        {!q && (
+          <>
+            <div className="browseSorts" role="group" aria-label="Sort">
+              {sorts.map((s) => (
+                <button
+                  type="button"
+                  key={s.value}
+                  className={activeSort === s.value ? 'is-on' : ''}
+                  onClick={() => setFilters({ sort: s.value })}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+            {genres.length > 0 && (
+              <div className="browseChips" role="list">
+                <button
+                  type="button"
+                  className={!genre ? 'is-on' : ''}
+                  onClick={() => setFilters({ genre: '' })}
+                >
+                  All
+                </button>
                 {genres.map((g) => (
-                  <option key={g.id} value={g.id}>
+                  <button
+                    type="button"
+                    key={g.id}
+                    className={String(genre) === String(g.id) ? 'is-on' : ''}
+                    onClick={() => setFilters({ genre: String(g.id) })}
+                  >
                     {g.name}
-                  </option>
+                  </button>
                 ))}
-              </select>
-            </>
-          )}
-          {q && (
-            <button type="button" className="browseClear" onClick={() => setFilters({ q: '' })}>
-              Clear search
-            </button>
-          )}
-        </div>
+              </div>
+            )}
+          </>
+        )}
 
-        <p className="browseCount">
-          {q ? `Results for “${q}”` : type === 'tv' ? 'Shows' : 'Movies'}
-          {total ? ` · ${total.toLocaleString()}` : ''}
-        </p>
+        <div className="browseHead">
+          <h1>
+            {heading}
+            {genreName && !q ? <span> · {genreName}</span> : null}
+          </h1>
+          {total > 0 && <p>{total.toLocaleString()} titles</p>}
+        </div>
 
         {status === 'error' && <p className="homeError">Could not load this catalog.</p>}
         {status === 'empty' && <p className="browseEmpty">Nothing with a poster for these filters.</p>}
+
+        {status === 'loading' && items.length === 0 && (
+          <section className="browseGrid" aria-hidden="true">
+            {Array.from({ length: 12 }, (_, i) => (
+              <span key={i} className="browseSkel" />
+            ))}
+          </section>
+        )}
 
         <section className="browseGrid">
           {items.map((m) => (

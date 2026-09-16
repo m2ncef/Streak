@@ -8,6 +8,14 @@ function proxyUrl(abs) {
   return `/api/hls-proxy?url=${encodeURIComponent(abs)}`;
 }
 
+function rewriteUri(raw, base) {
+  try {
+    return proxyUrl(new URL(raw, base).href);
+  } catch {
+    return raw;
+  }
+}
+
 function rewritePlaylist(text, sourceUrl) {
   const base = new URL(sourceUrl);
   return text
@@ -15,21 +23,36 @@ function rewritePlaylist(text, sourceUrl) {
     .map((line) => {
       if (!line) return line;
       if (line.startsWith("#")) {
-        return line.replace(/URI="([^"]+)"/g, (_, u) => {
-          try {
-            return `URI="${proxyUrl(new URL(u, base).href)}"`;
-          } catch {
-            return `URI="${u}"`;
-          }
+        return line.replace(/URI=("([^"]+)"|'([^']+)'|([^,\s]+))/g, (full, _a, d, s, u) => {
+          const val = d || s || u;
+          const q = d != null ? '"' : s != null ? "'" : "";
+          return `URI=${q}${rewriteUri(val, base)}${q}`;
         });
       }
-      try {
-        return proxyUrl(new URL(line, base).href);
-      } catch {
-        return line;
-      }
+      return rewriteUri(line, base);
     })
     .join("\n");
+}
+
+function parseRange(header, size) {
+  if (!header) return null;
+  const m = /bytes=(\d+)-(\d*)/i.exec(header);
+  if (!m) return null;
+  const start = Number(m[1]);
+  const end = m[2] ? Number(m[2]) : size - 1;
+  if (!Number.isFinite(start) || start < 0 || start >= size) return null;
+  return { start, end: Math.min(end, size - 1) };
+}
+
+function sniffMime(buf, ct) {
+  if (buf[0] === 0x47) return "video/mp2t";
+  const box = buf.length > 8 ? buf.subarray(4, 8).toString("ascii") : "";
+  if (box === "ftyp" || box === "moof" || box === "sidx" || box === "styp") {
+    return "video/mp4";
+  }
+  if (buf.length === 16) return "application/octet-stream";
+  if (ct && !ct.includes("text/html") && !ct.includes("application/json")) return ct;
+  return "application/octet-stream";
 }
 
 async function fetchUpstream(url, extra = {}) {
@@ -48,8 +71,10 @@ async function fetchUpstream(url, extra = {}) {
     const headers = {
       "User-Agent": UA,
       Referer: referer,
+      Origin: referer.replace(/\/$/, ""),
       Accept: "*/*",
     };
+    if (extra.range) headers.Range = extra.range;
     last = await fetch(url, {
       headers,
       redirect: "follow",
@@ -76,8 +101,10 @@ export async function GET(request) {
     return new Response("Invalid protocol", { status: 400 });
   }
 
+  const rangeHeader = request.headers.get("range");
   const upstream = await fetchUpstream(parsed.href, {
     referer: request.nextUrl.searchParams.get("referer"),
+    range: rangeHeader || undefined,
   });
 
   if (!upstream || (!upstream.ok && upstream.status !== 206)) {
@@ -88,17 +115,14 @@ export async function GET(request) {
 
   const ct = (upstream.headers.get("content-type") || "").toLowerCase();
   const buf = Buffer.from(await upstream.arrayBuffer());
-  const peek = buf.subarray(0, 16).toString("utf8");
-  const isPlaylist =
-    peek.startsWith("#EXTM3U") ||
-    ct.includes("mpegurl") ||
-    ct.includes("m3u8") ||
-    parsed.pathname.includes(".m3u8") ||
-    /master\.m3u8/i.test(parsed.href);
+  const peek = buf.subarray(0, 8).toString("utf8");
+  const isPlaylist = peek.startsWith("#EXTM3U");
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "Content-Length, Content-Range, Accept-Ranges",
     "Cache-Control": "no-store",
+    "Accept-Ranges": "bytes",
   };
 
   if (isPlaylist) {
@@ -108,11 +132,24 @@ export async function GET(request) {
     });
   }
 
-  let mime = ct && !ct.includes("text/html") ? ct : "application/octet-stream";
-  if (buf[0] === 0x47) mime = "video/mp2t";
-  else if (buf.length > 8 && buf.subarray(4, 8).toString("ascii") === "ftyp") {
-    mime = "video/mp4";
-  }
+  const mime = sniffMime(buf, ct);
   headers["Content-Type"] = mime;
+
+  const range = parseRange(rangeHeader, buf.length);
+  if (range && upstream.status !== 206) {
+    const slice = buf.subarray(range.start, range.end + 1);
+    headers["Content-Range"] = `bytes ${range.start}-${range.start + slice.length - 1}/${buf.length}`;
+    headers["Content-Length"] = String(slice.length);
+    return new Response(slice, { status: 206, headers });
+  }
+
+  if (upstream.status === 206) {
+    const cr = upstream.headers.get("content-range");
+    if (cr) headers["Content-Range"] = cr;
+    headers["Content-Length"] = String(buf.length);
+    return new Response(buf, { status: 206, headers });
+  }
+
+  headers["Content-Length"] = String(buf.length);
   return new Response(buf, { headers });
 }

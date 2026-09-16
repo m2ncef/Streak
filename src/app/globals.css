@@ -164,28 +164,32 @@ a {
     background: linear-gradient(180deg, transparent, #000 95%);
     pointer-events: none;
 }
-.heroMuteToggle {
+.heroControls {
     position: absolute;
-    z-index: 2;
-    top: 148px;
+    z-index: 3;
     right: var(--gutter);
-    width: 40px;
-    height: 40px;
+    bottom: 18%;
+    display: flex;
+    gap: 8px;
+}
+.heroCtrl {
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     border: 1.5px solid #ffffff88;
-    background: #00000055;
-    backdrop-filter: blur(6px);
+    background: #00000066;
+    backdrop-filter: blur(8px);
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background .15s ease, border-color .15s ease;
+    cursor: pointer;
 }
-.heroMuteToggle:hover {
-    background: #00000088;
+.heroCtrl:hover {
+    background: #00000099;
     border-color: #fff;
 }
-.heroMuteToggle i {
+.heroCtrl i {
     font-size: 15px;
 }
 .homeHeroCopy {
@@ -408,89 +412,126 @@ a {
     .rankedNum {
         font-size: 8.5rem;
     }
+    .browseGrid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
 }
 .browsePage {
-    max-width: 1100px;
-    margin: 0 auto 6vh;
-    padding: 0 2vh;
+    padding: 0 0 72px;
+}
+.browsePage .Header {
+    position: relative;
+    margin: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, #000 40%, transparent);
+    padding-bottom: 1vh;
 }
 .browseSearch {
     display: flex;
-    margin: 0 0 1.4vh;
+    align-items: center;
+    gap: 10px;
+    margin: 8px var(--gutter) 14px;
+    padding: 0 14px;
+    height: 44px;
+    background: #141414;
+    border: 1px solid #ffffff18;
+    border-radius: 8px;
+}
+.browseSearch i.fa-search {
+    color: #888;
+    font-size: 14px;
 }
 .browseSearch input {
     flex: 1;
     min-width: 0;
     border: none;
-    background: #151515;
-    color: white;
-    padding: 1.3vh 1.4vh;
-    border-radius: 1vh 0 0 1vh;
-    font-size: 0.95rem;
-}
-.browseSearch button {
-    border: none;
-    background: #ff742d;
-    color: #111;
-    font-weight: 800;
-    padding: 0 1.6vh;
-    border-radius: 0 1vh 1vh 0;
-}
-.browseFilters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8vh;
-    align-items: center;
-    margin-bottom: 1.4vh;
-}
-.browseSeg {
-    display: flex;
-    background: #151515;
-    border-radius: 1vh;
-    padding: 0.3vh;
-}
-.browseSeg button {
-    border: none;
     background: transparent;
-    color: #888;
-    padding: 0.7vh 1.4vh;
-    border-radius: 0.8vh;
-    font-weight: 600;
-    font-size: 0.85rem;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
 }
-.browseSeg button.is-on {
-    background: #ff742d;
-    color: #111;
+.browseSearch input::placeholder {
+    color: #777;
 }
-.browseFilters select {
+.browseSearchClear {
+    width: 28px;
+    height: 28px;
     border: none;
-    background: #151515;
+    border-radius: 50%;
+    background: #ffffff18;
     color: #ddd;
-    padding: 0.9vh 1.1vh;
-    border-radius: 1vh;
-    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
-.browseClear {
-    border: none;
-    background: none;
-    color: #ff742d;
-    font-size: 0.82rem;
-    padding: 0.6vh;
+.browseSorts {
+    display: flex;
+    gap: 8px;
+    margin: 0 var(--gutter) 10px;
 }
-.browseCount {
-    margin: 0 0 1.4vh;
+.browseSorts button,
+.browseChips button {
+    border: 1px solid #ffffff22;
+    background: #ffffff0f;
+    color: #cfcfcf;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.browseSorts button.is-on,
+.browseChips button.is-on {
+    background: #fff;
+    color: #111;
+    border-color: #fff;
+}
+.browseChips {
+    display: flex;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 0 var(--gutter);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.browseChips::-webkit-scrollbar {
+    display: none;
+}
+.browseHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 var(--gutter) 14px;
+}
+.browseHead h1 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+.browseHead h1 span {
+    color: #999;
+    font-weight: 600;
+}
+.browseHead p {
+    margin: 0;
     color: #777;
     font-size: 0.78rem;
 }
 .browseEmpty {
-    margin: 2vh 0;
-    color: dimgray;
+    margin: 2vh var(--gutter);
+    color: #888;
     font-size: 0.9rem;
 }
 .browseGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.1vh;
+    gap: 8px;
+    padding: 0 var(--gutter);
 }
 .browseGrid .movieCard {
     margin: 0;
@@ -501,17 +542,26 @@ a {
     height: auto;
     aspect-ratio: 2 / 3;
     object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+.browseSkel {
+    display: block;
+    aspect-ratio: 2 / 3;
+    border-radius: 4px;
+    background: #1a1a1a;
 }
 .browseMore {
     display: block;
-    width: 100%;
-    margin: 2.4vh 0 0;
-    border: none;
-    background: #151515;
-    color: #ddd;
-    padding: 1.4vh;
-    border-radius: 1vh;
-    font-weight: 600;
+    width: calc(100% - var(--gutter) * 2);
+    margin: 22px var(--gutter) 0;
+    border: 1px solid #ffffff22;
+    background: #ffffff12;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
 }
 .browseMore:disabled {
     opacity: 0.45;
@@ -620,8 +670,50 @@ a {
     z-index: 10;
 }
 .titlePage {
+    position: relative;
     margin: 0 auto;
     padding: 0 0 8vh;
+}
+.titleBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px var(--gutter) 28px;
+    background: linear-gradient(180deg, #000000cc 0%, #00000066 55%, transparent 100%);
+}
+.titleBarBrand {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 10px #000c;
+}
+.titleBarBtn {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ffffff2e;
+    border-radius: 50%;
+    background: #00000066;
+    backdrop-filter: blur(10px);
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.titleBarBtn:hover {
+    background: #00000099;
+    border-color: #ffffff66;
+}
+.titleBarBtn i {
+    font-size: 15px;
 }
 
 /* ---- Title hero (full-bleed, inspired by home hero) ---- */
@@ -840,20 +932,131 @@ a {
     display: flex;
 }
 .Player {
-    touch-action: none;
     z-index: 9999;
     position: fixed;
     display: none;
-    top: 0;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+    inset: 0;
+    background: #000;
+}
+.watchPlayer {
+    position: relative;
     width: 100%;
-    background: #0e0e0ee9;
-    backdrop-filter: blur(2vh);
-    gap: 2vh;
+    height: 100%;
+    background: #000;
+}
+.watchPlayer iframe,
+.watchPlayer .hlsPlayer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.watchClose,
+.watchTop,
+.watchNext {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+.watchPlayer.is-chrome .watchClose,
+.watchPlayer.is-chrome .watchTop,
+.watchPlayer.is-chrome .watchNext,
+.watchNext.is-offer {
+    opacity: 1;
+    pointer-events: auto;
+}
+.watchClose {
+    position: absolute;
+    z-index: 4;
+    top: 18px;
+    left: var(--gutter);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #ffffff33;
+    background: #00000088;
+    color: #fff;
+    cursor: pointer;
+}
+.watchTop {
+    position: absolute;
+    z-index: 4;
+    top: 18px;
+    left: 76px;
+    right: var(--gutter);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-shadow: 0 2px 12px #000;
+}
+.watchTop p {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+.watchTop span,
+.watchTop em {
+    font-size: 0.78rem;
+    color: #bbb;
+    font-style: normal;
+}
+.watchLoad {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #000;
+}
+.watchLoad p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+.watchLoad span {
+    color: #888;
+    font-size: 0.78rem;
+}
+.watchLoadBar {
+    width: min(52vw, 320px);
+    height: 3px;
+    background: #ffffff22;
+    border-radius: 99px;
+    overflow: hidden;
+}
+.watchLoadBar span {
+    display: block;
+    height: 100%;
+    background: #fff;
+    transition: width .35s ease;
+}
+.watchNext {
+    position: absolute;
+    z-index: 4;
+    right: var(--gutter);
+    bottom: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    border: none;
+    background: #fff;
+    color: #111;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.watchNext small {
+    font-weight: 600;
+    color: #444;
+}
+.watchNext.is-offer {
+    padding: 14px 18px;
+    font-size: 1rem;
 }
 .Loader {
     position: fixed;
@@ -1003,37 +1206,88 @@ a {
     font-weight: 600;
     border-radius: .7vh;
 }
-.Cards {
+.listPage {
+    padding: 0 0 72px;
+}
+.listPage .Header {
+    position: relative;
+    margin: 0;
+    background: linear-gradient(180deg, #000 40%, transparent);
+    padding-bottom: 1vh;
+}
+.listHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 8px var(--gutter) 16px;
+}
+.listHead h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+.listHead p {
+    margin: 0;
+    color: #777;
+    font-size: 0.78rem;
+}
+.listEmpty {
+    margin: 4vh var(--gutter);
+    color: #888;
+    font-size: 0.92rem;
+}
+.listGrid {
     display: flex;
     flex-direction: column;
-    gap: 2vh;
-    margin: 2vh;
+    gap: 10px;
+    padding: 0 var(--gutter);
 }
-.ListCard {
-    display: flex;
-    flex-direction: row;
+.listCard {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
     align-items: center;
-    gap: 1vh;
-    background-color: #101010;
-    backdrop-filter: blur(2vh);
-    border-radius: 2vh;
-    position: relative;
+    gap: 12px;
+    background: #141414;
+    border: 1px solid #ffffff12;
+    border-radius: 8px;
+    padding: 8px 10px 8px 8px;
 }
-.ListCard img {
-    padding: 1vh;
-    width: 15vh;
-    border-radius: 2vh;
-    margin: 1vh;
+.listCard img {
+    width: 64px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
 }
-.ListCard p {
-    width: fit-content;
-    background: #ff000033;
-    padding: .7vh 1.5vh;
-    border-radius: .7vh;
+.listCardMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
 }
-.ListCard h5 {
-    font-weight: 400;
-    color: gray;
+.listCardMeta strong {
+    font-size: 0.95rem;
+    letter-spacing: -0.02em;
+}
+.listCardMeta span {
+    color: #888;
+    font-size: 0.78rem;
+}
+.listRemove {
+    border: 1px solid #ffffff22;
+    background: transparent;
+    color: #ccc;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.listRemove:hover {
+    border-color: #fff;
+    color: #fff;
 }
 .returning {
     color: springgreen;
@@ -1486,13 +1740,8 @@ a {
     gap: 1vh;
 }
 .scraperFrame {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2vh;
-    width: 75vw;
-    height: 70vh;
+    width: 100%;
+    height: 100%;
 }
 .hlsPlayer {
     width: 100%;
@@ -1588,7 +1837,9 @@ a {
     .Header {
         margin: 16px var(--gutter) 0;
     }
-    .homePage .Header {
+    .homePage .Header,
+    .browsePage .Header,
+    .listPage .Header {
         margin: 0;
     }
     .homeHero {
@@ -1624,7 +1875,10 @@ a {
     }
     .browseGrid {
         grid-template-columns: repeat(6, 1fr);
-        gap: 1.4vh;
+        gap: 10px;
+    }
+    .browseHead h1 {
+        font-size: 1.45rem;
     }
     .titlePage {
         padding: 0 0 10vh;
