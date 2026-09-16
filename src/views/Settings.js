@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import Loading from '../Components/Loading'
-import Nav from '../Components/Nav'
+import Header from '../Components/Header'
 import Footer from '../Components/Footer'
 import ModulesSettings from '../Components/ModulesSettings'
 
@@ -35,29 +36,29 @@ export default function Settings() {
   return (
     <>
       <Loading />
-      <Nav />
       <main className="settingsPage">
+      <Header />
         <header className="settingsIdentity">
           <img src="/icon.png" alt="" />
           <div>
-            <h1>Streak</h1>
+            <h1>Settings</h1>
             <p>
-              Movies &amp; TV · by{' '}
-              <button type="button" className="settingsAuthor" onClick={() => window.open('https://instagram.com/m2ncef', '_blank')}>
+              Streak ·{' '}
+              <a href="https://instagram.com/m2ncef" target="_blank" rel="noreferrer">
                 moncef
-              </button>
+              </a>
             </p>
           </div>
         </header>
         {commit && (
           <p className="settingsCommit">
-            Latest push: {commit.message} · {commit.author} · {commit.when}
+            Latest: {commit.message} · {commit.when}
           </p>
         )}
 
         <ModulesSettings />
         <p className="settingsLead">
-          <a href="/modules">How to write a module and contribute</a>
+          <Link href="/modules">How to write a module →</Link>
         </p>
 
         <section className="settingsBlock">

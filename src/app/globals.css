@@ -1564,93 +1564,124 @@ a {
     border-radius: 8px;
 }
 .settingsPage {
-    max-width: 720px;
-    margin: 0 auto 6vh;
-    padding: 0 2.4vh;
+    padding: 0 0 72px;
+}
+.settingsPage .Header {
+    position: relative;
+    margin: 0;
+    background: linear-gradient(180deg, #000 40%, transparent);
+    padding-bottom: 1vh;
+}
+.settingsPage > .settingsIdentity,
+.settingsPage > .settingsCommit,
+.settingsPage > .settingsBlock,
+.settingsPage > .settingsLead,
+.settingsPage > section {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+}
+.settingsIdentity {
+    padding-top: 16px;
 }
 .settingsIdentity {
     display: flex;
     align-items: center;
-    gap: 1.6vh;
-    margin: 0 0 1.2vh;
+    gap: 14px;
+    margin: 0 0 10px;
 }
 .settingsIdentity img {
-    width: 5.6vh;
-    height: 5.6vh;
-    border-radius: 1.2vh;
-    background: #151515;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
     object-fit: cover;
 }
 .settingsIdentity h1 {
     margin: 0;
     font-size: 1.35rem;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    letter-spacing: -0.03em;
 }
 .settingsIdentity p {
-    margin: 0.3vh 0 0;
-    color: dimgray;
+    margin: 4px 0 0;
+    color: #888;
     font-size: 0.85rem;
 }
-.settingsAuthor {
-    border: none;
-    background: none;
-    color: #ff742d;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
+.settingsIdentity a {
+    color: #fff;
 }
 .settingsCommit {
-    margin: 0 0 3vh;
+    margin: 0 0 28px;
     color: #666;
     font-size: 0.75rem;
     line-height: 1.45;
 }
 .settingsBlock {
-    margin: 0 0 3.4vh;
+    margin: 0 0 32px;
 }
 .settingsBlock h2 {
-    margin: 0 0 1vh;
-    font-size: 0.78rem;
+    margin: 0 0 10px;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #8a8a8a;
 }
 .settingsLead {
-    margin: 0 0 1.4vh;
-    color: dimgray;
+    margin: 0 0 28px;
+    color: #888;
     font-size: 0.88rem;
     line-height: 1.45;
 }
 .settingsLead code {
-    color: #cfcfcf;
-    font-size: 0.84em;
-}
-.settingsBlock a {
-    display: block;
-    background: #151515;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     color: #ddd;
-    padding: 1.3vh 1.6vh;
-    margin: 0 0 0.7vh;
-    border-radius: 1vh;
+    white-space: nowrap;
+    background: #ffffff12;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+}
+.settingsLead a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.settingsBlock > a {
+    display: block;
+    background: #161616;
+    border: 1px solid #ffffff12;
+    color: #ddd;
+    padding: 12px 14px;
+    margin: 0 0 8px;
+    border-radius: 8px;
     font-size: 0.9rem;
+    text-decoration: none;
+}
+.settingsBlock > a:hover {
+    border-color: #ffffff33;
+    color: #fff;
 }
 .settingsLegal {
-    margin: 1.4vh 0 0;
+    margin: 14px 0 0;
     color: #666;
     font-size: 0.78rem;
     line-height: 1.5;
 }
+.settingsLegal a {
+    color: #ccc;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
 .settingsDanger {
     width: 100%;
-    border: none;
-    background: #151515;
+    border: 1px solid #ffffff12;
+    background: #161616;
     color: #ff6b6b;
     text-align: left;
-    padding: 1.4vh 1.6vh;
-    border-radius: 1vh;
-    font-size: 0.95rem;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
     cursor: pointer;
 }
 .webappDetails {
@@ -1741,20 +1772,21 @@ a {
 .moduleInstall input {
     flex: 1;
     min-width: 0;
-    border: none;
-    background: #151515;
+    border: 1px solid #ffffff12;
+    border-right: none;
+    background: #161616;
     color: white;
-    padding: 1.35vh 1.4vh;
-    border-radius: 1vh 0 0 1vh;
+    padding: 12px 14px;
+    border-radius: 8px 0 0 8px;
     font-size: 0.92rem;
 }
 .moduleInstall button {
     border: none;
-    background: #ff742d;
+    background: #fff;
     color: #111;
     font-weight: 700;
-    padding: 0 1.8vh;
-    border-radius: 0 1vh 1vh 0;
+    padding: 0 16px;
+    border-radius: 0 8px 8px 0;
     cursor: pointer;
 }
 .moduleInstall button:disabled {
@@ -1871,7 +1903,7 @@ a {
     overflow: hidden;
 }
 .moduleToggle.on {
-    background: #ff742d;
+    background: #fff;
 }
 .moduleToggle.on span {
     margin-left: auto;
@@ -1993,7 +2025,8 @@ a {
     }
     .homePage .Header,
     .browsePage .Header,
-    .listPage .Header {
+    .listPage .Header,
+    .settingsPage .Header {
         margin: 0;
     }
     .homeHero {

@@ -90,8 +90,7 @@ export default function ModulesSettings() {
     <section className="settingsBlock">
       <h2>Modules</h2>
       <p className="settingsLead">
-        Drop in any <code>.js</code> module. They run in the browser only — no host API.
-        Stream modules are tried top to bottom. Subtitle modules are merged.
+        Drop in any <code>.js</code> file. Runs in this browser. Stream modules are tried top to bottom; subtitle modules merge.
       </p>
 
       <ul className="moduleCatalog">
