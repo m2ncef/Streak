@@ -1,4 +1,5 @@
-# Streak 🔥📺 (NOT WORKING TEMPORARILY)
+# Streak 🔥📺
+
 ![Streak](https://socialify.git.ci/m2ncef/Streak/image?description=1&font=Inter&language=1&name=1&owner=1&theme=Dark)
 
 Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https://github.com/m2ncef) using Next.js 🚀
@@ -8,35 +9,53 @@ Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https:
 Curious to see it in action? Check out our live demo [here](https://streaak.netlify.app)!
 
 ## Preview
+
 # 🖥 Desktop
+
 ![DesktopHome](https://i.imgur.com/1yAIaGp.png)
 ![DesktopWatch](https://i.imgur.com/cYf3gzs.png)
+
 # 📱 Mobile
+
 ![PhoneHome](https://i.imgur.com/Upoy5kS.png)
 ![PhoneWatch](https://i.imgur.com/ly5pY7I.png)
 
 ## Spread the Love ❤️
+
 If you find Streak helpful, don't forget to give it a ⭐️ star on GitHub and share it with your friends and community.
 
 # 🚨 DISCLAIMER
 
 ### 1. Streak is made for educational purposes only.
-### 2. Streak does not host any files, it merely links to 3rd party services. Legal issues should be taken up with the file hosts and providers. 
+
+### 2. Streak does not host any files, it merely links to 3rd party services. Legal issues should be taken up with the file hosts and providers.
+
 ### 3. Streak is not responsible for any media files shown by the video providers.
+
+### 4. The TMDB API key is intentionally public — TMDB's API is free, so there's no secret to protect.
+
+### 5. Streaming may be unreliable on the hosted demo due to Vercel's serverless limitations. For the full experience, clone the repo and self-host 👍
 
 ## Features 🌈
 
 ### 📺 Using TMDB API
-   TheMovieDB API stands out for its comprehensive coverage of desired TV shows, offering a wealth of information that extends beyond basic details. Furthermore, its consistent updates ensure users have access to the latest news, movies, shows, and emerging trends.
+
+TheMovieDB API stands out for its comprehensive coverage of desired TV shows, offering a wealth of information that extends beyond basic details. Furthermore, its consistent updates ensure users have access to the latest news, movies, shows, and emerging trends.
+
 ### 👍 Good Quality Streaming
-   Watch your favorite movies, tv shows with such a good quality.
+
+Watch your favorite movies, tv shows with such a good quality.
+
 ### 📐 Optimized UI
-   Streak is fully responsive on all your devices, whether its a mobile phone, desktop, or even a tablet
+
+Streak is fully responsive on all your devices, whether its a mobile phone, desktop, or even a tablet
+
 ### ⚙️ Using movie-web API
 
 ## Getting Started 🚀
 
 ## Installation
+
 1. Clone the repository
 
 ```
@@ -50,27 +69,30 @@ cd Streak
 ```
 
 3. Install dependencies
-   
+
 ```
 npm install
 ```
 
 4. Running Locally
-   
+
 ```
 npm run dev
 ```
-   
+
 Open http://localhost:3000 in your browser to view the app.
 
 ### Build
+
 ```
 npm run build
 npm start
 ```
 
 ## Contributing 🤝
+
 We welcome contributions! Feel free to submit issues or pull requests. Let's make Streak even more amazing together. 🌟
 
 ## Feedback 💌
+
 Have suggestions or found a bug? We'd love to hear from you! Create an issue or reach out to us at moncxf@icloud.com
