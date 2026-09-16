@@ -1,7 +1,7 @@
 # Streak 🔥📺 (NOT WORKING TEMPORARILY)
 ![Streak](https://socialify.git.ci/m2ncef/Streak/image?description=1&font=Inter&language=1&name=1&owner=1&theme=Dark)
 
-Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https://github.com/m2ncef) using ReactJS 🚀
+Streak, a movies/tv shows streaming web app built with ❤️ by [moncef](https://github.com/m2ncef) using Next.js 🚀
 
 # Demo 🌐
 
@@ -58,7 +58,7 @@ npm install
 4. Running Locally
    
 ```
-npm start
+npm run dev
 ```
    
 Open http://localhost:3000 in your browser to view the app.
@@ -66,6 +66,7 @@ Open http://localhost:3000 in your browser to view the app.
 ### Build
 ```
 npm run build
+npm start
 ```
 
 ## Contributing 🤝

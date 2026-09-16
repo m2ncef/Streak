@@ -1,56 +1,71 @@
-import { useEffect, useState, useRef } from "react";
+'use client'
+import { useEffect, useState } from 'react'
+import { resolveStreaming, resolveSubtitles } from '../modules'
+import HlsPlayer from './HlsPlayer'
 
-export default (props) => {
-  const [OutputError, setOutputError] = useState(false);
-  const [loading, setLoading] = useState(true);
+export default function MovieScraper(props) {
+  const [loading, setLoading] = useState(true)
+  const [source, setSource] = useState(null)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    let cancelled = false
+    async function run() {
+      setLoading(true)
+      setError('')
+      const ctx = { kind: 'movie', id: props.id }
+      const stream = await resolveStreaming(ctx)
+      await resolveSubtitles(ctx)
+      if (cancelled) return
+      if (stream?.url) {
+        setSource(stream)
+      } else {
+        setError('No enabled streaming module returned a source.')
+      }
+      setLoading(false)
+    }
+    run()
+    return () => {
+      cancelled = true
+    }
+  }, [props.id])
+
+  if (loading) {
+    return (
+      <div className="scraperStatus">
+        <p>sbr chwiya sahbi...</p>
+      </div>
+    )
+  }
+
+  if (error || !source) {
+    return (
+      <div className="scraperStatus">
+        Source Not Found
+        <br />
+        m9drtch nelgah, smhli hbb hhhh
+      </div>
+    )
+  }
+
+  if (source.type === 'hls' || /\.m3u8(\?|$)/i.test(source.url) || source.url.includes('/api/hls-proxy')) {
+    return (
+      <div className="scraperFrame">
+        <HlsPlayer url={source.url} style={{ width: '100%', height: '100%' }} />
+      </div>
+    )
+  }
+
   return (
-    <>
-      {!loading ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "2vh",
-            width: "75vw",
-          }}
-        >
-          <iframe
-            width="100%"
-            height="100%"
-            src={`https://vidsrc.rip/embed/movie/${props.id}`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-      ) : OutputError ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "1vh",
-          }}
-        >
-          Source Not Found
-          {/* <br /><AdBig /><br /> */}
-          m9drtch nelgah, smhli hbb hhhh
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "1vh",
-          }}
-        >
-          <p>sbr chwiya sahbi...</p>
-          {/* <AdBig /> */}
-        </div>
-      )}
-    </>
-  );
-};
+    <div className="scraperFrame">
+      <iframe
+        width="100%"
+        height="100%"
+        src={source.url}
+        title={source.module?.name || 'stream'}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
+    </div>
+  )
+}

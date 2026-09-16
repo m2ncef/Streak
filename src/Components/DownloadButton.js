@@ -1,11 +1,5 @@
-import PropTypes from 'prop-types';
+'use client'
 import React, { Component } from 'react';
-import classNames from 'classnames';
-
-const propTypes = {
-  player: PropTypes.object,
-  className: PropTypes.string
-};
 
 export default class DownloadButton extends Component {
   constructor(props, context) {
@@ -24,10 +18,7 @@ export default class DownloadButton extends Component {
         ref={c => {
           this.button = c;
         }}
-        className={classNames(className, {
-          'video-react-control': true,
-          'video-react-button': true
-        })}
+        className={`${className || ''} video-react-control video-react-button`}
         href={currentSrc}
         download
         style={{
@@ -42,5 +33,3 @@ export default class DownloadButton extends Component {
     );
   }
 }
-
-DownloadButton.propTypes = propTypes;

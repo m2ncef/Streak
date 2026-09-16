@@ -1,3 +1,4 @@
+'use client'
 export default (props) => {
     const openIframe = () => {
         window.location.href = '#'

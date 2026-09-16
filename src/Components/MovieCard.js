@@ -1,5 +1,5 @@
+'use client'
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 export default function Card(props) {
     const imgPath = 'https://image.tmdb.org/t/p/w342'

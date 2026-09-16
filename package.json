@@ -2,59 +2,28 @@
   "name": "streak",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
-    "@joeattardi/emoji-button": "^4.6.4",
-    "@oplayer/core": "^1.2.33",
-    "@oplayer/hls": "^1.2.24",
-    "@oplayer/react": "^1.2.10",
-    "@oplayer/ui": "^1.3.0-beta.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "cors": "^2.8.5",
-    "express-basic-auth": "^1.2.1",
-    "express-rate-limit": "^7.1.5",
-    "griffith": "^1.30.0",
-    "hls.js": "^1.5.7",
-    "iso-639-1": "^3.1.2",
-    "mediaelement": "^7.0.3",
-    "oplayer": "^0.0.1",
-    "plyr-react": "^5.3.0",
-    "react": "^18.2.0",
-    "react-awesome-player": "^1.1.0",
-    "react-dom": "^18.2.0",
-    "react-hls": "^0.0.8",
-    "react-hot-toast": "^2.4.1",
-    "react-router-dom": "^6.22.0",
-    "react-scripts": "5.0.1",
-    "redux": "^5.0.1",
-    "toastify-js": "^1.12.0",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "@joeattardi/emoji-button": "^4.6.4",
+    "artplayer": "^5.2.2",
+    "framework7": "^9.1.3",
+    "framework7-react": "^9.1.3",
+    "hls.js": "^1.7.3",
+    "next": "^14.2.15",
+    "p-limit": "^6.2.0",
+    "playwright": "^1.63.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
+    "toastify-js": "^1.12.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@babel/core": "^8.0.5",
+    "@babel/plugin-transform-react-jsx": "^8.0.1",
+    "babel-loader": "^10.1.1"
   }
 }

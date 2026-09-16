@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useRef } from 'react'
 export default function Banner() {
     const banner = useRef()

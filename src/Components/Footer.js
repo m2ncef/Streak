@@ -1,3 +1,4 @@
+'use client'
 export default (props) => {
     return(
         <div style={props.style}>
