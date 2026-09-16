@@ -5,8 +5,12 @@ const nextConfig = {
     serverComponentsExternalPackages: [
       "playwright",
       "playwright-core",
+      "@sparticuz/chromium",
       "p-limit",
     ],
+    outputFileTracingIncludes: {
+      "/api/extract": ["./node_modules/@sparticuz/chromium/bin/**"],
+    },
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
@@ -14,6 +18,7 @@ const nextConfig = {
         if (
           request === "playwright" ||
           request === "playwright-core" ||
+          request === "@sparticuz/chromium" ||
           request === "electron"
         ) {
           return callback(null, "commonjs " + request);

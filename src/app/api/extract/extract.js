@@ -1,4 +1,7 @@
-import { chromium } from "playwright";
+import { chromium } from "playwright-core";
+import chromiumBinary from "@sparticuz/chromium";
+
+const IS_SERVERLESS = !!(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
 
 function pLimit(concurrency) {
   let active = 0;
@@ -40,10 +43,20 @@ let browser;
 
 export async function ensureBrowser() {
   if (browser?.isConnected()) return browser;
-  browser = await chromium.launch({
-    headless: true,
-    channel: "chrome",
-  });
+
+  if (IS_SERVERLESS) {
+    browser = await chromium.launch({
+      args: chromiumBinary.args,
+      executablePath: await chromiumBinary.executablePath(),
+      headless: true,
+    });
+  } else {
+    browser = await chromium.launch({
+      headless: true,
+      channel: "chrome",
+    });
+  }
+
   return browser;
 }
 
